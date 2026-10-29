@@ -825,15 +825,33 @@ body::before{
 .start-trips-add{
  flex:0 0 auto!important;
  align-self:center!important;
- width:46px!important;
- height:46px!important;
- min-width:46px!important;
- font-size:24px!important;
+ display:grid!important;
+ place-items:center!important;
+ width:84px!important;
+ height:84px!important;
+ min-width:84px!important;
+ padding:0!important;
+ margin:0!important;
+ border:0!important;
+ border-radius:0!important;
+ background:transparent!important;
+ box-shadow:none!important;
+ cursor:pointer!important;
+}
+.start-trips-add img{
+ display:block!important;
+ width:100%!important;
+ height:100%!important;
+ object-fit:contain!important;
+ border:0!important;
+ background:transparent!important;
+ box-shadow:none!important;
+ filter:drop-shadow(0 3px 5px rgba(0,0,0,.24));
 }
 @media(max-width:650px){
  .start-trips-top{gap:10px!important;margin-bottom:12px!important}
- .start-trips-art{width:calc(100% - 56px)!important;max-width:none!important;max-height:210px!important}
- .start-trips-add{width:40px!important;height:40px!important;min-width:40px!important}
+ .start-trips-art{width:calc(100% - 82px)!important;max-width:none!important;max-height:210px!important}
+ .start-trips-add{width:68px!important;height:68px!important;min-width:68px!important}
 }
 
 
@@ -947,7 +965,7 @@ function startPage(){
  <div class="metrics">${metric("Składniki w plecaku",allIngredients().length,"pozycje w magazynie")}${metric("Łączny zapas",fmt(totalStock)+" g","wszystkie składniki razem")}${metric("Zaplanowane porcje",fmt(activePlan.reduce((sum,p)=>sum+Number(p.portions||0),0)),"w aktywnych wyprawach")}${metric("Braki do dokupienia",missingItems.length,missingItems.length?"pozycji wymaga uzupełnienia":"wszystko pokryte zapasami")}</div>
  <div class="start-dashboard-grid">
  <div class="start-side-stack">
-   <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.png" alt="Zaplanowane wyprawy" loading="lazy"><button class="btn gold start-trips-add" data-go="plan" aria-label="Dodaj wyprawę">＋</button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
+   <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.png" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.png" alt="" loading="lazy"></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🛒</span> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
   </div>
   <div class="start-side-stack">
