@@ -631,9 +631,9 @@ body::before{
 <body>
 <div id="fpl-intro" aria-label="Intro Fishing Planet Bait Lab">
  <video id="fpl-intro-video" autoplay muted playsinline preload="auto" aria-hidden="true">
-  <source src="assets/fpl_intro.mp4" type="video/mp4">
+  <source src="/fishing-planet-bait-lab/assets/fpl_intro.mp4" type="video/mp4">
  </video>
- <img id="fpl-intro-logo" src="assets/fpl_bait_lab_logo.webp" alt="Fishing Planet Bait Lab">
+ <img id="fpl-intro-logo" src="/fishing-planet-bait-lab/assets/fpl_bait_lab_logo.webp" alt="Fishing Planet Bait Lab">
  <button id="fpl-intro-skip" type="button">Pomiń intro <span aria-hidden="true">→</span></button>
 </div>
 <div id="app">
@@ -892,8 +892,12 @@ render();
  if(alreadySeen){finishIntro();return}
  const playPromise=video.play();
  if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(()=>finishIntro());
- // Awaryjne wyjście, gdy przeglądarka nie uruchomi filmu lub plik nie odpowiada.
- setTimeout(()=>{if(!finished&&video.readyState===0)finishIntro()},4500);
+ // Awaryjne zabezpieczenie: jeśli film nie zacznie odtwarzania, nie zostawiaj pustego ekranu.
+ let playbackStarted=false;
+ video.addEventListener('playing',()=>{playbackStarted=true},{once:true});
+ setTimeout(()=>{if(!finished&&!playbackStarted&&video.currentTime<0.1)finishIntro()},5000);
+ // Jeśli przeglądarka zgłosi błąd ładowania źródła, pokaż stronę zamiast pustego intro.
+ video.addEventListener('stalled',()=>{setTimeout(()=>{if(!finished&&video.currentTime<0.1)finishIntro()},2500},{once:true});
 })();
 </script>
 </body></html>
