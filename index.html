@@ -1330,25 +1330,26 @@ body::before{
 }
 
 
-/* Desktop START banner: smaller pike artwork, tucked to the top-right */
+/* Desktop START banner: larger artwork, anchored higher in the top-right */
 @media(min-width:1051px){
   #app .start-hero-tile.start-hero-graphic{
+    position:relative!important;
     justify-content:flex-end!important;
     align-items:flex-start!important;
     min-height:0!important;
-    height:108px!important;
-    margin:0 0 8px!important;
+    height:160px!important;
+    margin:0 0 4px!important;
     padding:0!important;
     overflow:visible!important;
   }
   #app .start-banner-image{
-    width:62%!important;
-    max-width:760px!important;
-    max-height:112px!important;
+    width:100%!important;
+    max-width:1100px!important;
+    max-height:190px!important;
     height:auto!important;
     object-fit:contain!important;
     object-position:right top!important;
-    margin:-10px -8px 0 auto!important;
+    margin:-28px -8px 0 auto!important;
     transform:none!important;
     filter:drop-shadow(0 3px 8px rgba(0,0,0,.22))!important;
   }
