@@ -560,6 +560,17 @@ body::before{
 .nav button:hover{outline:none!important;filter:brightness(1.12) saturate(1.10) drop-shadow(0 0 5px rgba(255,210,112,.30))!important}
 .nav button:focus,.nav button:focus-visible{outline:none!important;outline-offset:0!important}
 .nav button.active:hover{filter:brightness(1.2) saturate(1.13) drop-shadow(0 0 8px rgba(255,210,112,.48))!important}
+
+/* Uproszczone menu: bez nagłówka, kafelki wyżej na ekranie */
+.sidebar-title{display:none!important}
+.sidebar-note{display:none!important}
+.sidebar{margin-top:-112px!important;padding:0 14px 8px 16px!important}
+.nav{gap:5px!important;margin:0!important;padding:0!important}
+@media(max-width:900px){
+ .sidebar{margin-top:0!important;padding:8px!important}
+ .nav{gap:8px!important}
+}
+
 </style>
 </head>
 <body>
