@@ -592,6 +592,17 @@ body::before{
  .nav::before{inset:-10px -8px}
 }
 
+/* Baner główny: samo logo, wyśrodkowane i maksymalnie duże w dostępnej przestrzeni */
+.top{min-height:235px!important;padding:12px clamp(16px,3vw,40px)!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.top-inner{width:100%!important;max-width:none!important;min-height:210px!important;padding:8px 0!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.brandline{width:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important}
+.brand-logo-img{display:block!important;width:auto!important;height:auto!important;max-width:min(92vw,780px)!important;max-height:205px!important;object-fit:contain!important;margin:0 auto!important;filter:drop-shadow(0 4px 16px rgba(0,0,0,.55))!important}
+@media(max-width:560px){
+ .top{min-height:175px!important;padding:8px 12px!important}
+ .top-inner{min-height:155px!important}
+ .brand-logo-img{max-width:94vw!important;max-height:145px!important}
+}
+
 /* Uproszczone menu: bez nagłówka, kafelki wyżej na ekranie */
 .sidebar-title{display:none!important}
 .sidebar-note{display:none!important}
@@ -609,7 +620,6 @@ body::before{
 <header class="top">
  <div class="top-inner">
   <div class="brandline"><img class="brand-logo-img" src="assets/fpl_bait_lab_logo.webp" alt="Logo Fishing Planet Bait Lab" onerror="this.style.display='none'"/></div>
-  <div class="hero-copy"><h1>Planuj mądrzej.<br>Łów skuteczniej.</h1><p class="subtitle">Receptury, magazyn składników i przygotowanie zanęt — w jednym miejscu.</p></div>
  </div>
 </header>
 <div class="app-frame">
