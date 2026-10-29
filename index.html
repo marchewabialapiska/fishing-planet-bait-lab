@@ -538,7 +538,7 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  background-color:transparent!important;background-repeat:no-repeat!important;
  background-position:center!important;background-size:100% 100%!important;
  box-shadow:none!important;overflow:hidden!important;outline-offset:3px;
- transition:filter .18s ease!important;transform:none!important;
+ transition:filter .2s ease,opacity .2s ease!important;opacity:.66!important;transform:none!important;
 }
 .nav button .nav-label,.nav button .nav-icon{display:none!important}
 .nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"].active{background:transparent url("assets/Goldener Start am Waldsee.png") center/100% 100% no-repeat!important}
@@ -547,8 +547,8 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
 .nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"].active{background:transparent url("assets/Goldene Rezepturen am Seeufer.png") center/100% 100% no-repeat!important}
 .nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.png") center/100% 100% no-repeat!important}
 .nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.png") center/100% 100% no-repeat!important}
-.nav button:hover{filter:brightness(1.08)!important}
-.nav button.active{filter:brightness(1.12)!important;outline:2px solid #ffe09a!important;outline-offset:1px;z-index:2}
+.nav button:hover{filter:brightness(1.12)!important;opacity:.82!important}
+.nav button.active{filter:brightness(1.22) saturate(1.08)!important;opacity:.96!important;outline:2px solid #ffe09a!important;outline-offset:1px;z-index:2}
 .nav button:focus-visible{outline:2px solid #ffe29a!important;outline-offset:3px}
 @media(max-width:900px){
  .app-frame{grid-template-columns:1fr!important}
