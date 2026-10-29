@@ -606,15 +606,21 @@ body::before{
  .nav::before{inset:-10px -8px}
 }
 
-/* Baner główny: samo logo, wyśrodkowane i maksymalnie duże w dostępnej przestrzeni */
-.top{min-height:235px!important;padding:12px clamp(16px,3vw,40px)!important;display:flex!important;align-items:center!important;justify-content:center!important}
-.top-inner{width:100%!important;max-width:none!important;min-height:210px!important;padding:8px 0!important;display:flex!important;align-items:center!important;justify-content:center!important}
-.brandline{width:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important}
-.brand-logo-img{display:block!important;width:auto!important;height:auto!important;max-width:min(92vw,780px)!important;max-height:205px!important;object-fit:contain!important;margin:0 auto!important;filter:drop-shadow(0 4px 16px rgba(0,0,0,.55))!important}
-@media(max-width:560px){
- .top{min-height:175px!important;padding:8px 12px!important}
- .top-inner{min-height:155px!important}
- .brand-logo-img{max-width:94vw!important;max-height:145px!important}
+/* Układ testowy: małe logo w lewym górnym rogu, szczupak wysoko po prawej */
+.top{min-height:0!important;height:0!important;padding:0!important;display:block!important;overflow:visible!important}
+.top-inner{position:relative!important;width:100%!important;max-width:none!important;min-height:0!important;height:0!important;padding:0!important;margin:0!important;display:block!important;overflow:visible!important}
+.brandline{position:absolute!important;left:14px!important;top:8px!important;width:190px!important;max-width:calc(100vw - 28px)!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;margin:0!important;z-index:20!important}
+.brand-logo-img{display:block!important;width:100%!important;height:auto!important;max-width:190px!important;max-height:75px!important;object-fit:contain!important;object-position:left top!important;margin:0!important;filter:drop-shadow(0 4px 12px rgba(0,0,0,.55))!important}
+@media(min-width:1051px){
+ #app .start-hero-tile.start-hero-graphic{height:190px!important;margin-top:0!important}
+ #app .start-banner-image{margin-top:-72px!important}
+}
+@media(max-width:1050px){
+ .top{height:0!important;min-height:0!important}
+ .brandline{left:10px!important;top:5px!important;width:145px!important;max-width:calc(100vw - 20px)!important}
+ .brand-logo-img{max-width:145px!important;max-height:58px!important}
+ #app .start-hero-tile.start-hero-graphic{margin-top:0!important}
+ #app .start-banner-image{margin-top:-12px!important}
 }
 
 /* Uproszczone menu: bez nagłówka, kafelki wyżej na ekranie */
