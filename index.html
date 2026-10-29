@@ -707,6 +707,47 @@ body::before{
  transform:scale(1.075)!important;
 }
 
+
+/* FINAL sidebar tile treatment: no rectangular outline, only artwork glow + smooth scale */
+#nav button,
+#nav button:hover,
+#nav button:focus,
+#nav button:focus-visible,
+#nav button.active,
+#nav button.active:hover,
+#nav button.active:focus,
+#nav button.active:focus-visible{
+ border:0!important;
+ border-color:transparent!important;
+ outline:0!important;
+ outline-offset:0!important;
+ box-shadow:none!important;
+ background-color:transparent!important;
+}
+#nav button{
+ transform:scale(1)!important;
+ transform-origin:center center!important;
+ transition:transform .28s cubic-bezier(.2,.75,.25,1),filter .28s ease!important;
+}
+#nav button:not(.active):not(:hover){
+ filter:drop-shadow(0 2px 5px rgba(0,0,0,.38))!important;
+}
+#nav button:hover,
+#nav button:focus-visible{
+ transform:scale(1.065)!important;
+ z-index:10!important;
+ filter:brightness(1.12) saturate(1.10) drop-shadow(0 0 7px rgba(255,210,112,.35))!important;
+}
+#nav button.active{
+ transform:scale(1.045)!important;
+ z-index:9!important;
+ filter:brightness(1.2) saturate(1.14) drop-shadow(0 0 8px rgba(255,210,112,.42))!important;
+}
+#nav button.active:hover,
+#nav button.active:focus-visible{
+ transform:scale(1.075)!important;
+}
+
 </style>
 </head>
 <body>
