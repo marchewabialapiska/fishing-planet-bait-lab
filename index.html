@@ -489,8 +489,7 @@ function startPage(){
  </section>
  <div class="metrics">${metric("Składniki w plecaku",allIngredients().length,"pozycje w magazynie")}${metric("Łączny zapas",fmt(totalStock)+" g","wszystkie składniki razem")}${metric("Zaplanowane porcje",fmt(activePlan.reduce((sum,p)=>sum+Number(p.portions||0),0)),"w aktywnych wyprawach")}${metric("Braki do dokupienia",missingItems.length,missingItems.length?"pozycji wymaga uzupełnienia":"wszystko pokryte zapasami")}</div>
  <div class="start-dashboard-grid">
-  <section class="panel start-inventory-panel"><div class="panelhead"><div><h2><span class="start-section-icon">🎒</span> Zawartość plecaka</h2><p class="muted">Aktualne ilości wszystkich składników i ich status względem planu.</p></div><button class="btn ghost" data-go="stock">Zarządzaj</button></div><div class="start-stock-list">${inventoryRows||'<div class="empty">Magazyn jest pusty.</div>'}</div></section>
-  <div class="start-side-stack">
+ <div class="start-side-stack">
    <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🎣</span> Zaplanowane wyprawy</h2><p class="muted">Wyprawy zapisane w Planie wypraw.</p></div><button class="btn gold" data-go="plan">＋</button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🛒</span> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div></section>
   </div>
