@@ -610,6 +610,21 @@ body::before{
 .nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"].active{background:transparent url("assets/Goldene Rezepturen am Seeufer.png") center/100% 100% no-repeat!important}
 .nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.png") center/100% 100% no-repeat!important}
 .nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.png") center/100% 100% no-repeat!important}
+
+/* Navigation lure art: preserve image proportions and blend pale baked backgrounds into the lake scene */
+.nav button[data-page="start"],
+.nav button[data-page="plan"],
+.nav button[data-page="stock"],
+.nav button[data-page="recipes"],
+.nav button[data-page="buy"],
+.nav button[data-page="history"]{
+ background-size:contain!important;
+ background-position:center!important;
+ background-repeat:no-repeat!important;
+ background-color:transparent!important;
+ mix-blend-mode:multiply;
+}
+
 </style>
 </head>
 <body>
