@@ -396,6 +396,18 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
 @media(max-width:1050px){.start-hero-tile{grid-template-columns:150px minmax(0,1fr);gap:17px}.start-hero-logo img{max-width:150px;max-height:110px}.start-hero-badge{display:none}.start-dashboard-grid{grid-template-columns:1fr}.start-actions-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.start-hero-tile{grid-template-columns:1fr;gap:8px;padding:17px;min-height:0}.start-hero-logo{justify-content:flex-start}.start-hero-logo img{width:150px;max-height:95px}.start-hero-copy h2{font-size:24px}.start-stock-row{grid-template-columns:25px minmax(0,1fr) auto}.start-stock-row .status{display:none}.start-buy-row{grid-template-columns:25px minmax(0,1fr) auto}.start-buy-row .btn{grid-column:2/-1;justify-self:start}.start-actions-grid{grid-template-columns:1fr 1fr}.start-actions-grid .btn{font-size:11px}}
 
+
+/* Main navigation: premium Start tile inspired by the lake scene and Bait Lab emblem */
+.nav button[data-page="start"]{position:relative;isolation:isolate;min-height:66px;padding:13px 14px 13px 56px;border:1px solid #b58b3d66;border-radius:13px;background:linear-gradient(110deg,#183e30f2,#0c241bf5);color:#f2d9a0;box-shadow:inset 0 1px #ffffff0b,0 5px 15px #0002;overflow:hidden}
+.nav button[data-page="start"]:before{content:"";position:absolute;left:10px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:10px;border:1px solid #e7b65370;background:linear-gradient(145deg,#e6b44e2b,#153d2d),url("assets/fpl_lake.webp") center/cover;box-shadow:inset 0 0 0 1px #071a11;z-index:-1}
+.nav button[data-page="start"]:after{content:"";position:absolute;left:22px;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:50%;background:#f0c66f;box-shadow:0 0 0 4px #f0c66f25,0 0 14px #f0c66f8c;pointer-events:none}
+.nav button[data-page="start"]:hover{background:linear-gradient(110deg,#214d3b,#123426);border-color:#d9aa4f;color:#fff0c8}
+.nav button[data-page="start"].active{background:linear-gradient(105deg,#e5b653,#bb8532);border-color:#f7d98b;color:#18251a;box-shadow:0 6px 18px #d9a44728,inset 0 1px #fff6}
+.nav button[data-page="start"].active:before{background:linear-gradient(145deg,#f5d98d,#c28b32),url("assets/fpl_lake.webp") center/cover;border-color:#fff1bf}
+.nav button[data-page="start"].active:after{background:#173d2f;box-shadow:0 0 0 4px #173d2f1f,0 0 10px #173d2f55}
+.nav button[data-page="plan"],.nav button[data-page="stock"],.nav button[data-page="recipes"],.nav button[data-page="buy"],.nav button[data-page="history"]{min-height:48px}
+@media(max-width:850px){.nav button[data-page="start"]{min-height:58px}}
+
 </style>
 </head>
 <body>
