@@ -655,7 +655,7 @@ state.shoppingChecks = state.shoppingChecks && typeof state.shoppingChecks === "
 state.shoppingAmounts = state.shoppingAmounts && typeof state.shoppingAmounts === "object" ? state.shoppingAmounts : {};
 state.plan.forEach(p=>{ if(!("venue" in p)) p.venue=""; if(!("notes" in p)) p.notes=""; });
 let page="start";
-const pages=[["start","⌂","Start"],["plan","🎯","Plan wyprawy"],["stock","🎒","Magazyn"],["recipes","🧪","Receptury"],["buy","🛒","Zakupy"],["history","📋","Historia"]];
+const pages=[["start","⌂","START"],["plan","🎯","PLANER"],["stock","🎒","PLECAK"],["recipes","🧪","ZANĘTY"],["buy","🛒","ZAKUPY"],["history","📋","HISTORIA"]];
 const VENUES=["Lone Star Lake", "Lesni Vila Fishery", "Mudwater River", "Rocky Lake", "Emerald Lake", "Neherrin River", "Ghent-Terneuzen Canal", "Falcon Lake", "Everglades", "White Moose Lake", "Saint-Croix Lake", "San Joaquin Delta", "Quanchkin Lake", "Tiber River", "Blue Crab Island", "Sander Baggersee Lake", "Akhtuba River", "Kaniq Creek", "Amazonian Maze", "Marron River", "Maku-Maku Lake", "Congo River", "Kaiji No Ri", "Noomaa Kuda Atholhu", "Selenge River", "Dnipro River", "Creuse River", "Skårland Fjord", "Weeping Willow Fishery", "Inne / własne łowisko"];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
