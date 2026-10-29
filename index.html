@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fishing Planet — Bait Lab Premium</title>
+<style>
+:root {
+ --site-primary:#173e35; --site-secondary:#c7a66a; --site-background:#101916;
+ --site-on-primary:#ffffff; --site-on-secondary:#17201b; --site-on-background:#eef3ed;
+ --site-font-body:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+ --site-font-heading:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+ --site-heading-scale:1; --site-spacing-scale:1; --site-radius-scale:1; --site-decoration-opacity:1;
+}
+*{box-sizing:border-box} body{margin:0;font-family:var(--site-font-body);background:light-dark(#f0f3ef,#101916);color:light-dark(#1b2822,#eef3ed)}
+#app{min-height:100vh;width:100%;background-color:light-dark(#f0f3ef,#101916);color:light-dark(#1b2822,#eef3ed);border-radius:0}
+.top{background:var(--site-primary);color:#fff;padding:25px clamp(18px,4vw,56px) 20px;position:relative;overflow:hidden}
+.top:after{content:"";position:absolute;width:360px;height:360px;border:1px solid #ffffff16;border-radius:50%;right:4%;top:-250px;box-shadow:0 0 0 36px #ffffff08,0 0 0 75px #ffffff06;pointer-events:none;opacity:var(--site-decoration-opacity)}
+.brandline{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d8e5d8;font-weight:800}
+.logo{width:42px;height:42px;display:grid;place-items:center;border:1px solid #c7a66a88;border-radius:13px;color:#e7c98f;font-size:23px;background:#ffffff0a}
+h1{font-size:calc(30px * var(--site-heading-scale));line-height:1.1;margin:17px 0 8px;letter-spacing:-.04em}
+.subtitle{margin:0;color:#d1ded4;font-size:14px;max-width:680px;line-height:1.6}
+.topmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}.pill{font-size:11px;font-weight:750;border:1px solid #ffffff35;border-radius:30px;padding:7px 11px;color:#eef5ed;background:#ffffff0a}
+.shell{max-width:1420px;margin:0 auto;padding:24px clamp(14px,3vw,40px) 48px}
+.nav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.nav button{background:transparent;border:1px solid light-dark(#d4ddd5,#34463c);color:inherit;padding:10px 14px;border-radius:11px;font-weight:750;cursor:pointer;font-size:13px}
+.nav button.active{background:var(--site-secondary);border-color:var(--site-secondary);color:#17201b}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.metric,.panel{background:light-dark(#fff,#18231d);border:1px solid light-dark(#dce4dc,#2b3b31);border-radius:calc(17px * var(--site-radius-scale));}
+.metric{padding:17px 18px}.metric .label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:800;color:light-dark(#637168,#a9b9ac)}
+.metric .value{font-size:27px;font-weight:850;letter-spacing:-.04em;margin-top:8px}.metric .hint{font-size:12px;color:light-dark(#718076,#a9b9ac);margin-top:4px}
+.panel{padding:20px;margin-bottom:16px}.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
+h2{font-size:18px;margin:0;letter-spacing:-.025em}h3{font-size:14px;margin:0 0 8px}.muted{color:light-dark(#68776c,#a6b5a9);font-size:13px;line-height:1.55;margin:6px 0 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn{border:0;border-radius:10px;padding:10px 14px;background:var(--site-primary);color:white;font-weight:800;cursor:pointer;font-size:12px}
+.btn.gold{background:var(--site-secondary);color:#18231d}.btn.ghost{background:transparent;color:inherit;border:1px solid light-dark(#cbd6cc,#3a4b40)}.btn.danger{background:#9b4035}.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:750;color:light-dark(#536258,#b5c4b8)}
+input,select,textarea{font:inherit;background:light-dark(#f8faf7,#101a14);color:inherit;border:1px solid light-dark(#ccd7ce,#3a4b40);border-radius:9px;padding:10px 11px;min-width:0}
+input[type=number]{width:100px}input[type=text]{width:100%}select{max-width:100%;width:100%}
+.tablewrap{overflow:auto;border:1px solid light-dark(#e0e6e0,#2c3b31);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:12px;min-width:580px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:light-dark(#65746a,#aab9ae);background:light-dark(#f6f8f5,#202d25);padding:12px 13px;white-space:nowrap}
+td{padding:11px 13px;border-top:1px solid light-dark(#e6ebe6,#2a392f);vertical-align:middle}td input{padding:7px 8px;width:100px}td .smallinput{width:76px}
+.status{display:inline-block;padding:5px 8px;border-radius:6px;font-size:10px;font-weight:850;white-space:nowrap}.ok{background:#dcefe1;color:#21653d}.warn{background:#f7e8c8;color:#7b5114}.bad{background:#f4dcd8;color:#943d32}
+.recipegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.recipe{border:1px solid light-dark(#dbe4dc,#314238);background:light-dark(#fbfcfa,#1b2820);border-radius:14px;padding:16px}
+.recipehead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}.recipehead h3{font-size:14px;line-height:1.4}
+.ingredientlist{display:grid;gap:7px}.ingredient{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:light-dark(#536158,#c1cec3)}.ingredient strong{color:inherit;font-weight:800;white-space:nowrap}
+.planrow{display:grid;grid-template-columns:minmax(190px,2fr) minmax(90px,.6fr) minmax(140px,1.2fr) auto;gap:10px;align-items:end;padding:12px 0;border-top:1px solid light-dark(#e5eae5,#2c3b31)}
+.trip-options{border-top:1px solid #dce6dc;margin-top:16px;padding-top:12px}.bait-option{display:grid;grid-template-columns:minmax(220px,1fr) 130px auto;gap:10px;align-items:end;padding:10px 0;border-bottom:1px solid #e6ece6}.ingredient-editor-row{display:grid;grid-template-columns:minmax(180px,1fr) 130px auto;gap:10px;align-items:end;margin:8px 0;padding:10px;background:#ffffff;border:1px solid #dce6dc;border-radius:10px}
+@media(max-width:700px){.bait-option,.ingredient-editor-row{grid-template-columns:1fr 1fr}.bait-option .field:first-child,.ingredient-editor-row .field:first-child{grid-column:1/-1}}
+.empty{padding:26px;text-align:center;color:light-dark(#738176,#9fb0a2);font-size:13px}
+.notice{padding:12px 14px;background:light-dark(#f5f0e4,#2b291e);border:1px solid light-dark(#e9d8b5,#51462d);border-radius:10px;font-size:12px;line-height:1.55;margin-bottom:15px;color:light-dark(#6f5628,#e7d6ad)}
+.search{max-width:260px}.bar{height:6px;background:light-dark(#e4eae4,#2a392f);border-radius:20px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;background:#c7a66a}
+.footer{font-size:11px;text-align:center;color:light-dark(#7b887e,#7e9082);padding:15px}
+.toast{position:fixed;bottom:20px;right:20px;background:#1f5b3d;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 8px 30px #0003;z-index:10;font-size:13px;font-weight:750}
+@media(max-width:850px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2,.recipegrid{grid-template-columns:1fr}.planrow{grid-template-columns:1fr 1fr}.planrow .wide{grid-column:1/-1}}
+@media(max-width:520px){h1{font-size:26px}.metrics{gap:8px}.metric{padding:13px}.metric .value{font-size:22px}.panel{padding:14px}.nav button{padding:9px 10px}.panelhead{flex-direction:column}}
+
+/* === FISHING-INSPIRED UI REFRESH === */
+:root{
+ --site-primary:#153f36; --site-secondary:#e3a34b; --site-background:#edf3ee;
+ --site-on-primary:#fff; --site-on-secondary:#17231d; --site-on-background:#1b2b24;
+ --site-font-body:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ --site-font-heading:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ --site-heading-scale:1.03; --site-spacing-scale:1; --site-radius-scale:1.05; --site-decoration-opacity:1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ font-family:var(--site-font-body);
+ background:
+   radial-gradient(ellipse at 85% 0%,rgba(70,139,118,.12),transparent 34rem),
+   linear-gradient(180deg,#eaf1eb 0%,#f4f6f0 55%,#e7eee8 100%);
+ color:#1b2b24;
+}
+#app{min-height:100vh;width:100%;background:transparent;color:#1b2b24}
+.top{
+ background:
+   radial-gradient(ellipse at 82% 110%,rgba(89,157,133,.34),transparent 38%),
+   linear-gradient(120deg,#102e29 0%,#17493c 52%,#1d5747 100%);
+ color:#fff;padding:27px clamp(18px,4vw,58px) 27px;position:relative;overflow:hidden;
+ border-bottom:4px solid #e3a34b;
+}
+.top:before{
+ content:"";position:absolute;inset:auto -5% -74px 28%;height:150px;
+ border:1px solid #c6e4d51e;border-radius:50%;
+ box-shadow:0 -12px 0 0 #c6e4d50b,0 -28px 0 0 #c6e4d508,0 -45px 0 0 #c6e4d506;
+ transform:rotate(-4deg);pointer-events:none;
+}
+.top:after{
+ content:"";position:absolute;width:330px;height:330px;border:1px solid #ffffff15;border-radius:50%;
+ right:4%;top:-230px;box-shadow:0 0 0 35px #ffffff08,0 0 0 72px #ffffff05;
+ pointer-events:none;opacity:var(--site-decoration-opacity)
+}
+.brandline{position:relative;z-index:1;display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#d5e7dc;font-weight:850}
+.brand-logo-img{width:104px;height:88px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 3px 12px #0009)}.brand-wordmark{display:flex;flex-direction:column;gap:3px}.brand-main{font-size:clamp(22px,2.3vw,34px);line-height:1.05;letter-spacing:.07em}.brand-sub{font-size:clamp(12px,1.1vw,17px);letter-spacing:.24em;color:#e9bd62}
+.logo{
+ width:48px;height:48px;display:grid;place-items:center;border:1px solid #e3a34b88;
+ border-radius:15px;color:#f5c879;font-size:24px;background:#ffffff0d;
+ box-shadow:inset 0 0 0 4px #ffffff05;
+}
+h1{position:relative;z-index:1;font-size:clamp(30px,4vw,46px);line-height:1.06;margin:20px 0 11px;letter-spacing:-.055em;font-weight:900}
+.subtitle{position:relative;z-index:1;margin:0;color:#d2e3d8;font-size:15px;max-width:720px;line-height:1.7}
+.topmeta{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;margin-top:21px}
+.pill{font-size:10px;letter-spacing:.04em;font-weight:800;border:1px solid #ffffff2e;border-radius:30px;padding:8px 11px;color:#eff7f0;background:#ffffff0b}
+.shell{max-width:1460px;margin:0 auto;padding:23px clamp(14px,3vw,42px) 52px}
+.nav{
+ display:flex;gap:7px;flex-wrap:wrap;margin:0 0 22px;padding:8px;
+ background:#ffffffc9;border:1px solid #d8e3da;border-radius:16px;
+ box-shadow:0 8px 24px #193c2c0b;position:sticky;top:8px;z-index:5;backdrop-filter:blur(12px)
+}
+.nav button{
+ background:transparent;border:1px solid transparent;color:#50645a;padding:11px 15px;
+ border-radius:10px;font-weight:800;cursor:pointer;font-size:12px;transition:all .18s ease;
+}
+.nav button:hover{background:#edf4ee;color:#153f36;border-color:#dbe7dd;transform:translateY(-1px)}
+.nav button.active{background:#153f36;border-color:#153f36;color:#fff;box-shadow:0 4px 12px #153f362b}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:19px}
+.metric,.panel{
+ background:#fff;border:1px solid #dce6dd;border-radius:17px;
+ box-shadow:0 5px 18px rgba(28,65,46,.045);
+}
+.metric{padding:18px 19px;position:relative;overflow:hidden}
+.metric:after{content:"";position:absolute;right:-23px;bottom:-36px;width:100px;height:100px;border:1px solid #2c71521a;border-radius:50%;box-shadow:0 0 0 13px #2c715208;pointer-events:none}
+.metric .label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:850;color:#63766a}
+.metric .value{font-size:clamp(22px,2.2vw,30px);font-weight:900;letter-spacing:-.05em;margin-top:9px;color:#173e35}
+.metric .hint{font-size:11px;color:#78877d;margin-top:5px}
+.panel{padding:clamp(15px,2vw,22px);margin-bottom:16px}
+.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:17px}
+h2{font-size:18px;margin:0;letter-spacing:-.035em;color:#183d32;font-weight:900}
+h3{font-size:14px;margin:0 0 8px;color:#244b3d}
+.muted{color:#6c7e71;font-size:12px;line-height:1.65;margin:6px 0 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn{
+ border:0;border-radius:10px;padding:11px 15px;background:#17483b;color:white;font-weight:850;
+ cursor:pointer;font-size:12px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+ box-shadow:0 3px 8px #17483b13
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px #17483b22;background:#205b49}
+.btn.gold{background:#e3a34b;color:#263429}.btn.gold:hover{background:#efb45f}
+.btn.ghost{background:#fff;color:#345447;border:1px solid #d2dfd5;box-shadow:none}
+.btn.ghost:hover{background:#f0f6f1;border-color:#a9c5b3}
+.btn.danger{background:#a5463b}.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:850;color:#53685b}
+input,select,textarea{
+ font:inherit;background:#fbfdf9;color:#1b2b24;border:1px solid #cedbd0;border-radius:10px;
+ padding:11px 12px;min-width:0;outline:none;transition:border-color .15s,box-shadow .15s
+}
+input:focus,select:focus,textarea:focus{border-color:#43866a;box-shadow:0 0 0 3px #43866a1b}
+input[type=number]{width:100px}input[type=text]{width:100%}select{max-width:100%;width:100%}
+.tablewrap{overflow:auto;border:1px solid #dfe8e0;border-radius:12px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:12px;min-width:580px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.075em;color:#63766a;background:#f1f6f1;padding:13px;white-space:nowrap}
+td{padding:12px 13px;border-top:1px solid #e8eee8;vertical-align:middle}
+tbody tr:hover{background:#f8fbf7}
+td input{padding:8px;width:100px;background:#fff}td .smallinput{width:76px}
+.status{display:inline-block;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:900;white-space:nowrap}
+.ok{background:#dff1e4;color:#21633e}.warn{background:#fff0d2;color:#835317}.bad{background:#f8e2de;color:#983d32}
+.recipegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.recipe{border:1px solid #dbe6dc;background:linear-gradient(145deg,#fff,#f7faf6);border-radius:14px;padding:17px;transition:transform .15s,box-shadow .15s}
+.recipe:hover{transform:translateY(-2px);box-shadow:0 8px 18px #214a3510}
+.recipehead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:13px}
+.recipehead h3{font-size:14px;line-height:1.45}
+.ingredientlist{display:grid;gap:8px}
+.ingredient{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#586b5e;padding-bottom:7px;border-bottom:1px dashed #e3ebe3}
+.ingredient:last-child{border-bottom:0;padding-bottom:0}
+.ingredient strong{color:#244b3d;font-weight:900;white-space:nowrap}
+.planrow{display:grid;grid-template-columns:minmax(190px,2fr) minmax(90px,.6fr) minmax(140px,1.2fr) auto;gap:10px;align-items:end;padding:14px 0;border-top:1px solid #e5ece5}
+.empty{padding:30px 20px;text-align:center;color:#738579;font-size:13px;background:#f8fbf7;border:1px dashed #d7e3d8;border-radius:11px}
+.notice{padding:13px 15px;background:#fff6e5;border:1px solid #f0d9aa;border-left:4px solid #e3a34b;border-radius:10px;font-size:12px;line-height:1.65;margin-bottom:16px;color:#725421}
+.search{max-width:300px}
+.bar{height:6px;background:#e4ece4;border-radius:20px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;background:#e3a34b}
+.footer{font-size:10px;text-align:center;color:#77877b;padding:20px 10px 5px;line-height:1.7}
+.toast{position:fixed;bottom:20px;right:20px;background:#17483b;color:#fff;padding:13px 17px;border-radius:12px;box-shadow:0 8px 30px #0002;z-index:10;font-size:12px;font-weight:800;max-width:min(420px,calc(100vw - 40px))}
+@media(max-width:900px){
+ .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grid2,.recipegrid{grid-template-columns:1fr}
+ .planrow{grid-template-columns:1fr 1fr}
+ .planrow .wide{grid-column:1/-1}
+ .nav{position:relative;top:auto}
+}
+@media(max-width:560px){
+ h1{font-size:29px}.metrics{gap:8px}.metric{padding:13px}.metric .value{font-size:22px}
+ .panel{padding:14px}.nav{gap:5px;padding:6px}.nav button{padding:10px 11px;font-size:11px}
+ .panelhead{flex-direction:column}.planrow{grid-template-columns:1fr}.top{padding-top:22px}
+ .topmeta .pill{font-size:9px}.logo{width:43px;height:43px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+
+textarea{width:100%;resize:vertical;min-height:70px;line-height:1.55}
+#recipe-form .grid2{grid-template-columns:minmax(220px,.8fr) minmax(260px,1.2fr)}
+@media(max-width:700px){#recipe-form .grid2{grid-template-columns:1fr}}
+
+
+
+
+/* === BAIT LAB / PREMIUM NIGHT FISHING EDITION === */
+:root{
+ --site-primary:#0f3b31; --site-secondary:#f1b84b; --site-background:#07130f;
+ --ink:#eaf4ed; --muted:#9aafa2; --line:#29453a; --surface:#10231b; --surface2:#142b21;
+ --glow:rgba(241,184,75,.18);
+}
+html{background:#07130f;color-scheme:dark}
+body{
+ background:
+  radial-gradient(ellipse at 12% 0%,rgba(28,104,77,.22),transparent 35rem),
+  radial-gradient(ellipse at 100% 35%,rgba(211,151,52,.08),transparent 32rem),
+  linear-gradient(145deg,#07130f 0%,#0a1913 48%,#0b1712 100%);
+ color:var(--ink); min-height:100vh;
+}
+#app{background:transparent;color:var(--ink)}
+.top{
+ padding:34px clamp(18px,5vw,72px) 32px;
+ background:linear-gradient(115deg,rgba(7,24,18,.98),rgba(15,58,44,.96) 58%,rgba(22,70,51,.92));
+ border-bottom:1px solid rgba(241,184,75,.65);
+ box-shadow:0 18px 55px rgba(0,0,0,.22);
+}
+.top:before{opacity:.65;border-color:#9cc9ac24;box-shadow:0 -18px 0 0 #9cc9ac0b,0 -38px 0 0 #9cc9ac09,0 -62px 0 0 #9cc9ac06}
+.top:after{border-color:#f1b84b24;box-shadow:0 0 0 34px #f1b84b08,0 0 0 72px #f1b84b05}
+.logo{border-color:#f1b84b99;color:#ffd782;background:linear-gradient(145deg,#ffffff12,#ffffff03);box-shadow:0 0 28px #f1b84b12,inset 0 0 0 4px #ffffff04}
+h1{font-size:clamp(34px,4.4vw,56px);letter-spacing:-.06em;text-shadow:0 5px 28px #0005}
+.subtitle{color:#c0d5c7;max-width:760px}
+.pill{border-color:#c1ddca2b;background:#ffffff08;backdrop-filter:blur(8px)}
+.shell{max-width:1540px;padding-top:26px}
+.nav{position:sticky;top:0;z-index:8;padding:10px;margin:0 0 22px;border:1px solid #29453a;background:rgba(8,24,17,.88);backdrop-filter:blur(18px);border-radius:16px;box-shadow:0 12px 28px #0002}
+.nav button{border:1px solid transparent;border-radius:11px;color:#b8cabe;background:transparent;padding:11px 15px;transition:all .18s ease}
+.nav button:hover{background:#ffffff09;color:#fff;border-color:#385747;transform:translateY(-1px)}
+.nav button.active{background:linear-gradient(135deg,#f5c766,#e6a83d);border-color:#ffd782;color:#17231b;box-shadow:0 5px 18px #f1b84b20}
+.metric,.panel{background:linear-gradient(145deg,rgba(19,42,31,.98),rgba(13,30,22,.98));border:1px solid #294638;border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.13);color:var(--ink)}
+.metric{padding:20px 21px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.metric:after{content:"";position:absolute;width:90px;height:90px;right:-38px;top:-44px;border:1px solid #f1b84b25;border-radius:50%;box-shadow:0 0 0 13px #f1b84b05;pointer-events:none}
+.metric:hover{transform:translateY(-3px);border-color:#52745d;box-shadow:0 15px 34px #0003}
+.metric .label{color:#9db5a5;letter-spacing:.12em}
+.metric .value{color:#fff;font-size:clamp(24px,2.2vw,32px);text-shadow:0 2px 18px #0003}
+.metric .hint{color:#91a999}
+.panel{padding:23px;margin-bottom:18px}
+.panelhead{padding-bottom:14px;border-bottom:1px solid #294236}
+h2{font-size:20px;color:#f1f6f1;letter-spacing:-.035em}h3{color:#e4eee6}
+.muted{color:#9aafa2}
+.btn{background:linear-gradient(135deg,#1d6047,#124432);border:1px solid #347455;color:#f5fff7;border-radius:11px;padding:11px 15px;box-shadow:0 4px 12px #0002;transition:transform .16s,filter .16s,box-shadow .16s}
+.btn:hover{filter:brightness(1.13);transform:translateY(-1px);box-shadow:0 7px 18px #0003}
+.btn.gold{background:linear-gradient(135deg,#ffd778,#e6a43a);border-color:#ffdc8a;color:#1b261d}
+.btn.ghost{background:#ffffff05;border-color:#365244;color:#cfe0d3}
+.btn.danger{background:linear-gradient(135deg,#a84c3c,#7e3028);border-color:#c56550}
+input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342;border-radius:10px;accent-color:#f1b84b;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#e5b34f;box-shadow:0 0 0 3px #e5b34f20}
+input::placeholder,textarea::placeholder{color:#718879}
+.field{color:#b6cabb}
+.tablewrap{border-color:#2c4939;border-radius:14px;background:#0c1d14}
+table{color:#dce9df}th{background:#183326;color:#a9c0af;border-bottom:1px solid #365642}td{border-color:#233d2e}tbody tr{transition:background .15s}tbody tr:hover{background:#ffffff05}
+td input{background:#08170f}
+.recipe{background:linear-gradient(145deg,#142b20,#0f2118);border-color:#304b3a;border-radius:16px;transition:transform .18s,border-color .18s,box-shadow .18s}
+.recipe:hover{transform:translateY(-2px);border-color:#54775c;box-shadow:0 12px 24px #0002}
+.recipehead{padding-bottom:10px;border-bottom:1px solid #2a4535}
+.ingredient{color:#b7cabe}.ingredient strong{color:#f0f5ef}
+.planrow{border-color:#294438}.trip-options{border-color:#345341}.bait-option{border-color:#294438}
+.ingredient-editor-row{background:#10251a;border-color:#2b4938}
+.notice{background:linear-gradient(120deg,#292717,#211f16);border-color:#66542a;color:#ead7a7;border-radius:12px}
+.bar{background:#263d2e}.bar span{background:linear-gradient(90deg,#4f9e69,#f1b84b);border-radius:20px;box-shadow:0 0 12px #f1b84b40}
+.status.ok{background:#173d2a;color:#9de2b0;border:1px solid #2f6b45}.status.warn{background:#49371a;color:#f3cd7b;border:1px solid #7c5a26}.status.bad{background:#49251f;color:#ffaaa0;border:1px solid #7e3b31}
+.empty{color:#8ca393}
+.footer{color:#708779;border-top:1px solid #1c3527;margin-top:22px}
+.toast{background:#174b32;border:1px solid #43855b;box-shadow:0 12px 35px #0007}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#09170f}::-webkit-scrollbar-thumb{background:#31513d;border:2px solid #09170f;border-radius:20px}::-webkit-scrollbar-thumb:hover{background:#4e7558}
+@media(max-width:700px){.nav{position:relative;top:auto;padding:7px}.nav button{flex:1}.top{padding-bottom:25px}.panel{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;transform:none!important}}
+
+
+/* === EMBEDDED FISHING ART PACK: local images, no external requests === */
+:root{--site-primary:#0b302a;--site-secondary:#eab653;--site-background:#071411;--site-on-background:#eef7ee}
+body{background:radial-gradient(ellipse at 80% 0%,#194c3c 0,transparent 36rem),linear-gradient(180deg,#071411,#0c211a 60%,#07110e)!important;color:#edf5eb!important}
+#app{background:transparent!important;color:#edf5eb!important}
+.top{background-image:linear-gradient(90deg,rgba(3,18,16,.97) 0%,rgba(3,18,16,.83) 48%,rgba(3,18,16,.25) 100%),url("assets/fpl_lake_anglers_4k.webp")!important;background-size:cover!important;background-position:center 54%!important;border-bottom:1px solid #dcae4f66!important;min-height:220px;}
+.top:before{background:linear-gradient(90deg,#06151133,transparent);}
+.logo{background:#0b2821!important;border-color:#eab653!important;box-shadow:0 0 24px #eab6531c}
+.nav{background:#071a16dc!important;border-color:#315347!important;box-shadow:0 12px 32px #0005!important}
+.nav button{color:#d4e5d9!important}
+.nav button:hover{background:#153e31!important;color:#fff!important;border-color:#b78c3c!important}
+.nav button.active{background:linear-gradient(135deg,#e9bb5e,#a97827)!important;color:#10221a!important;border-color:#f5d58d!important}
+.metric,.panel,.recipe{background:linear-gradient(145deg,#102a22f5,#0b1b17f5)!important;border-color:#315145!important;box-shadow:0 10px 30px #0003,inset 0 1px #ffffff08!important;color:#edf5eb!important}
+.metric .label,.muted,.footer{color:#a8c0b1!important}
+h2,h3{color:#f1d18b!important}
+input,select,textarea{background:#081b16!important;border-color:#355347!important;color:#f1f7ef!important}
+.tablewrap{border-color:#315145!important}th{background:#18352a!important;color:#c5d8c9!important}td{border-color:#263f34!important}
+.btn{background:#1b5943!important;border:1px solid #438467!important;color:#f4fff6!important;transition:transform .16s,box-shadow .16s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px #0004}
+.btn.gold{background:linear-gradient(135deg,#f0c66c,#bd8a35)!important;border-color:#f7d990!important;color:#1a251c!important}
+.btn.ghost{background:#10251e!important;border-color:#38594a!important;color:#e5f0e6!important}
+.status.ok{background:#173f2d;color:#a9efb9}.status.warn{background:#4d3a18;color:#ffdf9c}.status.bad{background:#4c2424;color:#ffb9ad}
+.notice{background:#302819!important;border-color:#6b5328!important;color:#f2d9a3!important}
+.recipe{position:relative;overflow:hidden}
+.recipe:after{content:"";position:absolute;right:-10px;top:18px;width:90px;height:70px;background-image:url("assets/fpl_sunnybait.webp");background-size:cover;background-position:center;border-radius:12px;opacity:.18;mask-image:linear-gradient(90deg,transparent,#000 45%);pointer-events:none}
+.fish-showcase{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px}
+.fish-hero{min-height:135px;position:relative;overflow:hidden;border:1px solid #456b56;border-radius:18px;background:linear-gradient(90deg,#071a15ee,#071a1566),url("assets/fpl_lake.webp") center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:19px;box-shadow:0 12px 30px #0004}
+.fish-hero .eyebrow{font-size:10px;letter-spacing:.18em;color:#e9bb60;font-weight:900;text-transform:uppercase}
+.fish-hero h2{font-size:24px;margin:7px 0;color:#fff!important;max-width:350px}
+.fish-hero p{font-size:12px;color:#c5d9cc;margin:0;max-width:340px}
+.fish-tile{position:relative;min-height:175px;overflow:hidden;border:1px solid #365747;border-radius:16px;background:#10261e;box-shadow:0 12px 28px #0003}
+.fish-tile img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;opacity:.86;transition:transform .25s}
+.fish-tile:hover img{transform:scale(1.05)}
+.fish-tile:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#06140fe8)}
+.fish-tile span{position:absolute;bottom:12px;left:13px;z-index:1;color:#fff;font-weight:900;font-size:16px;text-shadow:0 2px 8px #000}
+.recipe-art-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}
+.recipe-art{height:105px;border-radius:13px;overflow:hidden;position:relative;border:1px solid #365747;background:#0b1c16}
+.recipe-art img{width:100%;height:100%;object-fit:cover;opacity:.72}
+.recipe-art span{position:absolute;left:13px;bottom:10px;padding:5px 9px;border-radius:7px;background:#071711d9;color:#fff;font-size:12px;font-weight:850}
+@media(max-width:850px){.fish-showcase{grid-template-columns:repeat(2,minmax(0,1fr))}.fish-hero{grid-column:1/-1;min-height:145px}}
+@media(max-width:520px){.fish-showcase{grid-template-columns:1fr 1fr}.fish-tile{min-height:125px}.fish-hero{min-height:160px}.top{min-height:200px}}
+
+
+/* Local item illustrations: separate files under assets/ */
+.ingredient-art{width:42px;height:42px;object-fit:contain;border:1px solid #315145;border-radius:9px;background:#081a14;flex:0 0 42px}
+.ingredient-line{display:flex;align-items:center;gap:10px;min-width:0}
+.ingredient-line .ingredient-name{min-width:0;overflow-wrap:anywhere}
+.stock-product{display:flex;align-items:center;gap:10px}
+.stock-product .ingredient-art{width:38px;height:38px;flex-basis:38px}
+@media(max-width:600px){.ingredient-art{width:34px;height:34px;flex-basis:34px}.stock-product .ingredient-art{width:32px;height:32px;flex-basis:32px}}
+
+
+/* === APPROVED LAYOUT: FOREST PREMIUM / SIDEBAR + SPACIOUS WORKSPACE === */
+/* Keep legacy inline light surfaces aligned with the approved dark theme. */
+.panel[style*="background:#fbfdf9"],.panel[style*="background:#f5f9f4"],.panel[style*="background:#fff"],form.panel[style*="background"]{background:linear-gradient(145deg,#142b20,#0f2118)!important;color:var(--forest-text)}
+.ingredient-editor-row[style],#recipe-form .panel[style]{background:#10251a!important;border-color:#2b4938!important;color:var(--forest-text)}
+
+:root{--forest-bg:#07130f;--forest-panel:#10231b;--forest-panel2:#142b21;--forest-line:#294638;--forest-gold:#e8b553;--forest-text:#eaf4ed;--forest-muted:#9aafa2}
+html,body{min-height:100%;background:var(--forest-bg);color:var(--forest-text)}
+body{background:radial-gradient(ellipse at 72% 0%,rgba(48,105,75,.16),transparent 38rem),linear-gradient(145deg,#07130f,#0a1913 52%,#08130e)}
+#app{min-height:100vh;background:transparent;color:var(--forest-text)}
+.top{min-height:235px;padding:0 clamp(22px,4vw,62px);border-bottom:1px solid #c69a4a66;background:linear-gradient(90deg,rgba(4,17,12,.88),rgba(5,20,14,.42) 56%,rgba(5,17,12,.18)),linear-gradient(0deg,rgba(4,16,11,.38),rgba(4,16,11,.06)),url('assets/fpl_lake.webp') center 48%/cover no-repeat;position:relative;overflow:hidden}
+.top:before{content:"";position:absolute;inset:auto 0 0;height:70px;background:linear-gradient(0deg,rgba(7,19,15,.72),transparent);border:0;box-shadow:none;transform:none}
+.top:after{content:"";position:absolute;right:6%;top:-230px;width:340px;height:340px;border:1px solid #f1c56d22;border-radius:50%;box-shadow:0 0 0 34px #f1c56d09,0 0 0 70px #f1c56d06;pointer-events:none}
+.top-inner{max-width:1800px;margin:0 auto;min-height:235px;display:flex;flex-direction:column;justify-content:center;gap:22px;position:relative;z-index:1;padding:25px 0}
+.brandline{display:flex;align-items:center;gap:13px;color:#f4f6ef;font-size:13px;letter-spacing:.14em}
+.logo{width:52px;height:52px;border-radius:50%;border:1px solid #e8b553aa;background:#06150fbb;color:#f5c96f;font-size:25px;box-shadow:0 0 26px #e8b55316}
+.brand-main{display:block;font-size:clamp(19px,2.1vw,28px);font-weight:950;letter-spacing:.045em;line-height:1.1}
+.brand-sub{display:block;margin-top:5px;color:#f0bd59;font-size:12px;letter-spacing:.3em;font-weight:900}
+.hero-copy{max-width:700px}.hero-copy .eyebrow{display:inline-block;color:#f0c66f;font-size:10px;font-weight:900;letter-spacing:.2em;margin-bottom:8px}
+.hero-copy h1{font-size:clamp(25px,3vw,39px);line-height:1.06;margin:0 0 8px;letter-spacing:-.045em;text-shadow:0 3px 22px #0009}
+.hero-copy .subtitle{font-size:13px;color:#e0e9df;margin:0;max-width:620px;text-shadow:0 2px 10px #0009}
+.app-frame{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1900px;margin:0 auto;min-height:calc(100vh - 235px)}
+.sidebar{padding:23px 13px 22px 16px;background:linear-gradient(180deg,rgba(8,25,17,.98),rgba(7,20,14,.98));border-right:1px solid #294638;display:flex;flex-direction:column;gap:13px;min-width:0}
+.sidebar-title{padding:3px 12px 8px;color:#718c79;font-size:9px;font-weight:900;letter-spacing:.18em}
+.nav{display:flex;flex-direction:column;gap:7px;position:static;top:auto;z-index:auto;margin:0;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none}
+.nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:13px 13px;border:1px solid transparent;border-radius:11px;background:transparent;color:#b9cbbd;font-size:12px;font-weight:800;transition:background .16s,border-color .16s,color .16s;white-space:normal}
+.nav button:hover{background:#ffffff08;border-color:#294638;color:#fff;transform:none}
+.nav button.active{background:linear-gradient(100deg,#e7b653,#c99036);border-color:#f5d27c;color:#18241a;box-shadow:0 5px 18px #d9a44720}
+.sidebar-note{margin-top:auto;padding:17px 13px;border:1px solid #294638;border-radius:13px;background:linear-gradient(145deg,#10251a,#0a1b12);display:flex;flex-direction:column;gap:5px}
+.sidebar-note-icon{color:#e8b553;font-size:19px}.sidebar-note strong{font-size:10px;letter-spacing:.14em;color:#f0c66f}.sidebar-note span:last-child{font-size:10px;color:#78917f;line-height:1.5}
+.shell{max-width:none;width:100%;min-width:0;margin:0;padding:25px clamp(17px,2.3vw,36px) 35px}
+#content{max-width:1600px;margin:0 auto}
+.metric,.panel{background:linear-gradient(145deg,rgba(19,42,31,.98),rgba(13,30,22,.98));border:1px solid #294638;border-radius:15px;box-shadow:0 10px 28px #0002;color:var(--forest-text)}
+.panel{padding:clamp(17px,1.7vw,25px);margin-bottom:18px}
+.panelhead{align-items:center;padding-bottom:13px;border-bottom:1px solid #294236;margin-bottom:17px}
+h2{font-size:18px;color:#f0f5ef;letter-spacing:-.025em}h3{color:#e4eee6}.muted{color:#9aafa2}
+.metrics{gap:14px;margin-bottom:18px}.metric{padding:18px 19px}.metric .label{color:#9db5a5}.metric .value{color:#fff}.metric .hint{color:#91a999}
+.grid2{gap:18px}.recipegrid{gap:15px}.recipe{padding:18px}
+.tablewrap{border-color:#2c4939;background:#0c1d14}table{color:#dce9df}th{background:#183326;color:#a9c0af;border-bottom:1px solid #365642}td{border-color:#233d2e}tbody tr:hover{background:#ffffff05}
+.btn{border-radius:10px}.btn.ghost{background:#ffffff05;border-color:#365244;color:#cfe0d3}.btn.gold{background:linear-gradient(135deg,#ffd778,#e6a43a);border-color:#ffdc8a;color:#1b261d}
+input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}input::placeholder,textarea::placeholder{color:#718879}.field{color:#b6cabb}
+.recipe{background:linear-gradient(145deg,#142b20,#0f2118);border-color:#304b3a}.ingredient{color:#b7cabe}.ingredient strong{color:#f0f5ef}
+.empty{background:#0c1d14;border-color:#2c4939;color:#91a999}.notice{background:linear-gradient(120deg,#292717,#211f16);border-color:#66542a;color:#ead7a7}
+.footer{color:#6f8878;text-align:left;border-top:1px solid #1d3527;margin-top:15px;padding:17px 3px 0}
+.ingredient-art{background:#081a14;border-color:#315145}
+@media(max-width:980px){.app-frame{grid-template-columns:174px minmax(0,1fr)}.sidebar{padding:18px 9px}.nav button{padding:12px 10px;font-size:11px}.shell{padding:20px 16px 28px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.top,.top-inner{min-height:210px}.top{padding:0 20px}.top-inner{gap:16px}.app-frame{display:block}.sidebar{padding:10px 12px;border-right:0;border-bottom:1px solid #294638;position:sticky;top:0;z-index:7;background:rgba(7,20,14,.96);backdrop-filter:blur(14px)}.sidebar-title,.sidebar-note{display:none}.nav{flex-direction:row;overflow-x:auto;gap:6px;padding:0 0 2px;scrollbar-width:thin}.nav button{flex:0 0 auto;width:auto;white-space:nowrap;padding:10px 12px}.shell{padding:17px 12px 25px}.panel{padding:16px}.panelhead{align-items:flex-start}}
+@media(max-width:520px){.top,.top-inner{min-height:195px}.top-inner{padding:18px 0}.brand-logo-img{width:64px;height:58px}.brand-main{font-size:18px}.hero-copy h1{font-size:27px}.hero-copy .subtitle{font-size:12px}.metrics{grid-template-columns:1fr 1fr;gap:8px}.metric{padding:13px}.metric .value{font-size:22px}.panel{padding:13px}.shell{padding:12px 9px 22px}.nav button{font-size:10px;padding:9px 10px}}
+
+</style>
+</head>
+<body>
+<div id="app">
+<header class="top">
+ <div class="top-inner">
+  <div class="brandline"><img class="brand-logo-img" src="assets/fpl_bait_lab_logo.webp" alt="Fishing Planet Bait Lab"/><div class="brand-wordmark"><span class="brand-main">FISHING PLANET</span><span class="brand-sub">BAIT LAB</span></div></div>
+  <div class="hero-copy"><span class="eyebrow">TWÓJ WARSZTAT WĘDKARSKI</span><h1>Planuj mądrzej.<br>Łów skuteczniej.</h1><p class="subtitle">Receptury, magazyn składników i przygotowanie zanęt — w jednym miejscu.</p></div>
+ </div>
+</header>
+<div class="app-frame">
+ <aside class="sidebar">
+  <div class="sidebar-title">MENU GŁÓWNE</div>
+  <nav class="nav" id="nav" aria-label="Nawigacja główna"></nav>
+  <div class="sidebar-note"><span class="sidebar-note-icon">✦</span><strong>BAIT LAB</strong><span>Niezależny planer gracza</span></div>
+ </aside>
+ <main class="shell">
+  <section id="content"></section>
+  <div class="footer">FISHING PLANET BAIT LAB · Dane zapisują się automatycznie lokalnie w tej przeglądarce.</div>
+ </main>
+</div></div>
+<script>
+const ART = {"lake": "assets/fpl_lake.webp", "carp": "assets/fpl_carp.webp", "sturgeon": "assets/fpl_sturgeon.webp", "tench": "assets/fpl_tench.webp", "bream": "assets/fpl_bream.webp", "sunnybait": "assets/fpl_sunnybait.webp", "cloudybait": "assets/fpl_cloudybait.webp", "bucket": "assets/fpl_bucket.webp", "rods": "assets/fpl_rods.webp"};
+
+const ITEM_ART = {
+  "Truskawkowa mamałyga":"mash", "Big Riverine Breamer":"pellets", "Carp Rival":"boilies", "Catfish Destroyer":"oilcake",
+  "Geyser Bimber":"pellets", "Geyser Pchła Wodna":"pea", "X Flavour Supreme":"flavour", "CSL":"liquid",
+  "Tutti Frutti Supreme":"flavour", "Delta Czosnek-Karaś":"flavour", "Giant Octopus Supreme":"pellets",
+  "Rozdrobnione ziarna":"grain", "Ochotki":"worms", "Oilcake-Pea":"oilcake", "Pastoncino Mix":"pastoncino",
+  "Słonina":"boilies", "Słodki groszek":"pea", "Kulki proteinowe":"boilies"
+};
+function itemArt(name){if(name === "Truskawkowa mamałyga") return "assets/item_mash_truskawkowa.webp";const key=ITEM_ART[name]||(/ochot|robak/i.test(name)?"worms":/ziarn|kukurydz|groch/i.test(name)?"grain":/płyn|csl/i.test(name)?"liquid":/flavour|supreme|dip/i.test(name)?"flavour":/mamałyga|zanęta/i.test(name)?"mash":"pellets");return `assets/item_${key}.svg`; }
+const SEED = {"recipes":{"Słoneczna — pełna porcja":[{"ingredient":"Truskawkowa mamałyga","grams":1000.0},{"ingredient":"Big Riverine Breamer","grams":1000.0},{"ingredient":"Carp Rival","grams":1500.0},{"ingredient":"X Flavour Supreme","grams":151.0},{"ingredient":"CSL","grams":143.0},{"ingredient":"Tutti Frutti Supreme","grams":152.0},{"ingredient":"Rozdrobnione ziarna","grams":125.0},{"ingredient":"Oilcake-Pea","grams":250.0},{"ingredient":"Pastoncino Mix","grams":250.0}],"Pochmurna — pełna porcja":[{"ingredient":"Geyser Pchła Wodna","grams":1000.0},{"ingredient":"Geyser Bimber","grams":1000.0},{"ingredient":"Catfish Destroyer","grams":1500.0},{"ingredient":"X Flavour Supreme","grams":152.0},{"ingredient":"Delta Czosnek-Karaś","grams":152.0},{"ingredient":"Giant Octopus Supreme","grams":152.0},{"ingredient":"Ochotki","grams":125.0},{"ingredient":"Oilcake-Pea","grams":250.0},{"ingredient":"Pastoncino Mix","grams":250.0}],"Słoneczna — pół porcji":[{"ingredient":"Truskawkowa mamałyga","grams":500.0},{"ingredient":"Big Riverine Breamer","grams":500.0},{"ingredient":"Carp Rival","grams":750.0},{"ingredient":"X Flavour Supreme","grams":75.5},{"ingredient":"CSL","grams":71.5},{"ingredient":"Tutti Frutti Supreme","grams":76.0},{"ingredient":"Rozdrobnione ziarna","grams":62.5},{"ingredient":"Oilcake-Pea","grams":125.0},{"ingredient":"Pastoncino Mix","grams":125.0}],"Pochmurna — pół porcji":[{"ingredient":"Geyser Pchła Wodna","grams":500.0},{"ingredient":"Geyser Bimber","grams":500.0},{"ingredient":"Catfish Destroyer","grams":750.0},{"ingredient":"X Flavour Supreme","grams":76.0},{"ingredient":"Delta Czosnek-Karaś","grams":76.0},{"ingredient":"Giant Octopus Supreme","grams":76.0},{"ingredient":"Ochotki","grams":62.5},{"ingredient":"Oilcake-Pea","grams":125.0},{"ingredient":"Pastoncino Mix","grams":125.0}]},"stock":{"Truskawkowa mamałyga":0.0,"Big Riverine Breamer":0.0,"Carp Rival":0.0,"X Flavour Supreme":545.0,"CSL":286.0,"Tutti Frutti Supreme":196.0,"Rozdrobnione ziarna":0.0,"Oilcake-Pea":875.0,"Pastoncino Mix":875.0,"Geyser Pchła Wodna":2500.0,"Geyser Bimber":2500.0,"Catfish Destroyer":3750.0,"Delta Czosnek-Karaś":620.0,"Giant Octopus Supreme":782.0,"Ochotki":436.5},"plan":[],"purchases":[{"date":"29.10.2026, 08:09:22","ingredient":"Catfish Destroyer","grams":4500.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Delta Czosnek-Karaś","grams":500.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Geyser Bimber","grams":3000.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Geyser Pchła Wodna","grams":3000.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Giant Octopus Supreme","grams":500.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Ochotki","grams":250.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Oilcake-Pea","grams":1000.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"X Flavour Supreme","grams":500.0,"price":"","note":""},{"date":"29.10.2026, 08:09:22","ingredient":"Pastoncino Mix","grams":1000.0,"price":"","note":""}],"history":[{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Catfish Destroyer","grams":4500.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Delta Czosnek-Karaś","grams":500.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Geyser Bimber","grams":3000.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Geyser Pchła Wodna","grams":3000.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Giant Octopus Supreme","grams":500.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Ochotki","grams":250.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Oilcake-Pea","grams":1000.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"X Flavour Supreme","grams":500.0,"details":"Cena: —"},{"date":"29.10.2026, 08:09:22","type":"Zakup","description":"Zakup składników","ingredient":"Pastoncino Mix","grams":1000.0,"details":"Cena: —"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Geyser Pchła Wodna","grams":500.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Geyser Bimber","grams":500.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Catfish Destroyer","grams":750.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"X Flavour Supreme","grams":76.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Delta Czosnek-Karaś","grams":76.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Giant Octopus Supreme","grams":76.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Ochotki","grams":62.5,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Oilcake-Pea","grams":125.0,"details":"Pochmurna — pół porcji × 1 porcji"},{"date":"29.10.2026, 08:17:07","type":"Zużycie","description":"29.10","ingredient":"Pastoncino Mix","grams":125.0,"details":"Pochmurna — pół porcji × 1 porcji"}],"trips":[]};
+const STORE_KEY = "fp_bait_lab_excel_20261029_v1";
+let state;
+try { state = JSON.parse(localStorage.getItem(STORE_KEY) || "null") || structuredClone(SEED); } catch(e) { state=structuredClone(SEED); }
+if(!state.recipes || !state.stock) state=structuredClone(SEED);
+state.plan = Array.isArray(state.plan) ? state.plan : [];
+state.purchases = Array.isArray(state.purchases) ? state.purchases : [];
+state.history = Array.isArray(state.history) ? state.history : [];
+state.trips = Array.isArray(state.trips) ? state.trips : [];
+state.plan.forEach(p=>{ if(!("venue" in p)) p.venue=""; if(!("notes" in p)) p.notes=""; });
+let page="start";
+const pages=[["start","⌂","Start"],["plan","🎯","Plan wyprawy"],["stock","🎒","Magazyn"],["recipes","🧪","Receptury"],["buy","🛒","Zakupy"],["history","📋","Historia"]];
+const VENUES=["Lone Star Lake", "Lesni Vila Fishery", "Mudwater River", "Rocky Lake", "Emerald Lake", "Neherrin River", "Ghent-Terneuzen Canal", "Falcon Lake", "Everglades", "White Moose Lake", "Saint-Croix Lake", "San Joaquin Delta", "Quanchkin Lake", "Tiber River", "Blue Crab Island", "Sander Baggersee Lake", "Akhtuba River", "Kaniq Creek", "Amazonian Maze", "Marron River", "Maku-Maku Lake", "Congo River", "Kaiji No Ri", "Noomaa Kuda Atholhu", "Selenge River", "Dnipro River", "Creuse River", "Skårland Fjord", "Weeping Willow Fishery", "Inne / własne łowisko"];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>Number(n||0).toLocaleString("pl-PL",{maximumFractionDigits:1});
+const allIngredients=()=>Object.keys(state.stock).sort((a,b)=>a.localeCompare(b,"pl"));
+function save(){
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error("Nie udało się zapisać danych lokalnie:", err);
+    toast("Nie udało się zapisać danych. Wyeksportuj kopię zapasową.");
+  }
+}
+function toast(msg){let el=document.createElement("div");el.className="toast";el.textContent=msg;document.body.appendChild(el);setTimeout(()=>el.remove(),2400);}
+function nav(){ $("#nav").innerHTML=pages.map(([id,icon,label])=>`<button class="${page===id?"active":""}" data-page="${id}">${icon} &nbsp;${label}</button>`).join(""); $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{page=b.dataset.page;render();});}
+function needForPlan(plan=state.plan){let out={};plan.forEach(p=>{if(!p.recipe||Number(p.portions)<=0)return;(state.recipes[p.recipe]||[]).forEach(i=>out[i.ingredient]=(out[i.ingredient]||0)+i.grams*Number(p.portions));});return out;}
+function availableStatus(ingredient,need){let have=Number(state.stock[ingredient]||0);return have>=need?["OK","ok"]:["BRAKUJE","bad"];}
+function metric(label,value,hint){return `<div class="metric"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;}
+function table(headers,rows){return `<div class="tablewrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows||""}</tbody></table></div>`;}
+function recipeCard(name){let list=state.recipes[name]||[];return `<article class="recipe"><div class="recipehead"><h3>${esc(name)}</h3><span class="status ${name.includes("Słoneczna")?"warn":"ok"}">${name.includes("Słoneczna")?"☀ SŁONECZNA":"☁ POCHMURNA"}</span></div><div class="ingredientlist">${list.map(i=>`<div class="ingredient"><span class="ingredient-line"><img class="ingredient-art" src="${itemArt(i.ingredient)}" alt="" loading="lazy"><span class="ingredient-name">${esc(i.ingredient)}</span></span><strong>${fmt(i.grams)} g</strong></div>`).join("")}</div></article>`;}
+function startPage(){
+ let n=needForPlan(),missing=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0)).length;
+ let totalStock=Object.values(state.stock).reduce((a,b)=>a+Number(b||0),0);
+ return `<section class="fish-showcase"><div class="fish-hero"><span class="eyebrow">Fishing Planet · Bait Lab</span><h2>Lepszy plan. Lepsza wyprawa.</h2><p>Receptury, zapasy i przygotowanie zanęt — wszystko w jednym miejscu, również offline.</p></div></section><div class="metrics">${metric("Składniki w magazynie",allIngredients().length,"pozycje kontrolowane")}${metric("Łączny zapas",fmt(totalStock)+" g","według aktualnego stanu")}${metric("Pozycje w planie",state.plan.filter(p=>p.recipe&&p.portions>0).length,"receptury do przygotowania")}${metric("Braki w planie",missing,missing?"sprawdź listę zakupów":"plan pokryty zapasami")}</div>
+ <div class="grid2"><section class="panel"><div class="panelhead"><div><h2>Aktualny plan</h2><p class="muted">Plan początkowy zachowany z arkusza — wyprawa „Anglia”. Planowanie nie zużywa magazynu.</p></div><button class="btn gold" data-go="plan">Otwórz plan</button></div>
+ ${state.plan.length?table(["Wyprawa","Receptura","Porcje"],state.plan.filter(p=>p.recipe).map(p=>`<tr><td>${esc(p.trip||"—")}</td><td>${esc(p.recipe)}</td><td>${fmt(p.portions)}</td></tr>`).join("")):`<div class="empty">Dodaj recepturę w Planie zanęt.</div>`}</section>
+ <section class="panel"><div class="panelhead"><div><h2>Co trzeba dokupić?</h2><p class="muted">Różnica między zapasem a zapotrzebowaniem aktualnego planu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div>
+ ${Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0)).length?table(["Składnik","Brakuje"],Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0)).map(k=>`<tr><td>${esc(k)}</td><td><span class="status bad">${fmt(n[k]-Number(state.stock[k]||0))} g</span></td></tr>`).join("")):`<div class="empty">Na razie niczego nie brakuje w planie.</div>`}</section></div>
+ <section class="panel"><div class="panelhead"><div><h2>Szybkie działania</h2><p class="muted">Zwykła robota, bez walki z komórkami i formułami.</p></div></div><div class="row"><button class="btn gold" data-go="plan">＋ Zaplanuj zanętę</button><button class="btn" data-go="buy">＋ Dodaj zakup</button><button class="btn ghost" data-go="stock">✎ Popraw stany</button><button class="btn ghost" id="backup">Eksportuj kopię danych</button><button class="btn ghost" id="restore">Importuj kopię</button></div></section>`;
+}
+function planPage(){
+ let n=needForPlan();
+ const venueOptions=(selected)=>VENUES.map(v=>`<option value="${esc(v)}" ${selected===v?"selected":""}>${esc(v)}</option>`).join("");
+ const groups=[]; const groupMap=new Map();
+ state.plan.forEach((p,i)=>{const key=(p.trip||"").trim()||"__bez_nazwy__";if(!groupMap.has(key)){const g={key,trip:p.trip||"",venue:p.venue||"",customVenue:p.customVenue||"",notes:p.notes||"",items:[]};groupMap.set(key,g);groups.push(g);}groupMap.get(key).items.push({p,i});});
+ let rows=groups.map((g,gi)=>`<div class="panel" style="padding:16px;margin-bottom:14px;background:#fbfdf9">
+  <div class="panelhead"><div><h3>🎣 ${esc(g.trip||"Wyprawa bez nazwy")}</h3><p class="muted">Jedno łowisko i wspólne notatki, wiele wariantów zanęty.</p></div><button class="btn danger" data-remove-trip-group="${gi}">Usuń całą wyprawę</button></div>
+  <div class="grid2">
+   <label class="field">Nazwa wyprawy<input type="text" value="${esc(g.trip)}" placeholder="np. Weekend na karpie" data-group-trip="${gi}"></label>
+   <label class="field">Łowisko<select data-group-venue="${gi}"><option value="">— wybierz łowisko —</option>${venueOptions(g.venue)}</select></label>
+   <label class="field">Własne łowisko (opcjonalnie)<input type="text" data-group-custom-venue="${gi}" value="${esc(g.customVenue)}" placeholder="Wpisz własną nazwę, jeśli nie ma na liście"></label>
+   <label class="field">Notatki do wyprawy<textarea data-group-notes="${gi}" rows="2" placeholder="Miejscówka, pogoda, zestaw, godziny…">${esc(g.notes)}</textarea></label>
+  </div>
+  <div class="trip-options"><div class="panelhead" style="margin-bottom:4px"><div><h3>Opcje zanęty</h3><p class="muted">Każda opcja może korzystać z innej receptury i liczby porcji.</p></div><button class="btn gold" data-add-bait-option="${gi}">＋ Dodaj opcję zanęty</button></div>
+  ${g.items.map(({p,i},oi)=>`<div class="bait-option">
+   <label class="field">Receptura<select data-plan-recipe="${i}"><option value="">— wybierz recepturę —</option>${Object.keys(state.recipes).map(r=>`<option value="${esc(r)}" ${p.recipe===r?"selected":""}>${esc(r)}</option>`).join("")}</select></label>
+   <label class="field">Liczba porcji<input type="number" min="0" step="0.5" value="${Number(p.portions)||0}" data-plan-portions="${i}"></label>
+   <button class="btn ghost" data-remove-plan="${i}">Usuń opcję</button>
+  </div>`).join("")}
+  </div>
+ </div>`).join("");
+ let needs=Object.keys(n).sort((a,b)=>a.localeCompare(b,"pl")).map(k=>`<tr><td>${esc(k)}</td><td>${fmt(n[k])} g</td><td>${fmt(state.stock[k])} g</td><td>${n[k]>Number(state.stock[k]||0)?`<span class="status bad">BRAKUJE ${fmt(n[k]-Number(state.stock[k]||0))} g</span>`:`<span class="status ok">WYSTARCZY</span>`}</td></tr>`).join("");
+ return `<section class="panel"><div class="panelhead"><div><h2>Plan wypraw i przygotowania zanęt</h2><p class="muted">Utwórz wyprawę, wybierz łowisko, a następnie dodawaj dowolną liczbę opcji zanęty. Notatki są wspólne dla całej wyprawy.</p></div><button class="btn gold" id="add-plan">＋ Nowa wyprawa</button></div>
+ <div class="notice">Magazyn zmienia się dopiero po „Zatwierdź zużycie”. Dodawanie lub usuwanie opcji nie zmienia stanów magazynowych.</div>
+ ${rows||'<div class="empty">Nie ma zaplanowanych wypraw. Kliknij „Nowa wyprawa”, aby zacząć.</div>'}
+ <div class="row" style="margin-top:16px"><button class="btn gold" id="confirm-plan">✓ Zatwierdź zużycie całego planu</button><button class="btn ghost" id="clear-plan">Wyczyść cały plan</button></div>
+ </section>
+ <section class="panel"><div class="panelhead"><div><h2>Lista składników dla planu</h2><p class="muted">Sumaryczne zapotrzebowanie na wszystkie opcje zanęty ze wszystkich wypraw.</p></div></div>${needs?table(["Składnik","Potrzeba","Masz","Kontrola"],needs):'<div class="empty">Wybierz recepturę, aby obliczyć zapotrzebowanie.</div>'}</section>`;
+}
+function stockPage(){
+ let n=needForPlan();
+ let rows=allIngredients().map((k,i)=>{let have=Number(state.stock[k]||0),need=Number(n[k]||0),left=have-need;return `<tr><td><div class="stock-product"><img class="ingredient-art" src="${itemArt(k)}" alt="" loading="lazy"><strong>${esc(k)}</strong></div></td><td><input type="number" min="0" step="1" value="${have}" data-stock="${esc(k)}"></td><td>${fmt(need)} g</td><td>${fmt(Math.max(0,need-have))} g</td><td>${fmt(left)} g</td><td><span class="status ${need>have?"bad":"ok"}">${need>have?"BRAKUJE":"OK"}</span></td><td><button class="btn danger" data-delete-product="${esc(k)}">Usuń</button></td></tr>`}).join("");
+ return `<section class="panel"><div class="panelhead"><div><h2>Magazyn składników</h2><p class="muted">Edytuj ilości w plecaku albo dodaj nowy produkt. Nowe pozycje będą dostępne również w zakupach i recepturach.</p></div><input class="search" id="stock-search" placeholder="Szukaj składnika…"></div>
+ <div class="notice">Usunięcie produktu usuwa go również z receptur, jeśli był w nich użyty. Nie zmienia historii ani pozostałych stanów magazynowych.</div>
+ <form id="product-form" class="panel" style="background:#f5f9f4;margin-bottom:16px">
+  <h3>＋ Dodaj nowy produkt do bazy</h3><div class="grid2" style="margin-top:12px">
+   <label class="field">Nazwa produktu<input id="product-name" type="text" required placeholder="np. Kukurydza konserwowa"></label>
+   <label class="field">Stan początkowy (g)<input id="product-grams" type="number" min="0" step="1" value="0" required></label>
+  </div><div class="row" style="margin-top:12px"><button class="btn gold" type="submit">Dodaj produkt</button></div>
+ </form>
+ ${table(["Składnik","Stan w plecaku (g)","Potrzeba planu","Brakuje","Zostanie","Status","Akcja"],rows)}</section>`;
+}
+function recipesPage(){
+ const cards=Object.keys(state.recipes).map(name=>`<article class="recipe"><div class="recipehead"><h3>${esc(name)}</h3><div class="row"><button class="btn ghost" data-edit-recipe="${esc(name)}">Edytuj</button><button class="btn danger" data-delete-recipe="${esc(name)}">Usuń</button></div></div><div class="ingredientlist">${(state.recipes[name]||[]).map(i=>`<div class="ingredient"><span class="ingredient-line"><img class="ingredient-art" src="${itemArt(i.ingredient)}" alt="" loading="lazy"><span class="ingredient-name">${esc(i.ingredient)}</span></span><strong>${fmt(i.grams)} g</strong></div>`).join("")}</div></article>`).join("");
+ return `<section class="panel"><div class="panelhead"><div><h2>Baza receptur</h2><p class="muted">Składniki wybierasz z magazynu. Możesz też dodać nowy produkt bezpośrednio podczas tworzenia receptury.</p></div></div><div class="recipe-art-row"><div class="recipe-art"><img src="${ART.sunnybait}" alt="Składniki zanęty słonecznej"><span>☀ Zanęta słoneczna</span></div><div class="recipe-art"><img src="${ART.cloudybait}" alt="Składniki zanęty pochmurnej"><span>☁ Zanęta pochmurna</span></div></div>
+ <form id="recipe-form" class="panel" style="background:#f5f9f4;margin-bottom:17px">
+  <h3 id="recipe-form-title">＋ Dodaj / edytuj recepturę</h3><input type="hidden" id="recipe-original" value="">
+  <label class="field" style="margin-top:12px">Nazwa receptury<input id="recipe-name" type="text" required placeholder="np. Zanęta na leszcza"></label>
+  <div style="margin-top:16px"><div class="panelhead" style="margin-bottom:8px"><div><h3>Składniki i gramatura na pełną porcję</h3><p class="muted">Wybierz produkt z magazynu i wpisz ilość w gramach.</p></div><button class="btn ghost" type="button" id="add-recipe-row">＋ Dodaj składnik</button></div><div id="recipe-ingredient-rows"></div></div>
+  <div class="panel" style="background:#fff;margin-top:14px"><h3>Nie ma produktu w magazynie?</h3><p class="muted">Dodaj go tutaj. Zostanie dopisany do magazynu ze stanem 0 g i od razu dodany do tej receptury z podaną gramaturą.</p>
+   <div class="grid2" style="margin-top:12px"><label class="field">Nazwa nowego produktu<input id="recipe-new-product" type="text" placeholder="np. Kukurydza konserwowa"></label><label class="field">Gramatura w recepturze (g)<input id="recipe-new-grams" type="number" min="0.1" step="0.1" placeholder="np. 250"></label></div>
+   <div class="row" style="margin-top:12px"><button class="btn" type="button" id="add-recipe-new-product">＋ Dodaj do receptury i magazynu</button></div>
+  </div>
+  <div class="row" style="margin-top:14px"><button class="btn gold" type="submit">Zapisz recepturę</button><button class="btn ghost" type="button" id="recipe-cancel">Wyczyść formularz</button></div>
+ </form>
+ <div class="recipegrid">${cards||'<div class="empty">Brak receptur. Dodaj pierwszą powyżej.</div>'}</div></section>`;
+}
+function buyPage(){
+ return `<section class="panel"><div class="panelhead"><div><h2>Dodaj zakup do magazynu</h2><p class="muted">Zapisany zakup zwiększa stan składnika i trafia do historii.</p></div></div><form id="buy-form"><div class="grid2"><label class="field">Produkt<select id="buy-ingredient" required>${allIngredients().map(k=>`<option>${esc(k)}</option>`).join("")}</select><span class="muted">Nie ma produktu? Dodaj go w zakładce Magazyn.</span></label><label class="field">Kupiona ilość (g)<input id="buy-grams" type="number" min="1" step="1" required placeholder="np. 500"></label><label class="field">Cena (opcjonalnie)<input id="buy-price" type="number" min="0" step=".01" placeholder="np. 4,99"></label><label class="field">Sklep / notatka<input id="buy-note" type="text" placeholder="np. zapas na weekend"></label></div><div class="row" style="margin-top:16px"><button class="btn gold" type="submit">＋ Zapisz zakup i uzupełnij magazyn</button></div></form></section>
+ <section class="panel"><h2>Ostatnie zakupy</h2><p class="muted" style="margin-bottom:15px">Historia zakupów zapisanych przez tę stronę.</p>${table(["Data","Składnik","Ilość","Cena","Notatka"],state.purchases.slice().reverse().slice(0,12).map(p=>`<tr><td>${esc(p.date)}</td><td>${esc(p.ingredient)}</td><td>+${fmt(p.grams)} g</td><td>${p.price?esc(p.price)+" €":"—"}</td><td>${esc(p.note||"—")}</td></tr>`).join(""))||""}</section>`;
+}
+function historyPage(){
+ let rows=state.history.slice().reverse().map(h=>`<tr><td>${esc(h.date)}</td><td><span class="status ${h.type==="Zużycie"?"warn":"ok"}">${esc(h.type)}</span></td><td>${esc(h.description||"—")}</td><td>${esc(h.ingredient||"—")}</td><td>${h.type==="Zakup"?"+":"−"}${fmt(h.grams)} g</td><td>${esc(h.details||"—")}</td></tr>`).join("");
+ return `<section class="panel"><div class="panelhead"><div><h2>Dziennik dnia</h2><p class="muted">Wyczyść dziennik i listę ostatnich zakupów po zakończeniu dnia. To usuwa wyłącznie zapisy — nie zmienia stanów magazynowych.</p></div><div class="row"><button class="btn ghost" id="export-history">Eksportuj CSV</button><button class="btn danger" id="clear-history">Wyczyść historię</button></div></div>
+ <div class="notice">„Wyczyść historię” usuwa wpisy dziennika i listę ostatnich zakupów. Nie cofa zakupów, nie dodaje z powrotem zużytych składników i nie zmienia magazynu.</div>
+ ${rows?table(["Data i godzina","Typ","Opis / wyprawa","Składnik","Ilość","Szczegóły"],rows):'<div class="empty">Dziennik jest pusty. Zakupy i zużycie będą tu zapisywane, gdy wykonasz operacje.</div>'}</section>`;
+}
+function addRecipeIngredientRow(selected="", grams=""){
+ const wrap=$("#recipe-ingredient-rows");if(!wrap)return;
+ const row=document.createElement("div");row.className="ingredient-editor-row recipe-ingredient-row";
+ const options=allIngredients().map(k=>`<option value="${esc(k)}" ${k===selected?"selected":""}>${esc(k)}</option>`).join("");
+ row.innerHTML=`<label class="field">Produkt<select class="recipe-row-product" required><option value="">— wybierz z magazynu —</option>${options}</select></label><label class="field">Gramatura (g)<input class="recipe-row-grams" type="number" min="0.1" step="0.1" value="${esc(grams)}" required placeholder="np. 250"></label><button type="button" class="btn danger recipe-row-remove">Usuń</button>`;
+ row.querySelector(".recipe-row-remove").onclick=()=>row.remove();wrap.appendChild(row);
+}
+function clearRecipeEditor(){const original=$("#recipe-original");if(!original)return;original.value="";$("#recipe-name").value="";$("#recipe-ingredient-rows").innerHTML="";$("#recipe-form-title").textContent="＋ Dodaj / edytuj recepturę";$("#recipe-new-product").value="";$("#recipe-new-grams").value="";addRecipeIngredientRow();}
+function render(){nav();let fn={"start":startPage,"plan":planPage,"stock":stockPage,"recipes":recipesPage,"buy":buyPage,"history":historyPage}[page];$("#content").innerHTML=fn();if(page==="recipes"&&!$("#recipe-ingredient-rows").children.length)addRecipeIngredientRow();bind();}
+function bind(){
+ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{page=b.dataset.go;render();});
+ document.querySelectorAll("[data-plan-recipe]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planRecipe].recipe=el.value;save();render();});
+ document.querySelectorAll("[data-plan-portions]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planPortions].portions=Math.max(0,Number(el.value)||0);save();render();});
+ document.querySelectorAll("[data-remove-plan]").forEach(el=>el.onclick=()=>{state.plan.splice(+el.dataset.removePlan,1);save();render();});
+ $("#add-plan")?.addEventListener("click",()=>{const base="Nowa wyprawa";let name=base,n=2;while(state.plan.some(p=>(p.trip||"").trim()===name)){name=`${base} ${n++}`;}state.plan.push({recipe:"",portions:1,trip:name,venue:"",customVenue:"",notes:""});save();render();});
+ $("#clear-plan")?.addEventListener("click",()=>{if(confirm("Wyczyścić wszystkie pozycje planu? Magazyn nie zostanie zmieniony.")){state.plan=[];save();render();}});
+ document.querySelectorAll("[data-group-trip]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupTrip;const groups=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))];const old=groups[gi],name=el.value.trim();if(!name){alert("Podaj nazwę wyprawy.");render();return;}if(name!==old&&state.plan.some(p=>(p.trip||"").trim()===name)){alert("Wyprawa o tej nazwie już istnieje. Użyj innej nazwy.");render();return;}state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===old)p.trip=name;});save();render();});
+ document.querySelectorAll("[data-group-venue]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupVenue;const tripGroups=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=tripGroups[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key){p.venue=el.value;if(el.value!=="Inne / własne łowisko")p.customVenue="";}});save();render();});
+ document.querySelectorAll("[data-group-custom-venue]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupCustomVenue;const keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key){p.customVenue=el.value;if(el.value.trim())p.venue="Inne / własne łowisko";}});save();render();});
+ document.querySelectorAll("[data-group-notes]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupNotes;const keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key)p.notes=el.value;});save();toast("Notatki zapisane.");});
+ document.querySelectorAll("[data-add-bait-option]").forEach(el=>el.onclick=()=>{const gi=+el.dataset.addBaitOption,keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi],base=state.plan.find(p=>(((p.trip||"").trim()||"__bez_nazwy__")===key));if(!base)return;state.plan.push({recipe:"",portions:1,trip:base.trip,venue:base.venue||"",customVenue:base.customVenue||"",notes:base.notes||""});save();render();});
+ document.querySelectorAll("[data-remove-trip-group]").forEach(el=>el.onclick=()=>{const gi=+el.dataset.removeTripGroup,keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi],name=key==="__bez_nazwy__"?"":key;if(!confirm(`Usunąć całą wyprawę „${name||"bez nazwy"}” wraz ze wszystkimi opcjami zanęty? Magazyn pozostanie bez zmian.`))return;state.plan=state.plan.filter(p=>(((p.trip||"").trim()||"__bez_nazwy__")!==key));save();render();toast("Wyprawa usunięta.");});
+ $("#product-form")?.addEventListener("submit",e=>{e.preventDefault();const name=$("#product-name").value.trim(),grams=Number($("#product-grams").value);if(!name)return;if(Object.keys(state.stock).some(k=>k.toLocaleLowerCase("pl")===name.toLocaleLowerCase("pl"))){alert("Produkt o takiej nazwie już istnieje.");return;}state.stock[name]=Math.max(0,grams||0);save();render();toast("Produkt dodany do magazynu.");});
+ document.querySelectorAll("[data-delete-product]").forEach(el=>el.onclick=()=>{const name=el.dataset.deleteProduct;const used=Object.entries(state.recipes).filter(([r,items])=>items.some(it=>it.ingredient===name)).map(([r])=>r);if(!confirm(`Usunąć produkt „${name}” z magazynu${used.length?`, a także z receptur: ${used.join(", ")}`:""}? Historia pozostanie bez zmian.`))return;delete state.stock[name];Object.keys(state.recipes).forEach(r=>state.recipes[r]=state.recipes[r].filter(it=>it.ingredient!==name));save();render();toast("Produkt usunięty.");});
+ $("#add-recipe-row")?.addEventListener("click",()=>addRecipeIngredientRow());
+ $("#add-recipe-new-product")?.addEventListener("click",()=>{const name=$("#recipe-new-product").value.trim(),grams=Number($("#recipe-new-grams").value);if(!name||!Number.isFinite(grams)||grams<=0){alert("Wpisz nazwę produktu i poprawną gramaturę większą od zera.");return;}const existing=Object.keys(state.stock).find(k=>k.toLocaleLowerCase("pl")===name.toLocaleLowerCase("pl"));if(existing){alert("Taki produkt już istnieje w magazynie. Wybierz go z listy składników.");return;}state.stock[name]=0;save();addRecipeIngredientRow(name,grams);$("#recipe-new-product").value="";$("#recipe-new-grams").value="";toast("Produkt dodany do magazynu i receptury.");});
+ $("#recipe-form")?.addEventListener("submit",e=>{e.preventDefault();const original=$("#recipe-original").value,name=$("#recipe-name").value.trim();if(!name)return;const items=[];for(const row of document.querySelectorAll(".recipe-ingredient-row")){const ingredient=row.querySelector(".recipe-row-product").value,grams=Number(row.querySelector(".recipe-row-grams").value);if(!ingredient||!Number.isFinite(grams)||grams<=0){alert("Każdy składnik musi mieć wybrany produkt i gramaturę większą od zera.");return;}items.push({ingredient,grams});}if(!items.length){alert("Dodaj co najmniej jeden składnik.");return;}if(name!==original&&state.recipes[name]){alert("Receptura o takiej nazwie już istnieje.");return;}if(original&&original!==name){state.plan.forEach(p=>{if(p.recipe===original)p.recipe=name;});delete state.recipes[original];}state.recipes[name]=items;save();render();toast("Receptura zapisana.");});
+ document.querySelectorAll("[data-edit-recipe]").forEach(el=>el.onclick=()=>{const name=el.dataset.editRecipe;$("#recipe-original").value=name;$("#recipe-name").value=name;$("#recipe-ingredient-rows").innerHTML="";(state.recipes[name]||[]).forEach(it=>addRecipeIngredientRow(it.ingredient,it.grams));$("#recipe-form-title").textContent="✎ Edytuj recepturę";$("#recipe-name").focus();window.scrollTo({top:0,behavior:"smooth"});});
+ document.querySelectorAll("[data-delete-recipe]").forEach(el=>el.onclick=()=>{const name=el.dataset.deleteRecipe;if(!confirm(`Usunąć recepturę „${name}”? Pozycje planu korzystające z niej zostaną usunięte.`))return;delete state.recipes[name];state.plan=state.plan.filter(p=>p.recipe!==name);save();render();toast("Receptura usunięta.");});
+ $("#recipe-cancel")?.addEventListener("click",()=>clearRecipeEditor());
+ $("#clear-history")?.addEventListener("click",()=>{if(!state.history.length){toast("Historia jest już pusta.");return;}if(!confirm("Usunąć wpisy dziennika oraz listę ostatnich zakupów? Magazyn, plan i receptury pozostaną bez zmian."))return;state.history=[];state.purchases=[];save();render();toast("Wyczyszczono dziennik. Magazyn bez zmian.");});
+
+ $("#confirm-plan")?.addEventListener("click",()=>{let plan=state.plan.filter(p=>p.recipe&&Number(p.portions)>0);if(!plan.length){toast("Plan jest pusty.");return;}let n=needForPlan(plan),short=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0));if(short.length){alert("Nie można zatwierdzić zużycia — brakuje składników:\\n"+short.map(k=>`${k}: brakuje ${fmt(n[k]-state.stock[k])} g`).join("\\n"));return;}if(!confirm("Potwierdzasz rzeczywiste zużycie całego planu? Stany magazynowe zostaną pomniejszone."))return;let now=new Date().toLocaleString("pl-PL");plan.forEach(p=>(state.recipes[p.recipe]||[]).forEach(it=>{let grams=it.grams*Number(p.portions);state.stock[it.ingredient]-=grams;state.history.push({date:now,type:"Zużycie",description:p.trip||"Plan zanęt",ingredient:it.ingredient,grams,details:`${p.recipe} · ${fmt(p.portions)} porcji`});}));state.plan=[];save();render();toast("Zużycie zapisane, magazyn zaktualizowany.");});
+ document.querySelectorAll("[data-stock]").forEach(el=>el.onchange=()=>{state.stock[el.dataset.stock]=Math.max(0,Number(el.value)||0);save();render();toast("Stan magazynowy zapisany.");});
+ $("#stock-search")?.addEventListener("input",e=>{let q=e.target.value.toLocaleLowerCase("pl");document.querySelectorAll("#content tbody tr").forEach(tr=>tr.style.display=tr.textContent.toLocaleLowerCase("pl").includes(q)?"":"none");});
+ $("#buy-form")?.addEventListener("submit",e=>{e.preventDefault();let ingredient=$("#buy-ingredient").value,grams=Number($("#buy-grams").value);if(!ingredient||grams<=0)return;let date=new Date().toLocaleString("pl-PL"),price=$("#buy-price").value,note=$("#buy-note").value;state.stock[ingredient]=Number(state.stock[ingredient]||0)+grams;let purchase={date,ingredient,grams,price:price?`${Number(price).toFixed(2)}`:"",note};state.purchases.push(purchase);state.history.push({date,type:"Zakup",description:"Zakup składników",ingredient,grams,details:[price?`Cena: ${price} €`:"",note].filter(Boolean).join(" · ")});save();render();toast("Zakup zapisany, magazyn uzupełniony.");});
+ $("#backup")?.addEventListener("click",()=>download("fishing-planet-kopia.json",JSON.stringify(state,null,2),"application/json"));
+ $("#restore")?.addEventListener("click",()=>{let input=document.createElement("input");input.type="file";input.accept=".json,application/json";input.onchange=()=>{let f=input.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let imported=JSON.parse(reader.result);if(!imported.stock||!imported.recipes)throw Error();if(confirm("Import zastąpi obecne dane w tej przeglądarce. Kontynuować?")){state=imported;save();render();toast("Kopia danych zaimportowana.");}}catch(e){alert("Nieprawidłowy plik kopii.");}};reader.readAsText(f);};input.click();});
+ $("#export-history")?.addEventListener("click",()=>{let rows=[["Data","Typ","Opis","Składnik","Ilość g","Szczegóły"],...state.history.map(h=>[h.date,h.type,h.description,h.ingredient,h.grams,h.details])];download("fishing-planet-historia.csv","\\ufeff"+rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(";")).join("\\r\\n"),"text/csv;charset=utf-8");});
+}
+function download(name,text,mime){let blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
+render();
+</script></body></html>
