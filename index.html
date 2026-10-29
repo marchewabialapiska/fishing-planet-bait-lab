@@ -939,6 +939,82 @@ body::before{
 #app .start-history-icon{display:block!important;width:58px!important;height:58px!important;flex:0 0 58px!important;object-fit:contain!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.24))}
 @media(max-width:560px){#app .start-history-title{font-size:19px!important;gap:8px!important}#app .start-history-icon{width:48px!important;height:48px!important;flex-basis:48px!important}}
 
+
+
+/* START dashboard polish: clearer contrast, consistent spacing and premium gold controls */
+#app .start-dashboard-grid{gap:18px!important;align-items:start!important}
+#app .start-dashboard-grid .panel{
+  background:rgba(4,22,16,.78)!important;
+  border:1px solid rgba(220,181,93,.27)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.035)!important;
+  backdrop-filter:blur(5px)!important;
+  -webkit-backdrop-filter:blur(5px)!important;
+  border-radius:16px!important;
+}
+#app .start-dashboard-grid .panelhead{gap:14px!important;margin-bottom:15px!important;align-items:center!important}
+#app .start-dashboard-grid .muted{color:#c0cec2!important;font-size:12px!important;line-height:1.55!important;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+#app .start-dashboard-grid .start-stock-row,
+#app .start-dashboard-grid .start-buy-row,
+#app .start-dashboard-grid .start-activity-row{
+  min-height:40px!important;
+  padding-top:8px!important;padding-bottom:8px!important;
+  border-color:rgba(206,220,202,.15)!important;
+}
+#app .start-dashboard-grid .start-stock-name,
+#app .start-dashboard-grid .start-buy-row,
+#app .start-dashboard-grid .start-activity-copy{color:#edf5eb!important}
+#app .start-dashboard-grid .start-stock-qty{font-weight:800!important;color:#f2c66f!important}
+#app .start-dashboard-grid .start-stock-bar{background:rgba(223,235,220,.18)!important}
+#app .start-dashboard-grid .btn.ghost{
+  border:1px solid rgba(229,185,92,.55)!important;
+  background:rgba(7,28,20,.72)!important;
+  color:#f5d58b!important;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease!important;
+}
+#app .start-dashboard-grid .btn.ghost:hover{
+  background:rgba(181,126,43,.24)!important;
+  border-color:#f1c66f!important;
+  box-shadow:0 0 0 2px rgba(232,180,79,.10)!important;
+  transform:translateY(-1px)!important;
+}
+#app .start-trips-panel{background:rgba(4,22,16,.62)!important}
+#app .start-trips-panel .start-trip-card{
+  border:1px solid rgba(228,198,130,.20)!important;
+  border-radius:11px!important;
+}
+#app .start-actions-panel{
+  margin-top:18px!important;
+  background:rgba(4,22,16,.84)!important;
+  border:1px solid rgba(220,181,93,.30)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(5px)!important;
+  -webkit-backdrop-filter:blur(5px)!important;
+}
+#app .start-actions-grid{gap:10px!important}
+#app .start-actions-grid .btn{
+  min-height:43px!important;
+  border:1px solid rgba(227,163,75,.38)!important;
+  transition:transform .18s ease,filter .18s ease,box-shadow .18s ease!important;
+}
+#app .start-actions-grid .btn:hover{
+  transform:translateY(-2px)!important;
+  filter:brightness(1.09)!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20)!important;
+}
+#app .start-actions-grid .btn.gold{
+  background:linear-gradient(135deg,#f1c66f,#c88731)!important;
+  color:#17271d!important;border-color:#f5d58b!important;
+}
+@media(max-width:850px){
+  #app .start-dashboard-grid{gap:13px!important}
+  #app .start-dashboard-grid .panel{padding:16px!important}
+  #app .start-actions-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:520px){
+  #app .start-dashboard-grid .muted{font-size:12px!important}
+  #app .start-actions-grid{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
