@@ -611,18 +611,18 @@ body::before{
 .nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.png") center/100% 100% no-repeat!important}
 .nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.png") center/100% 100% no-repeat!important}
 
-/* Navigation lure art: preserve image proportions and blend pale baked backgrounds into the lake scene */
-.nav button[data-page="start"],
-.nav button[data-page="plan"],
-.nav button[data-page="stock"],
-.nav button[data-page="recipes"],
-.nav button[data-page="buy"],
-.nav button[data-page="history"]{
+/* Navigation artwork: keep the same natural proportions in default, hover, focus and active states */
+.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"]:focus,.nav button[data-page="start"]:focus-visible,.nav button[data-page="start"].active,
+.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"]:focus,.nav button[data-page="plan"]:focus-visible,.nav button[data-page="plan"].active,
+.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"]:focus,.nav button[data-page="stock"]:focus-visible,.nav button[data-page="stock"].active,
+.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"]:focus,.nav button[data-page="recipes"]:focus-visible,.nav button[data-page="recipes"].active,
+.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"]:focus,.nav button[data-page="buy"]:focus-visible,.nav button[data-page="buy"].active,
+.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"]:focus,.nav button[data-page="history"]:focus-visible,.nav button[data-page="history"].active{
  background-size:contain!important;
  background-position:center!important;
  background-repeat:no-repeat!important;
  background-color:transparent!important;
- mix-blend-mode:multiply;
+ transform:none!important;
 }
 
 </style>
