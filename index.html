@@ -641,6 +641,27 @@ body::before{
 @media(prefers-reduced-motion:reduce){#fpl-intro,#fpl-intro-logo{transition:none!important}}
 @media(prefers-reduced-motion:reduce){#fpl-intro,#fpl-intro-logo{transition:none!important}}
 
+
+/* Active navigation tile: illuminate the artwork only, never draw a rectangular frame */
+.nav button.active,
+.nav button.active:hover,
+.nav button.active:focus,
+.nav button.active:focus-visible{
+ border-color:transparent!important;
+ outline:none!important;
+ outline-offset:0!important;
+ box-shadow:none!important;
+ background-color:transparent!important;
+ text-shadow:none!important;
+ filter:brightness(1.2) saturate(1.14) drop-shadow(0 0 8px rgba(255,210,112,.42))!important;
+}
+.nav button[data-page="start"].active{background:transparent url("./assets/Goldener%20Start%20am%20Waldsee.webp") center/contain no-repeat!important}
+.nav button[data-page="plan"].active{background:transparent url("./assets/Z%C5%82oty%20planer%20wypraw%20w%C4%99dkarskich.webp") center/contain no-repeat!important}
+.nav button[data-page="stock"].active{background:transparent url("./assets/Magazyn%20zapas%C3%B3w%20nad%20jeziorem.webp") center/contain no-repeat!important}
+.nav button[data-page="recipes"].active{background:transparent url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp") center/contain no-repeat!important}
+.nav button[data-page="buy"].active{background:transparent url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp") center/contain no-repeat!important}
+.nav button[data-page="history"].active{background:transparent url("./assets/Geschichte%20des%20Angelns.webp") center/contain no-repeat!important}
+
 </style>
 </head>
 <body>
