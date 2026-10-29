@@ -1,12 +1,22 @@
 # Fishing Planet Bait Lab
 
-Projekt planera zanęt do Fishing Planet.
+Planer zanęt do gry Fishing Planet.
 
-## Kierunek projektu
+## Kierunek wizualny
 - Leśny premium: ciemna zieleń, grafit i złote akcenty.
-- Grafiki przechowywane jako osobne pliki w `assets/`.
-- Zmiany wprowadzane etapami, po akceptacji każdej grafiki.
-- Zachowanie istniejących funkcji planera i lokalnego zapisu.
+- Grafiki trzymane osobno w katalogu `assets/`.
+- Każda nowa grafika jest najpierw przedstawiana do akceptacji.
+- Zachowanie funkcji planera i zapisu lokalnego w przeglądarce.
 
-## Status
-Repozytorium projektu utworzone; dodano plik startowy README. Kod aplikacji i zaakceptowane grafiki zostaną dodane w kolejnych commitach po sprawdzeniu i przygotowaniu plików projektu.
+## Struktura
+- `index.html` — aplikacja.
+- `assets/item_*.svg` — ilustracje składników i akcesoriów.
+
+## Stan prac
+- [x] Pierwsza wersja aplikacji dodana do repozytorium.
+- [x] Dodane osobne ilustracje SVG składników.
+- [x] Przygotowane odwołania do zaakceptowanego tła i logo.
+- [ ] Przesłać do `assets/` pliki `fpl_lake_anglers_4k.webp` i `fpl_bait_lab_logo.webp`; do tego czasu te dwie grafiki nie będą widoczne w wersji repozytoryjnej.
+
+## Uruchomienie
+Otwórz `index.html` w przeglądarce. Dane planera są przechowywane lokalnie w tej przeglądarce; nie są synchronizowane między urządzeniami.
