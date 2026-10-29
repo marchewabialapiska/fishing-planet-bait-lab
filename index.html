@@ -554,6 +554,12 @@ body::before{
 .nav button:hover[data-page="recipes"],.nav button:focus[data-page="recipes"],.nav button:focus-visible[data-page="recipes"],.nav button.active[data-page="recipes"]{background:transparent url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp") center/contain no-repeat!important}
 .nav button:hover[data-page="buy"],.nav button:focus[data-page="buy"],.nav button:focus-visible[data-page="buy"],.nav button.active[data-page="buy"]{background:transparent url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%9Bca.webp") center/contain no-repeat!important}
 .nav button:hover[data-page="history"],.nav button:focus[data-page="history"],.nav button:focus-visible[data-page="history"],.nav button.active[data-page="history"]{background:transparent url("./assets/Geschichte%20des%20Angelns.webp") center/contain no-repeat!important}
+
+/* Wskaźnik aktywności bez ramki — tylko delikatne rozświetlenie grafiki */
+.nav button.active{outline:none!important;outline-offset:0!important;filter:brightness(1.18) saturate(1.12) drop-shadow(0 0 7px rgba(255,210,112,.42))!important;z-index:2}
+.nav button:hover{outline:none!important;filter:brightness(1.12) saturate(1.10) drop-shadow(0 0 5px rgba(255,210,112,.30))!important}
+.nav button:focus,.nav button:focus-visible{outline:none!important;outline-offset:0!important}
+.nav button.active:hover{filter:brightness(1.2) saturate(1.13) drop-shadow(0 0 8px rgba(255,210,112,.48))!important}
 </style>
 </head>
 <body>
