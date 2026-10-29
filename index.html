@@ -562,7 +562,7 @@ body::before{
 /* Delikatna warstwa wody na banerze — zdjęcie pozostaje subtelne, tekst czytelny */
 .top::before{
  content:""!important;display:block!important;position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important;
- background-image:linear-gradient(180deg,rgba(3,16,22,.52),rgba(3,16,22,.66)),url("./assets/banner-water.png")!important;
+ background-image:linear-gradient(180deg,rgba(3,16,22,.52),rgba(3,16,22,.66)),url("./assets/banner-water.webp")!important;
  background-size:cover!important;background-position:center 48%!important;background-repeat:no-repeat!important;
  opacity:.24!important;
 }
@@ -947,7 +947,7 @@ body::before{
 <div id="app">
 <header class="top">
  <div class="top-inner">
-  <div class="brandline"><img class="brand-logo-img" src="assets/fpl_bait_lab_logo.png" alt="Logo Fishing Planet Bait Lab" onerror="this.style.display='none'"/></div>
+  <div class="brandline"><img class="brand-logo-img" src="assets/fpl_bait_lab_logo.webp" alt="Logo Fishing Planet Bait Lab" onerror="this.style.display='none'"/></div>
  </div>
 </header>
 <div class="app-frame">
@@ -1030,17 +1030,17 @@ function startPage(){
  const stockPreview=allIngredients().slice(0,7).map(k=>`<div class="start-stock-row"><img src="${itemArt(k)}" alt="" loading="lazy"><div class="start-stock-name"><strong>${esc(k)}</strong><div class="start-stock-bar"><span style="width:${Math.max(3,Math.min(100,Number(state.stock[k]||0)/Math.max(1,...Object.values(state.stock).map(Number))*100))}%"></span></div></div><strong class="start-stock-qty">${fmt(state.stock[k])} g</strong><span class="status ok">ZAPAS</span></div>`).join("");
  return `
  <section class="start-hero-tile start-hero-graphic">
-  <img class="start-banner-image" src="assets/start-banner.png" alt="Szczupak i napis: Twoje wyprawy. Twoje zapasy. Podsumowanie plecaka, zaplanowanych wypraw i składników do uzupełnienia." fetchpriority="high">
+  <img class="start-banner-image" src="assets/start-banner.webp" alt="Szczupak i napis: Twoje wyprawy. Twoje zapasy. Podsumowanie plecaka, zaplanowanych wypraw i składników do uzupełnienia." fetchpriority="high">
  </section>
  <div class="metrics">${metric("Składniki w plecaku",allIngredients().length,"pozycje w magazynie")}${metric("Łączny zapas",fmt(totalStock)+" g","wszystkie składniki razem")}${metric("Zaplanowane porcje",fmt(activePlan.reduce((sum,p)=>sum+Number(p.portions||0),0)),"w aktywnych wyprawach")}${metric("Braki do dokupienia",missingItems.length,missingItems.length?"pozycji wymaga uzupełnienia":"wszystko pokryte zapasami")}</div>
  <div class="start-dashboard-grid">
  <div class="start-side-stack">
-   <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.png" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.png" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
-   <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.png" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
+   <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.webp" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.webp" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
   </div>
   <div class="start-side-stack">
-   <section class="panel"><div class="panelhead"><div><h2 class="start-stock-title"><img class="start-stock-icon" src="assets/stan-plecaka.png" alt="" loading="lazy"> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div><p class="muted">Pokazano pierwsze 7 składników z magazynu.</p></section>
-   <section class="panel"><div class="panelhead"><div><h2 class="start-history-title"><img class="start-history-icon" src="assets/ostatnie-dzialania.png" alt="" loading="lazy"> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-stock-title"><img class="start-stock-icon" src="assets/stan-plecaka.webp" alt="" loading="lazy"> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div><p class="muted">Pokazano pierwsze 7 składników z magazynu.</p></section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-history-title"><img class="start-history-icon" src="assets/ostatnie-dzialania.webp" alt="" loading="lazy"> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
   </div>
  </div>
  <section class="panel start-actions-panel"><div class="panelhead"><div><h2>Szybkie działania</h2><p class="muted">Najczęściej używane skróty — zawsze pod ręką.</p></div><span class="start-actions-emblem">✦</span></div><div class="start-actions-grid"><button class="btn gold" data-go="plan">＋ Zaplanuj wyprawę</button><button class="btn" data-go="buy">＋ Dodaj zakup</button><button class="btn ghost" data-go="stock">✎ Zmień stany plecaka</button><button class="btn ghost" id="backup">⇩ Eksportuj kopię danych</button><button class="btn ghost" id="restore">⇧ Importuj kopię</button></div></section>`;
