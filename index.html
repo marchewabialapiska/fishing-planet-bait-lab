@@ -881,6 +881,32 @@ body::before{
  border-color:rgba(220,226,196,.16)!important;
 }
 
+
+/* START: custom 3D shopping icon and slightly larger section title */
+#app .start-buy-title{
+ display:flex!important;
+ align-items:center!important;
+ gap:10px!important;
+ font-size:21px!important;
+ line-height:1.15!important;
+}
+#app .start-buy-icon{
+ display:block!important;
+ width:58px!important;
+ height:58px!important;
+ flex:0 0 58px!important;
+ object-fit:contain!important;
+ border:0!important;
+ border-radius:0!important;
+ background:transparent!important;
+ box-shadow:none!important;
+ filter:drop-shadow(0 3px 5px rgba(0,0,0,.24));
+}
+@media(max-width:560px){
+ #app .start-buy-title{font-size:19px!important;gap:8px!important}
+ #app .start-buy-icon{width:48px!important;height:48px!important;flex-basis:48px!important}
+}
+
 </style>
 </head>
 <body>
@@ -978,7 +1004,7 @@ function startPage(){
  <div class="start-dashboard-grid">
  <div class="start-side-stack">
    <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.png" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.png" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
-   <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🛒</span> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.png" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
   </div>
   <div class="start-side-stack">
    <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🎒</span> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div><p class="muted">Pokazano pierwsze 7 składników z magazynu.</p></section>
