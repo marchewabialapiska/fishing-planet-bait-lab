@@ -556,6 +556,22 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav{display:flex!important;flex-direction:row!important;overflow-x:auto!important;align-items:stretch!important;gap:8px!important}
  .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:160px!important;min-width:160px!important;height:40px!important;min-height:40px!important}
 }
+
+/* === Full-page lakeside background artwork === */
+html{min-height:100%;background:#06120f!important}
+body{
+ min-height:100vh!important;
+ background-color:#06120f!important;
+ background-image:linear-gradient(rgba(4,14,11,.48),rgba(4,14,11,.62)),url("assets/site-background.png")!important;
+ background-position:center center!important;
+ background-size:cover!important;
+ background-repeat:no-repeat!important;
+ background-attachment:fixed!important;
+}
+#app{background:transparent!important}
+.app-frame{background:transparent!important}
+.sidebar{background:rgba(5,19,15,.76)!important;backdrop-filter:blur(3px)}
+.shell{background:rgba(5,16,13,.16)!important}
 </style>
 </head>
 <body>
