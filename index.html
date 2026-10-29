@@ -577,6 +577,21 @@ body::before{
 .nav button:focus,.nav button:focus-visible{outline:none!important;outline-offset:0!important}
 .nav button.active:hover{filter:brightness(1.2) saturate(1.13) drop-shadow(0 0 8px rgba(255,210,112,.48))!important}
 
+/* Lepsze odcięcie istniejących kafelków od tła — bez zmiany grafik */
+.nav{position:relative!important;isolation:isolate}
+.nav::before{
+ content:"";position:absolute;z-index:-1;pointer-events:none;
+ inset:-24px -16px;
+ background:radial-gradient(ellipse at 50% 45%,rgba(2,10,8,.38) 0%,rgba(2,10,8,.22) 48%,rgba(2,10,8,0) 78%);
+ filter:blur(13px);
+}
+.nav button:not(:hover):not(.active){
+ filter:drop-shadow(0 2px 5px rgba(0,0,0,.38))!important;
+}
+@media(max-width:900px){
+ .nav::before{inset:-10px -8px}
+}
+
 /* Uproszczone menu: bez nagłówka, kafelki wyżej na ekranie */
 .sidebar-title{display:none!important}
 .sidebar-note{display:none!important}
