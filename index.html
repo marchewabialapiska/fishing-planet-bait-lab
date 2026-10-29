@@ -557,18 +557,22 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:160px!important;min-width:160px!important;height:40px!important;min-height:40px!important}
 }
 
-/* === Full-page lakeside background artwork (fixed layer behind the app) === */
+/* === One continuous lakeside image behind hero and full page === */
 html,body{min-height:100%;background:#06120f!important}
 body{min-height:100vh!important;background:none!important;position:relative!important}
 body::before{
- content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
- background-image:linear-gradient(rgba(4,14,11,.34),rgba(4,14,11,.48)),url("./assets/site-background.png?v=2");
- background-position:center center;background-size:cover;background-repeat:no-repeat;
+ content:"";position:absolute;inset:0 0 auto 0;height:100%;min-height:100%;
+ z-index:0;pointer-events:none;
+ background-image:linear-gradient(rgba(4,14,11,.24),rgba(4,14,11,.44)),url("./assets/site-background.png?v=3");
+ background-position:top center;background-size:100% auto;background-repeat:no-repeat;
 }
-#app{position:relative;z-index:1;min-height:100vh;background:transparent!important}
+#app{position:relative;z-index:1;min-height:100vh;background:transparent!important;color:#edf5eb!important}
+.top{background-image:none!important;background-color:transparent!important;border-bottom:1px solid #dcae4f66!important}
+.top:before,.top:after{pointer-events:none}
 .app-frame{background:transparent!important}
-.sidebar{background:rgba(5,19,15,.62)!important;backdrop-filter:blur(3px)}
-.shell{background:rgba(5,16,13,.08)!important}
+.sidebar{background:rgba(5,19,15,.58)!important;backdrop-filter:blur(3px)}
+.shell{background:rgba(5,16,13,.10)!important}
+@media(max-width:900px){body::before{background-size:auto 100%;background-position:top center}}
 </style>
 </head>
 <body>
