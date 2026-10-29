@@ -409,27 +409,6 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
 @media(max-width:850px){.nav button[data-page="start"]{min-height:58px}}
 
 
-/* === CUSTOM START TILE ARTWORK: matches the Bait Lab lake/gold identity === */
-.nav button[data-page="start"]{
- position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;
- width:clamp(190px,22vw,250px);height:72px;min-height:72px;padding:0;
- font-size:0;line-height:0;color:transparent;border:1px solid #eab44c;border-radius:13px;
- background:#0b1d14 url("assets/start-tile.svg") center/cover no-repeat;
- box-shadow:0 0 0 1px #eab44c24,inset 0 0 18px #0005,0 7px 22px #0005;
- overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease
-}
-.nav button[data-page="start"]:hover{
- background:#0b1d14 url("assets/start-tile.svg") center/cover no-repeat;
- border-color:#ffe09a;transform:translateY(-2px);
- box-shadow:0 0 0 2px #eab44c30,0 10px 26px #0007
-}
-.nav button[data-page="start"].active{
- background:#0b1d14 url("assets/start-tile.svg") center/cover no-repeat;
- border:2px solid #ffd77b;box-shadow:0 0 0 2px #eab44c30,0 0 24px #eab44c45,0 8px 24px #0006
-}
-.nav button[data-page="start"]:before,.nav button[data-page="start"]:after{display:none;content:none}
-@media(max-width:560px){.nav button[data-page="start"]{width:100%;max-width:260px;height:68px;min-height:68px}}
-
 </style>
 </head>
 <body>
