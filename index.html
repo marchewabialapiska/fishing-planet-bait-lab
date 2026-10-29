@@ -607,11 +607,11 @@ body::before{
 }
 
 
-/* FIX: logo has its own top-left space; sidebar tiles stay fully inside the left column */
+/* FIX: align sidebar START with the four dashboard metrics; larger logo and readable trip-planner tile */
 @media(min-width:901px){
   #app .sidebar{
     margin-top:0!important;
-    padding:118px 14px 12px 16px!important;
+    padding:0 14px 12px 16px!important;
     align-self:start!important;
     min-width:0!important;
     overflow:visible!important;
@@ -636,6 +636,27 @@ body::before{
     background-size:contain!important;
     flex:0 0 88px!important;
   }
+  #app .brandline{
+    left:14px!important;
+    top:8px!important;
+    width:230px!important;
+    max-width:calc(100vw - 28px)!important;
+  }
+  #app .brand-logo-img{
+    max-width:230px!important;
+    max-height:92px!important;
+  }
+  /* The trip-planner tile has a long title, so give it extra height for legibility */
+  #app .nav button[data-page="plan"]{
+    height:108px!important;
+    min-height:108px!important;
+    flex-basis:108px!important;
+  }
+}
+@media(max-width:900px){
+  #app .brandline{width:170px!important;max-width:calc(100vw - 20px)!important}
+  #app .brand-logo-img{max-width:170px!important;max-height:68px!important}
+  #app .nav button[data-page="plan"]{height:96px!important;min-height:96px!important;flex-basis:96px!important}
 }
 
 /* Układ testowy: małe logo w lewym górnym rogu, szczupak wysoko po prawej */
