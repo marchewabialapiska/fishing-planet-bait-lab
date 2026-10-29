@@ -615,13 +615,13 @@ body::before{
 
 
 /* Intro filmowe — logo pojawia się na końcowym rozbryzgu */
-#fpl-intro{position:fixed;inset:0;z-index:99999;background:#07110f;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity 1.15s ease,visibility 1.15s ease}
+#fpl-intro{position:fixed;inset:0;z-index:2147483647;background:#07110f;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity 1.15s ease,visibility 1.15s ease}
 #fpl-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
-#fpl-intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#07110f}
+#fpl-intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#07110f;display:block;z-index:0}
 #fpl-intro::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(0,8,7,.2) 100%);opacity:.8}
 #fpl-intro-logo{position:relative;z-index:2;width:min(68vw,620px);max-height:42vh;object-fit:contain;opacity:0;transform:translateY(12px) scale(.96);filter:drop-shadow(0 8px 30px rgba(0,0,0,.65));transition:opacity 1.05s ease,transform 1.2s cubic-bezier(.2,.75,.2,1)}
 #fpl-intro.logo-visible #fpl-intro-logo{opacity:1;transform:translateY(0) scale(1)}
-#fpl-intro-skip{position:absolute;z-index:5;right:max(22px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 17px;background:rgba(3,13,11,.48);backdrop-filter:blur(12px);color:#fff;font:600 13px/1.2 system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;transition:background .2s ease,opacity .2s ease}
+#fpl-intro-skip{position:absolute;z-index:2147483647;pointer-events:auto;right:max(22px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 17px;background:rgba(3,13,11,.48);backdrop-filter:blur(12px);color:#fff;font:600 13px/1.2 system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;transition:background .2s ease,opacity .2s ease}
 #fpl-intro-skip:hover{background:rgba(3,13,11,.8)}
 @media(max-width:600px){#fpl-intro-logo{width:86vw;max-height:32vh}#fpl-intro-skip{right:14px;bottom:14px}}
 @media(prefers-reduced-motion:reduce){#fpl-intro,#fpl-intro-logo{transition:none!important}}
@@ -635,7 +635,42 @@ body::before{
  </video>
  <img id="fpl-intro-logo" src="/fishing-planet-bait-lab/assets/fpl_bait_lab_logo.webp" alt="Fishing Planet Bait Lab">
  <button id="fpl-intro-skip" type="button">Pomiń intro <span aria-hidden="true">→</span></button>
-</div>
+</div><script>
+(function(){
+ const overlay=document.getElementById('fpl-intro');
+ const video=document.getElementById('fpl-intro-video');
+ const logo=document.getElementById('fpl-intro-logo');
+ const skip=document.getElementById('fpl-intro-skip');
+ if(!overlay||!video||!logo||!skip)return;
+ let finished=false, logoShown=false, fadeTimer=null, logoTimer=null;
+ function showLogo(){if(finished||logoShown)return;logoShown=true;overlay.classList.add('logo-visible');}
+ function finishIntro(){
+  if(finished)return;
+  finished=true;clearTimeout(logoTimer);clearTimeout(fadeTimer);
+  overlay.classList.add('is-leaving');
+  try{video.pause()}catch(e){}
+  fadeTimer=setTimeout(()=>{overlay.remove()},1200);
+ }
+ function maybeShowLogo(){
+  if(Number.isFinite(video.duration)&&video.duration>0&&video.currentTime>=video.duration-2.1)showLogo();
+ }
+ skip.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();finishIntro()});
+ video.addEventListener('timeupdate',maybeShowLogo);
+ video.addEventListener('ended',function(){showLogo();setTimeout(finishIntro,2100)});
+ video.addEventListener('error',function(){setTimeout(finishIntro,800)});
+ video.addEventListener('canplay',function(){video.classList.add('ready')},{once:true});
+ // Begin playback as soon as the browser can decode the first frame.
+ function startPlayback(){
+  const p=video.play();
+  if(p&&p.catch)p.catch(function(){/* Keep skip control available; some browsers require a user gesture. */});
+ }
+ video.addEventListener('canplay',startPlayback,{once:true});
+ startPlayback();
+ // Safety exit prevents a stalled/unsupported media file from trapping the user.
+ setTimeout(function(){if(!finished&&(video.error||video.readyState<2)&&video.currentTime<0.1)finishIntro()},10000);
+})();
+</script>
+
 <div id="app">
 <header class="top">
  <div class="top-inner">
@@ -854,45 +889,5 @@ function bind(){
 function download(name,text,mime){let blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
 render();
 </script>
-<script>
-(function(){
- const overlay=document.getElementById('fpl-intro');
- const video=document.getElementById('fpl-intro-video');
- const logo=document.getElementById('fpl-intro-logo');
- const skip=document.getElementById('fpl-intro-skip');
- if(!overlay||!video||!logo||!skip)return;
- let finished=false, logoShown=false, endTimer=null, fadeTimer=null;
- function showLogo(){
-  if(finished||logoShown)return;
-  logoShown=true;
-  overlay.classList.add('logo-visible');
- }
- function finishIntro(){
-  if(finished)return;
-  finished=true;
-  clearTimeout(endTimer);clearTimeout(fadeTimer);
-  overlay.classList.add('is-leaving');
-  try{video.pause()}catch(e){}
-  fadeTimer=setTimeout(()=>{if(overlay.isConnected)overlay.remove()},1250);
- }
- function checkLogoTiming(){
-  if(Number.isFinite(video.duration)&&video.duration>0&&video.currentTime>=video.duration-1.8)showLogo();
- }
- skip.addEventListener('click',finishIntro);
- video.addEventListener('timeupdate',checkLogoTiming);
- video.addEventListener('ended',()=>{
-  showLogo();
-  endTimer=setTimeout(finishIntro,2200);
- });
- video.addEventListener('error',()=>setTimeout(finishIntro,500));
- video.addEventListener('playing',()=>{overlay.classList.add('video-playing')},{once:true});
- video.addEventListener('loadeddata',()=>{try{video.currentTime=0}catch(e){}},{once:true});
- // Keep intro available on every page load; fall back to the site if playback truly fails.
- const playPromise=video.play();
- if(playPromise&&typeof playPromise.catch==='function'){
-  playPromise.catch(()=>{setTimeout(()=>{if(!finished&&video.paused)finishIntro()},1200)});
- }
- setTimeout(()=>{if(!finished&&video.currentTime<0.1&&video.paused)finishIntro()},7000);
-})();
-</script>
+
 </body></html>
