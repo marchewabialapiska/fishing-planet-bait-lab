@@ -1116,6 +1116,25 @@ body::before{
 
 
 
+
+/* Stronger section descriptions and a clear hierarchy for fishing venue names */
+#app .start-dashboard-grid .panelhead .muted{
+  font-size:14px!important;
+  line-height:1.55!important;
+  color:#d0ddd2!important;
+}
+#app .start-dashboard-grid .start-trip-body>span{
+  display:block!important;
+  font-size:16px!important;
+  line-height:1.4!important;
+  font-weight:800!important;
+  color:#f2cf7d!important;
+  overflow-wrap:anywhere!important;
+}
+#app .start-dashboard-grid .start-trip-body>strong{
+  font-size:14px!important;
+}
+
 /* Improve readability across the START dashboard without changing its layout */
 #app .start-dashboard-grid .start-stock-name strong,
 #app .start-dashboard-grid .start-stock-qty,
@@ -1330,7 +1349,7 @@ function startPage(){
   return `<div class="start-stock-row"><img src="${itemArt(k)}" alt="" loading="lazy"><div class="start-stock-name"><strong>${esc(k)}</strong><div class="start-stock-bar"><span style="width:${percent}%"></span></div></div><strong class="start-stock-qty">${fmt(have)} g</strong><span class="status ${need>have?"bad":"ok"}">${need>have?"BRAK":"OK"}</span></div>`;
  }).join("");
  const tripCards=tripGroups.map(g=>`<article class="start-trip-card"><div class="start-trip-mark">⌖</div><div class="start-trip-body"><strong>${esc(g.trip)}</strong><span>${esc(g.venue||"Łowisko nieustalone")}</span><small>${g.items.length} ${g.items.length===1?"opcja zanęty":"opcji zanęty"} · ${fmt(g.items.reduce((sum,p)=>sum+Number(p.portions||0),0))} porcji</small></div><button class="btn ghost" data-go="plan">Otwórz</button></article>`).join("");
- const missingRows=missingItems.slice(0,8).map(k=>`<div class="start-buy-row"><img src="${itemArt(k)}" alt="" loading="lazy"><span>${esc(k)}</span><strong>${fmt(n[k]-Number(state.stock[k]||0))} g</strong><button class="btn ghost" data-go="buy">Dokup</button></div>`).join("");
+ const missingRows=missingItems.map(k=>`<div class="start-buy-row"><img src="${itemArt(k)}" alt="" loading="lazy"><span>${esc(k)}</span><strong>${fmt(n[k]-Number(state.stock[k]||0))} g</strong><button class="btn ghost" data-go="buy">Dokup</button></div>`).join("");
  const recentRows=state.history.slice(-6).reverse().map(h=>`<div class="start-activity-row"><span class="start-activity-dot ${h.type==="Zużycie"?"used":h.type==="Zakup"?"bought":""}"></span><div class="start-activity-copy"><strong>${esc(h.description||h.type||"Aktywność")}</strong><span>${esc(h.ingredient||h.details||"Zapis w dzienniku")}</span><small>${esc(h.date||"")}</small></div><b>${h.type==="Zakup"?"+":"−"}${fmt(h.grams)} g</b></div>`).join("");
  const stockPreview=allIngredients().slice(0,7).map(k=>`<div class="start-stock-row"><img src="${itemArt(k)}" alt="" loading="lazy"><div class="start-stock-name"><strong>${esc(k)}</strong><div class="start-stock-bar"><span style="width:${Math.max(3,Math.min(100,Number(state.stock[k]||0)/Math.max(1,...Object.values(state.stock).map(Number))*100))}%"></span></div></div><strong class="start-stock-qty">${fmt(state.stock[k])} g</strong><span class="status ok">ZAPAS</span></div>`).join("");
  return `
@@ -1341,10 +1360,10 @@ function startPage(){
  <div class="start-dashboard-grid">
  <div class="start-side-stack">
    <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.webp" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.webp" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
-   <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div>${missingItems.length>8?'<p class="muted">Pokazano 8 z '+missingItems.length+' brakujących składników.</p>':""}</section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div></section>
   </div>
   <div class="start-side-stack">
-   <section class="panel"><div class="panelhead"><div><h2 class="start-stock-title"><img class="start-stock-icon" src="assets/stan-plecaka.webp" alt="" loading="lazy"> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div><p class="muted">Pokazano pierwsze 7 składników z magazynu.</p></section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-stock-title"><img class="start-stock-icon" src="assets/stan-plecaka.webp" alt="" loading="lazy"> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2 class="start-history-title"><img class="start-history-icon" src="assets/ostatnie-dzialania.webp" alt="" loading="lazy"> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
   </div>
  </div>
