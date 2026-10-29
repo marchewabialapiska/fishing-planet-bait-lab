@@ -501,67 +501,32 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
 }
 
 
-/* === Illustrated navigation tiles: use the six purpose-generated PNGs === */
+/* === Kafelki nawigacji — spójny wygląd w każdym stanie === */
+.app-frame{grid-template-columns:282px minmax(0,1fr)!important;background:transparent!important}
+.sidebar{padding:22px 14px 22px 16px!important;background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;outline:0!important}
+.sidebar::before,.sidebar::after{display:none!important}
+.sidebar-title,.sidebar-note{background:transparent!important;border:0!important;box-shadow:none!important}
+.nav{gap:10px!important;background:transparent!important;background-image:none!important;box-shadow:none!important}
 .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){
- width:100%!important;min-height:62px!important;height:62px!important;flex:0 0 auto!important;
- padding:0!important;border:1px solid #d5a54a!important;border-radius:9px!important;
- font-size:0!important;color:transparent!important;text-shadow:none!important;
- background-color:#0b1d14!important;background-repeat:no-repeat!important;
- background-position:center 50%!important;background-size:100% 250%!important;
- box-shadow:0 3px 10px #0005!important;overflow:hidden!important;
-}
-.nav button .nav-label,.nav button .nav-icon{display:none!important}
-.nav button[data-page="start"]{background-image:url("assets/Goldener Start am Waldsee.webp")!important}
-.nav button[data-page="plan"]{background-image:url("assets/Złoty planer wypraw wędkarskich.webp")!important}
-.nav button[data-page="stock"]{background-image:url("assets/Magazyn zapasów nad jeziorem.webp")!important}
-.nav button[data-page="recipes"]{background-image:url("assets/Goldene Rezepturen am Seeufer.webp")!important}
-.nav button[data-page="buy"]{background-image:url("assets/Zakupy nad jeziorem o zachodzie słońca.webp")!important}
-.nav button[data-page="history"]{background-image:url("assets/Geschichte des Angelns.webp")!important}
-.nav button:hover,.nav button.active{
- border-color:#ffe29a!important;box-shadow:0 0 0 2px #dcae5044,0 0 16px #dcae5044!important;
- filter:brightness(1.08)
-}
-.nav button:focus-visible{outline:2px solid #ffe29a!important;outline-offset:2px}
-@media(max-width:560px){
- .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:210px!important;min-width:210px!important;height:58px!important;min-height:58px!important;background-size:100% 250%!important}
-}
-
-
-/* === Navigation tiles: one image only, no extra tile frame or active gradient === */
-.app-frame{grid-template-columns:282px minmax(0,1fr)!important}
-.sidebar{padding:22px 14px 22px 16px!important}
-.nav{gap:10px!important}
-.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){
- box-sizing:border-box!important;width:100%!important;height:64px!important;min-height:64px!important;
- flex:0 0 auto!important;padding:0!important;border:0!important;border-radius:0!important;
+ box-sizing:border-box!important;display:block!important;width:100%!important;min-width:0!important;
+ height:64px!important;min-height:64px!important;flex:0 0 auto!important;
+ padding:0!important;border:0!important;border-radius:0!important;
  font-size:0!important;color:transparent!important;text-shadow:none!important;
  background-color:transparent!important;background-repeat:no-repeat!important;
- background-position:center!important;background-size:100% 100%!important;
+ background-position:center!important;background-size:contain!important;
  box-shadow:none!important;overflow:hidden!important;outline-offset:3px;
- transition:filter .2s ease!important;opacity:1!important;transform:none!important;
+ opacity:1!important;transform:none!important;filter:none!important;
+ transition:filter .18s ease!important;
 }
 .nav button .nav-label,.nav button .nav-icon{display:none!important}
-.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"].active{background:transparent url("assets/Goldener Start am Waldsee.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"].active{background:transparent url("assets/Złoty planer wypraw wędkarskich.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"].active{background:transparent url("assets/Magazyn zapasów nad jeziorem.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"].active{background:transparent url("assets/Goldene Rezepturen am Seeufer.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.webp") center/100% 100% no-repeat!important}
-.nav button,
-.nav button:visited,
-.nav button:hover,
-.nav button:focus,
-.nav button:focus-visible,
-.nav button.active{
- opacity:1!important;
-}
-.nav button:hover{filter:brightness(1.08) saturate(1.10)!important}
-.nav button.active{
- filter:brightness(1.14) saturate(1.12)!important;
- outline:2px solid #ffe09a!important;
- outline-offset:1px;
- z-index:2;
-}
+.nav button[data-page="start"]{background-image:url("./assets/Goldener%20Start%20am%20Waldsee.webp")!important}
+.nav button[data-page="plan"]{background-image:url("./assets/Z%C5%82oty%20planer%20wypraw%20w%C4%99dkarskich.webp")!important}
+.nav button[data-page="stock"]{background-image:url("./assets/Magazyn%20zapas%C3%B3w%20nad%20jeziorem.webp")!important}
+.nav button[data-page="recipes"]{background-image:url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp")!important}
+.nav button[data-page="buy"]{background-image:url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp")!important}
+.nav button[data-page="history"]{background-image:url("./assets/Geschichte%20des%20Angelns.webp")!important}
+.nav button:hover{filter:brightness(1.08)!important}
+.nav button.active{filter:brightness(1.12)!important;outline:2px solid #ffe09a!important;outline-offset:1px;z-index:2}
 .nav button:focus-visible{outline:2px solid #ffe29a!important;outline-offset:3px}
 @media(max-width:900px){
  .app-frame{grid-template-columns:1fr!important}
@@ -569,8 +534,7 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav{display:flex!important;flex-direction:row!important;overflow-x:auto!important;align-items:stretch!important;gap:8px!important}
  .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:210px!important;min-width:210px!important;height:56px!important;min-height:56px!important}
 }
-
-/* === Seamless background with transparent header and sidebar === */
+/* Tło strony bez dodatkowej warstwy pod kafelkami */
 html,body{min-height:100%;background:#06120f!important}
 body{min-height:100vh!important;background:none!important;position:relative!important}
 body::before{
@@ -582,60 +546,7 @@ body::before{
 .top{background:transparent!important;background-image:none!important;border:0!important;border-bottom:0!important;box-shadow:none!important;outline:0!important}
 .top::before,.top::after{display:none!important}
 .top-inner{background:transparent!important;border:0!important;box-shadow:none!important}
-.app-frame{background:transparent!important}
-.sidebar{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;outline:0!important}
-.sidebar::before,.sidebar::after{display:none!important}
-.sidebar-title{background:transparent!important;border:0!important;box-shadow:none!important}
 .shell{background:rgba(5,16,13,.10)!important}
-
-
-/* Truly remove any background layer behind the left navigation tiles */
-.sidebar,
-.sidebar *,
-.sidebar-title,
-.sidebar-note,
-.nav,
-.nav button,
-.nav button:hover,
-.nav button:focus,
-.nav button:focus-visible,
-.nav button.active{
- background-color:transparent!important;
- background-image:none!important;
- box-shadow:none!important;
-}
-.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"].active{background:transparent url("assets/Goldener Start am Waldsee.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"].active{background:transparent url("assets/Złoty planer wypraw wędkarskich.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"].active{background:transparent url("assets/Magazyn zapasów nad jeziorem.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"].active{background:transparent url("assets/Goldene Rezepturen am Seeufer.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.webp") center/100% 100% no-repeat!important}
-.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.webp") center/100% 100% no-repeat!important}
-
-/* Navigation artwork: keep the same natural proportions in default, hover, focus and active states */
-.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"]:focus,.nav button[data-page="start"]:focus-visible,.nav button[data-page="start"].active,
-.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"]:focus,.nav button[data-page="plan"]:focus-visible,.nav button[data-page="plan"].active,
-.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"]:focus,.nav button[data-page="stock"]:focus-visible,.nav button[data-page="stock"].active,
-.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"]:focus,.nav button[data-page="recipes"]:focus-visible,.nav button[data-page="recipes"].active,
-.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"]:focus,.nav button[data-page="buy"]:focus-visible,.nav button[data-page="buy"].active,
-.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"]:focus,.nav button[data-page="history"]:focus-visible,.nav button[data-page="history"].active{
- background-size:contain!important;
- background-position:center!important;
- background-repeat:no-repeat!important;
- background-color:transparent!important;
- transform:none!important;
-}
-
-
-/* HOTFIX: restore visible illustrated navigation tiles */
-.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"]:focus,.nav button[data-page="start"]:focus-visible,.nav button[data-page="start"].active{background-image:url("./assets/Goldener%20Start%20am%20Waldsee.webp")!important}
-.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"]:focus,.nav button[data-page="plan"]:focus-visible,.nav button[data-page="plan"].active{background-image:url("./assets/Z%C5%82oty%20planer%20wypraw%20w%C4%99dkarskich.webp")!important}
-.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"]:focus,.nav button[data-page="stock"]:focus-visible,.nav button[data-page="stock"].active{background-image:url("./assets/Magazyn%20zapas%C3%B3w%20nad%20jeziorem.webp")!important}
-.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"]:focus,.nav button[data-page="recipes"]:focus-visible,.nav button[data-page="recipes"].active{background-image:url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp")!important}
-.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"]:focus,.nav button[data-page="buy"]:focus-visible,.nav button[data-page="buy"].active{background-image:url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp")!important}
-.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"]:focus,.nav button[data-page="history"]:focus-visible,.nav button[data-page="history"].active{background-image:url("./assets/Geschichte%20des%20Angelns.webp")!important}
-.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){background-color:#0b1d14!important;background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important;min-height:64px!important;height:64px!important;opacity:1!important}
-.nav button .nav-label,.nav button .nav-icon{display:none!important}
-@media(max-width:900px){.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:210px!important;min-width:210px!important;height:56px!important;min-height:56px!important}}
 </style>
 </head>
 <body>
