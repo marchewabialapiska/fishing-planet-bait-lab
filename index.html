@@ -500,6 +500,32 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav-icon{flex-basis:30px;width:30px;height:30px;font-size:19px}
 }
 
+
+/* === Illustrated navigation tiles: use the six purpose-generated PNGs === */
+.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){
+ width:100%!important;min-height:62px!important;height:62px!important;flex:0 0 auto!important;
+ padding:0!important;border:1px solid #d5a54a!important;border-radius:9px!important;
+ font-size:0!important;color:transparent!important;text-shadow:none!important;
+ background-color:#0b1d14!important;background-repeat:no-repeat!important;
+ background-position:center 50%!important;background-size:100% 250%!important;
+ box-shadow:0 3px 10px #0005!important;overflow:hidden!important;
+}
+.nav button .nav-label,.nav button .nav-icon{display:none!important}
+.nav button[data-page="start"]{background-image:url("assets/Goldener Start am Waldsee.png")!important}
+.nav button[data-page="plan"]{background-image:url("assets/Złoty planer wypraw wędkarskich.png")!important}
+.nav button[data-page="stock"]{background-image:url("assets/Magazyn zapasów nad jeziorem.png")!important}
+.nav button[data-page="recipes"]{background-image:url("assets/Goldene Rezepturen am Seeufer.png")!important}
+.nav button[data-page="buy"]{background-image:url("assets/Zakupy nad jeziorem o zachodzie słońca.png")!important}
+.nav button[data-page="history"]{background-image:url("assets/Geschichte des Angelns.png")!important}
+.nav button:hover,.nav button.active{
+ border-color:#ffe29a!important;box-shadow:0 0 0 2px #dcae5044,0 0 16px #dcae5044!important;
+ filter:brightness(1.08)
+}
+.nav button:focus-visible{outline:2px solid #ffe29a!important;outline-offset:2px}
+@media(max-width:560px){
+ .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:210px!important;min-width:210px!important;height:58px!important;min-height:58px!important;background-size:100% 250%!important}
+}
+
 </style>
 </head>
 <body>
@@ -541,6 +567,8 @@ state.plan = Array.isArray(state.plan) ? state.plan : [];
 state.purchases = Array.isArray(state.purchases) ? state.purchases : [];
 state.history = Array.isArray(state.history) ? state.history : [];
 state.trips = Array.isArray(state.trips) ? state.trips : [];
+state.shoppingChecks = state.shoppingChecks && typeof state.shoppingChecks === "object" ? state.shoppingChecks : {};
+state.shoppingAmounts = state.shoppingAmounts && typeof state.shoppingAmounts === "object" ? state.shoppingAmounts : {};
 state.plan.forEach(p=>{ if(!("venue" in p)) p.venue=""; if(!("notes" in p)) p.notes=""; });
 let page="start";
 const pages=[["start","⌂","Start"],["plan","🎯","Plan wyprawy"],["stock","🎒","Magazyn"],["recipes","🧪","Receptury"],["buy","🛒","Zakupy"],["history","📋","Historia"]];
@@ -622,12 +650,17 @@ function planPage(){
   </div>
  </div>`).join("");
  let needs=Object.keys(n).sort((a,b)=>a.localeCompare(b,"pl")).map(k=>`<tr><td>${esc(k)}</td><td>${fmt(n[k])} g</td><td>${fmt(state.stock[k])} g</td><td>${n[k]>Number(state.stock[k]||0)?`<span class="status bad">BRAKUJE ${fmt(n[k]-Number(state.stock[k]||0))} g</span>`:`<span class="status ok">WYSTARCZY</span>`}</td></tr>`).join("");
+ const shoppingMissing=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0)).sort((a,b)=>a.localeCompare(b,"pl"));
+ const shoppingRows=shoppingMissing.map(k=>{const missing=Math.max(0,n[k]-Number(state.stock[k]||0));const amount=state.shoppingAmounts[k]??String(missing);return `<tr><td><strong>${esc(k)}</strong></td><td>${fmt(n[k])} g</td><td>${fmt(Number(state.stock[k]||0))} g</td><td><span class="status bad">${fmt(missing)} g</span></td><td><input type="number" min="0.1" step="0.1" value="${esc(amount)}" data-shopping-amount="${esc(k)}" aria-label="Kupiona ilość ${esc(k)} w gramach"></td><td><input type="checkbox" ${state.shoppingChecks[k]?"checked":""} data-shopping-check="${esc(k)}" aria-label="Oznacz ${esc(k)} jako kupione"></td></tr>`}).join("");
  return `<section class="panel"><div class="panelhead"><div><h2>Plan wypraw i przygotowania zanęt</h2><p class="muted">Utwórz wyprawę, wybierz łowisko, a następnie dodawaj dowolną liczbę opcji zanęty. Notatki są wspólne dla całej wyprawy.</p></div><button class="btn gold" id="add-plan">＋ Nowa wyprawa</button></div>
  <div class="notice">Magazyn zmienia się dopiero po „Zatwierdź zużycie”. Dodawanie lub usuwanie opcji nie zmienia stanów magazynowych.</div>
  ${rows||'<div class="empty">Nie ma zaplanowanych wypraw. Kliknij „Nowa wyprawa”, aby zacząć.</div>'}
  <div class="row" style="margin-top:16px"><button class="btn gold" id="confirm-plan">✓ Zatwierdź zużycie całego planu</button><button class="btn ghost" id="clear-plan">Wyczyść cały plan</button></div>
  </section>
- <section class="panel"><div class="panelhead"><div><h2>Lista składników dla planu</h2><p class="muted">Sumaryczne zapotrzebowanie na wszystkie opcje zanęty ze wszystkich wypraw.</p></div></div>${needs?table(["Składnik","Potrzeba","Masz","Kontrola"],needs):'<div class="empty">Wybierz recepturę, aby obliczyć zapotrzebowanie.</div>'}</section>`;
+ <section class="panel"><div class="panelhead"><div><h2>Lista składników dla planu</h2><p class="muted">Sumaryczne zapotrzebowanie na wszystkie opcje zanęty ze wszystkich wypraw.</p></div></div>${needs?table(["Składnik","Potrzeba","Masz","Kontrola"],needs):'<div class="empty">Wybierz recepturę, aby obliczyć zapotrzebowanie.</div>'}</section>
+ <section class="panel"><div class="panelhead"><div><h2>Lista zakupów na wyprawę</h2><p class="muted">Tylko brakujące składniki. Sprawdź kupione pozycje, wpisz faktycznie kupioną ilość i zatwierdź, aby dodać ją do magazynu.</p></div><span class="status ${shoppingMissing.length?"bad":"ok"}">${shoppingMissing.length?`${shoppingMissing.length} braków`:"Komplet składników"}</span></div>
+ ${shoppingRows?table(["Składnik","Potrzeba","Masz","Brakuje","Dodaj do magazynu (g)","Kupione"],shoppingRows):'<div class="empty">Na ten moment niczego nie brakuje — wybierz receptury i liczbę porcji powyżej.</div>'}
+ ${shoppingRows?`<div class="row" style="margin-top:16px"><button class="btn gold" id="confirm-shopping">✓ Dodaj kupione do magazynu</button><button class="btn ghost" id="reset-shopping-checks">Wyczyść odhaczenia</button></div><p class="muted" style="margin-top:10px">Odhaczenie samo w sobie nie zmienia zapasów. Magazyn i historia aktualizują się dopiero po zatwierdzeniu.</p>`:""}</section>`;
 }
 function stockPage(){
  let n=needForPlan();
@@ -702,6 +735,10 @@ function bind(){
  $("#confirm-plan")?.addEventListener("click",()=>{let plan=state.plan.filter(p=>p.recipe&&Number(p.portions)>0);if(!plan.length){toast("Plan jest pusty.");return;}let n=needForPlan(plan),short=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0));if(short.length){alert("Nie można zatwierdzić zużycia — brakuje składników:\\n"+short.map(k=>`${k}: brakuje ${fmt(n[k]-state.stock[k])} g`).join("\\n"));return;}if(!confirm("Potwierdzasz rzeczywiste zużycie całego planu? Stany magazynowe zostaną pomniejszone."))return;let now=new Date().toLocaleString("pl-PL");plan.forEach(p=>(state.recipes[p.recipe]||[]).forEach(it=>{let grams=it.grams*Number(p.portions);state.stock[it.ingredient]-=grams;state.history.push({date:now,type:"Zużycie",description:p.trip||"Plan zanęt",ingredient:it.ingredient,grams,details:`${p.recipe} · ${fmt(p.portions)} porcji`});}));state.plan=[];save();render();toast("Zużycie zapisane, magazyn zaktualizowany.");});
  document.querySelectorAll("[data-stock]").forEach(el=>el.onchange=()=>{state.stock[el.dataset.stock]=Math.max(0,Number(el.value)||0);save();render();toast("Stan magazynowy zapisany.");});
  $("#stock-search")?.addEventListener("input",e=>{let q=e.target.value.toLocaleLowerCase("pl");document.querySelectorAll("#content tbody tr").forEach(tr=>tr.style.display=tr.textContent.toLocaleLowerCase("pl").includes(q)?"":"none");});
+ document.querySelectorAll("[data-shopping-check]").forEach(el=>el.onchange=()=>{state.shoppingChecks[el.dataset.shoppingCheck]=el.checked;save();});
+ document.querySelectorAll("[data-shopping-amount]").forEach(el=>el.onchange=()=>{const k=el.dataset.shoppingAmount;state.shoppingAmounts[k]=el.value;save();});
+ $("#reset-shopping-checks")?.addEventListener("click",()=>{state.shoppingChecks={};save();render();});
+ $("#confirm-shopping")?.addEventListener("click",()=>{const rows=[...document.querySelectorAll("[data-shopping-check]:checked")];if(!rows.length){toast("Zaznacz składniki, które kupiłeś.");return;}const purchases=[];for(const el of rows){const ingredient=el.dataset.shoppingCheck;const grams=Number(state.shoppingAmounts[ingredient]??document.querySelector(`[data-shopping-amount="${CSS.escape(ingredient)}"]`)?.value);if(!Number.isFinite(grams)||grams<=0){alert(`Wpisz prawidłową ilość dla: ${ingredient}`);return;}purchases.push({ingredient,grams});}if(!confirm(`Dodać ${purchases.length} kupionych składników do magazynu i zapisać je w historii?`))return;const date=new Date().toLocaleString("pl-PL");purchases.forEach(({ingredient,grams})=>{state.stock[ingredient]=Number(state.stock[ingredient]||0)+grams;state.purchases.push({date,ingredient,grams,price:"",note:"Lista zakupów — plan wyprawy"});state.history.push({date,type:"Zakup",description:"Zakupy do planu wyprawy",ingredient,grams,details:"Dodano z listy zakupów"});delete state.shoppingChecks[ingredient];delete state.shoppingAmounts[ingredient];});save();render();toast("Kupione składniki dodane do magazynu.");});
  $("#buy-form")?.addEventListener("submit",e=>{e.preventDefault();let ingredient=$("#buy-ingredient").value,grams=Number($("#buy-grams").value);if(!ingredient||grams<=0)return;let date=new Date().toLocaleString("pl-PL"),price=$("#buy-price").value,note=$("#buy-note").value;state.stock[ingredient]=Number(state.stock[ingredient]||0)+grams;let purchase={date,ingredient,grams,price:price?`${Number(price).toFixed(2)}`:"",note};state.purchases.push(purchase);state.history.push({date,type:"Zakup",description:"Zakup składników",ingredient,grams,details:[price?`Cena: ${price} €`:"",note].filter(Boolean).join(" · ")});save();render();toast("Zakup zapisany, magazyn uzupełniony.");});
  $("#backup")?.addEventListener("click",()=>download("fishing-planet-kopia.json",JSON.stringify(state,null,2),"application/json"));
  $("#restore")?.addEventListener("click",()=>{let input=document.createElement("input");input.type="file";input.accept=".json,application/json";input.onchange=()=>{let f=input.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let imported=JSON.parse(reader.result);if(!imported.stock||!imported.recipes)throw Error();if(confirm("Import zastąpi obecne dane w tej przeglądarce. Kontynuować?")){state=imported;save();render();toast("Kopia danych zaimportowana.");}}catch(e){alert("Nieprawidłowy plik kopii.");}};reader.readAsText(f);};input.click();});
