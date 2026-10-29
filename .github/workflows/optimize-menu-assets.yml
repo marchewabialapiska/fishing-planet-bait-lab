@@ -11,6 +11,7 @@ on:
       - 'assets/Zakupy nad jeziorem o zachodzie słońca.png'
       - 'assets/Geschichte des Angelns.png'
       - '.github/workflows/optimize-menu-assets.yml'
+      - 'index.html'
   workflow_dispatch:
 
 permissions:
@@ -60,5 +61,6 @@ jobs:
             echo "No optimized assets changed."
           else
             git commit -m "Add optimized WebP menu artwork"
+            git pull --rebase origin main
             git push
           fi
