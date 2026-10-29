@@ -685,6 +685,28 @@ body::before{
  transform:scale(1.075);
 }
 
+
+/* Sidebar navigation tiles only: smooth enlargement on hover and while active */
+.nav button{
+ transform:scale(1)!important;
+ transform-origin:center center!important;
+ transition:transform .28s cubic-bezier(.2,.75,.25,1),filter .28s ease!important;
+ will-change:transform;
+}
+.nav button:hover,
+.nav button:focus-visible{
+ transform:scale(1.065)!important;
+ z-index:10!important;
+}
+.nav button.active{
+ transform:scale(1.045)!important;
+ z-index:9!important;
+}
+.nav button.active:hover,
+.nav button.active:focus-visible{
+ transform:scale(1.075)!important;
+}
+
 </style>
 </head>
 <body>
