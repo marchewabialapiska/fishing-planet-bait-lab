@@ -559,7 +559,16 @@ body::before{
 .nav button:hover[data-page="plan"],.nav button:focus[data-page="plan"],.nav button:focus-visible[data-page="plan"],.nav button.active[data-page="plan"]{background:transparent url("./assets/Z%C5%82oty%20planer%20wypraw%20w%C4%99dkarskich.webp") center/contain no-repeat!important}
 .nav button:hover[data-page="stock"],.nav button:focus[data-page="stock"],.nav button:focus-visible[data-page="stock"],.nav button.active[data-page="stock"]{background:transparent url("./assets/Magazyn%20zapas%C3%B3w%20nad%20jeziorem.webp") center/contain no-repeat!important}
 .nav button:hover[data-page="recipes"],.nav button:focus[data-page="recipes"],.nav button:focus-visible[data-page="recipes"],.nav button.active[data-page="recipes"]{background:transparent url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp") center/contain no-repeat!important}
-.nav button:hover[data-page="buy"],.nav button:focus[data-page="buy"],.nav button:focus-visible[data-page="buy"],.nav button.active[data-page="buy"]{background:transparent url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%9Bca.webp") center/contain no-repeat!important}
+/* Naprawa kafelka Zakupy: zachowaj grafikę we wszystkich stanach interakcji */
+.nav button[data-page="buy"]:hover,
+.nav button[data-page="buy"]:focus,
+.nav button[data-page="buy"]:focus-visible,
+.nav button[data-page="buy"].active{
+ background-color:transparent!important;
+ background-image:url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp")!important;
+ background-position:center!important;background-size:contain!important;background-repeat:no-repeat!important;
+ opacity:1!important;visibility:visible!important;
+}
 .nav button:hover[data-page="history"],.nav button:focus[data-page="history"],.nav button:focus-visible[data-page="history"],.nav button.active[data-page="history"]{background:transparent url("./assets/Geschichte%20des%20Angelns.webp") center/contain no-repeat!important}
 
 /* Wskaźnik aktywności bez ramki — tylko delikatne rozświetlenie grafiki */
