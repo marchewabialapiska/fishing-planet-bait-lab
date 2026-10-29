@@ -662,6 +662,29 @@ body::before{
 .nav button[data-page="buy"].active{background:transparent url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp") center/contain no-repeat!important}
 .nav button[data-page="history"].active{background:transparent url("./assets/Geschichte%20des%20Angelns.webp") center/contain no-repeat!important}
 
+
+/* Smooth, subtle all-direction scale on hover and for the selected tile */
+.nav button{
+ position:relative;
+ transform:scale(1);
+ transform-origin:center center;
+ transition:transform .28s cubic-bezier(.2,.75,.25,1),filter .28s ease;
+ will-change:transform;
+}
+.nav button:hover,
+.nav button:focus-visible{
+ transform:scale(1.065);
+ z-index:3;
+}
+.nav button.active{
+ transform:scale(1.045);
+ z-index:2;
+}
+.nav button.active:hover,
+.nav button.active:focus-visible{
+ transform:scale(1.075);
+}
+
 </style>
 </head>
 <body>
