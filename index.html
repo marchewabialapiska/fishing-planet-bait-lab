@@ -748,6 +748,54 @@ body::before{
  transform:scale(1.075)!important;
 }
 
+
+/* Korekta czytelności kafelków PLANER i ZANĘTY */
+.nav button[data-page="plan"]{
+  background-size:112% auto!important;
+}
+.nav button:hover[data-page="plan"],
+.nav button:focus[data-page="plan"],
+.nav button:focus-visible[data-page="plan"],
+.nav button.active[data-page="plan"]{
+  background-size:112% auto!important;
+}
+/* Obrót samej grafiki ZANĘTY o 90° w prawo, bez obracania przycisku/obszaru klikania */
+.nav button[data-page="recipes"]{
+  position:relative!important;
+  background-image:none!important;
+  isolation:isolate;
+}
+.nav button[data-page="recipes"]::before{
+  content:"";
+  position:absolute;
+  width:38%;
+  height:264%;
+  left:31%;
+  top:-82%;
+  background-image:url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp");
+  background-position:center;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  transform:rotate(90deg);
+  transform-origin:center;
+  pointer-events:none;
+  z-index:-1;
+}
+.nav button:hover[data-page="recipes"],
+.nav button:focus[data-page="recipes"],
+.nav button:focus-visible[data-page="recipes"],
+.nav button.active[data-page="recipes"]{
+  background-image:none!important;
+}
+@media(max-width:900px){
+  .nav button[data-page="recipes"]::before{
+    width:40%;
+    height:250%;
+    left:30%;
+    top:-75%;
+  }
+}
+
 </style>
 </head>
 <body>
