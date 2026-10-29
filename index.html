@@ -625,6 +625,17 @@ body::before{
  transform:none!important;
 }
 
+
+/* HOTFIX: restore visible illustrated navigation tiles */
+.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"]:focus,.nav button[data-page="start"]:focus-visible,.nav button[data-page="start"].active{background-image:url("./assets/Goldener%20Start%20am%20Waldsee.webp")!important}
+.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"]:focus,.nav button[data-page="plan"]:focus-visible,.nav button[data-page="plan"].active{background-image:url("./assets/Z%C5%82oty%20planer%20wypraw%20w%C4%99dkarskich.webp")!important}
+.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"]:focus,.nav button[data-page="stock"]:focus-visible,.nav button[data-page="stock"].active{background-image:url("./assets/Magazyn%20zapas%C3%B3w%20nad%20jeziorem.webp")!important}
+.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"]:focus,.nav button[data-page="recipes"]:focus-visible,.nav button[data-page="recipes"].active{background-image:url("./assets/Goldene%20Rezepturen%20am%20Seeufer.webp")!important}
+.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"]:focus,.nav button[data-page="buy"]:focus-visible,.nav button[data-page="buy"].active{background-image:url("./assets/Zakupy%20nad%20jeziorem%20o%20zachodzie%20s%C5%82o%C5%84ca.webp")!important}
+.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"]:focus,.nav button[data-page="history"]:focus-visible,.nav button[data-page="history"].active{background-image:url("./assets/Geschichte%20des%20Angelns.webp")!important}
+.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){background-color:#0b1d14!important;background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important;min-height:64px!important;height:64px!important;opacity:1!important}
+.nav button .nav-label,.nav button .nav-icon{display:none!important}
+@media(max-width:900px){.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:210px!important;min-width:210px!important;height:56px!important;min-height:56px!important}}
 </style>
 </head>
 <body>
