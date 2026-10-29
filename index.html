@@ -615,15 +615,16 @@ body::before{
 
 
 /* Intro filmowe — logo pojawia się na końcowym rozbryzgu */
-#fpl-intro{position:fixed;inset:0;z-index:2147483647;background:#07110f;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity 1.15s ease,visibility 1.15s ease}
+#fpl-intro{position:fixed;inset:0;z-index:2147483647;background:#000;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;isolation:isolate;transition:opacity 1.65s cubic-bezier(.22,.61,.36,1),visibility 1.65s ease}
 #fpl-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
-#fpl-intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#07110f;display:block;z-index:0}
-#fpl-intro::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(0,8,7,.2) 100%);opacity:.8}
-#fpl-intro-logo{position:relative;z-index:2;width:min(68vw,620px);max-height:42vh;object-fit:contain;opacity:0;transform:translateY(12px) scale(.96);filter:drop-shadow(0 8px 30px rgba(0,0,0,.65));transition:opacity 1.05s ease,transform 1.2s cubic-bezier(.2,.75,.2,1)}
+#fpl-intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;display:block;z-index:0}
+#fpl-intro::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 25%,rgba(0,8,7,.2) 100%);opacity:.8}
+#fpl-intro-logo{position:relative;z-index:2;width:min(76vw,700px);max-height:48vh;object-fit:contain;opacity:0;transform:translateY(18px) scale(.72);filter:drop-shadow(0 8px 30px rgba(0,0,0,.65));transition:opacity 1.35s ease,transform 1.75s cubic-bezier(.16,1,.3,1)}
 #fpl-intro.logo-visible #fpl-intro-logo{opacity:1;transform:translateY(0) scale(1)}
 #fpl-intro-skip{position:absolute;z-index:2147483647;pointer-events:auto;right:max(22px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 17px;background:rgba(3,13,11,.48);backdrop-filter:blur(12px);color:#fff;font:600 13px/1.2 system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;transition:background .2s ease,opacity .2s ease}
 #fpl-intro-skip:hover{background:rgba(3,13,11,.8)}
-@media(max-width:600px){#fpl-intro-logo{width:86vw;max-height:32vh}#fpl-intro-skip{right:14px;bottom:14px}}
+@media(max-width:600px){#fpl-intro-logo{width:90vw;max-height:36vh}#fpl-intro-skip{right:14px;bottom:14px}}
+@media(prefers-reduced-motion:reduce){#fpl-intro,#fpl-intro-logo{transition:none!important}}
 @media(prefers-reduced-motion:reduce){#fpl-intro,#fpl-intro-logo{transition:none!important}}
 
 </style>
@@ -649,24 +650,22 @@ body::before{
   finished=true;clearTimeout(logoTimer);clearTimeout(fadeTimer);
   overlay.classList.add('is-leaving');
   try{video.pause()}catch(e){}
-  fadeTimer=setTimeout(()=>{overlay.remove()},1200);
+  fadeTimer=setTimeout(()=>{overlay.remove()},1700);
  }
  function maybeShowLogo(){
-  if(Number.isFinite(video.duration)&&video.duration>0&&video.currentTime>=video.duration-2.1)showLogo();
+  if(Number.isFinite(video.duration)&&video.duration>0&&video.currentTime>=Math.max(0,video.duration-3.2))showLogo();
  }
  skip.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();finishIntro()});
  video.addEventListener('timeupdate',maybeShowLogo);
- video.addEventListener('ended',function(){showLogo();setTimeout(finishIntro,2100)});
+ video.addEventListener('ended',function(){showLogo();setTimeout(finishIntro,1600)});
  video.addEventListener('error',function(){setTimeout(finishIntro,800)});
  video.addEventListener('canplay',function(){video.classList.add('ready')},{once:true});
- // Begin playback as soon as the browser can decode the first frame.
  function startPlayback(){
   const p=video.play();
   if(p&&p.catch)p.catch(function(){/* Keep skip control available; some browsers require a user gesture. */});
  }
  video.addEventListener('canplay',startPlayback,{once:true});
  startPlayback();
- // Safety exit prevents a stalled/unsupported media file from trapping the user.
  setTimeout(function(){if(!finished&&(video.error||video.readyState<2)&&video.currentTime<0.1)finishIntro()},10000);
 })();
 </script>
