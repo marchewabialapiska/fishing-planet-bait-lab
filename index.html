@@ -760,30 +760,38 @@ body::before{
   background-size:112% auto!important;
 }
 
-/* START hero: use the transparent pike banner as the complete heading artwork */
+/* START hero: smaller floating pike artwork, blended into the page with no visible card/frame */
 .start-hero-tile.start-hero-graphic{
- display:block!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
  min-height:0!important;
  padding:0!important;
- overflow:hidden!important;
- background:linear-gradient(110deg,rgba(4,17,13,.50),rgba(5,25,19,.18))!important;
+ margin:0 0 18px!important;
+ overflow:visible!important;
+ background:transparent!important;
  border:0!important;
+ border-radius:0!important;
  box-shadow:none!important;
 }
-.start-hero-tile.start-hero-graphic:before{display:none!important}
+.start-hero-tile.start-hero-graphic:before,
+.start-hero-tile.start-hero-graphic:after{display:none!important;content:none!important}
 .start-banner-image{
  display:block!important;
- width:100%!important;
+ width:82%!important;
  height:auto!important;
- max-width:100%!important;
- max-height:none!important;
+ max-width:1200px!important;
+ max-height:250px!important;
  object-fit:contain!important;
  margin:0 auto!important;
- filter:drop-shadow(0 5px 12px rgba(0,0,0,.28));
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ filter:drop-shadow(0 3px 8px rgba(0,0,0,.22));
 }
 @media(max-width:650px){
- .start-hero-tile.start-hero-graphic{padding:0!important;margin-bottom:14px!important}
- .start-banner-image{width:100%!important;height:auto!important}
+ .start-hero-tile.start-hero-graphic{padding:0!important;margin:0 0 14px!important}
+ .start-banner-image{width:96%!important;max-height:180px!important}
 }
 
 </style>
