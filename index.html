@@ -933,6 +933,12 @@ body::before{
  #app .start-stock-icon{width:48px!important;height:48px!important;flex-basis:48px!important}
 }
 
+
+/* START: custom 3D fishing-history icon, matching other section headers */
+#app .start-history-title{display:flex!important;align-items:center!important;gap:10px!important;font-size:21px!important;line-height:1.15!important}
+#app .start-history-icon{display:block!important;width:58px!important;height:58px!important;flex:0 0 58px!important;object-fit:contain!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.24))}
+@media(max-width:560px){#app .start-history-title{font-size:19px!important;gap:8px!important}#app .start-history-icon{width:48px!important;height:48px!important;flex-basis:48px!important}}
+
 </style>
 </head>
 <body>
@@ -1034,7 +1040,7 @@ function startPage(){
   </div>
   <div class="start-side-stack">
    <section class="panel"><div class="panelhead"><div><h2 class="start-stock-title"><img class="start-stock-icon" src="assets/stan-plecaka.png" alt="" loading="lazy"> Stan plecaka</h2><p class="muted">Podgląd zapasów bez otwierania magazynu.</p></div><button class="btn ghost" data-go="stock">Magazyn</button></div><div class="start-stock-list">${stockPreview||'<div class="empty">Magazyn jest pusty.</div>'}</div><p class="muted">Pokazano pierwsze 7 składników z magazynu.</p></section>
-   <section class="panel"><div class="panelhead"><div><h2><span class="start-section-icon">🕘</span> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
+   <section class="panel"><div class="panelhead"><div><h2 class="start-history-title"><img class="start-history-icon" src="assets/ostatnie-dzialania.png" alt="" loading="lazy"> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
   </div>
  </div>
  <section class="panel start-actions-panel"><div class="panelhead"><div><h2>Szybkie działania</h2><p class="muted">Najczęściej używane skróty — zawsze pod ręką.</p></div><span class="start-actions-emblem">✦</span></div><div class="start-actions-grid"><button class="btn gold" data-go="plan">＋ Zaplanuj wyprawę</button><button class="btn" data-go="buy">＋ Dodaj zakup</button><button class="btn ghost" data-go="stock">✎ Zmień stany plecaka</button><button class="btn ghost" id="backup">⇩ Eksportuj kopię danych</button><button class="btn ghost" id="restore">⇧ Importuj kopię</button></div></section>`;
