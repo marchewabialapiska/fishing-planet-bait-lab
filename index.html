@@ -663,25 +663,25 @@ body::before{
 .nav button[data-page="history"].active{background:transparent url("./assets/Geschichte%20des%20Angelns.webp") center/contain no-repeat!important}
 
 
-/* Smooth, subtle all-direction scale on hover and for the selected tile */
-.nav button{
+/* Smooth scaling is scoped strictly to the six sidebar navigation tiles */
+#nav button{
  position:relative;
  transform:scale(1);
  transform-origin:center center;
  transition:transform .28s cubic-bezier(.2,.75,.25,1),filter .28s ease;
  will-change:transform;
 }
-.nav button:hover,
-.nav button:focus-visible{
+#nav button:hover,
+#nav button:focus-visible{
  transform:scale(1.065);
  z-index:3;
 }
-.nav button.active{
+#nav button.active{
  transform:scale(1.045);
  z-index:2;
 }
-.nav button.active:hover,
-.nav button.active:focus-visible{
+#nav button.active:hover,
+#nav button.active:focus-visible{
  transform:scale(1.075);
 }
 
