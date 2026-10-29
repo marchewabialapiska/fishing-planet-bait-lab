@@ -861,12 +861,10 @@ render();
  const logo=document.getElementById('fpl-intro-logo');
  const skip=document.getElementById('fpl-intro-skip');
  if(!overlay||!video)return;
- const key='fplBaitLabIntroSeenV1';
  let finished=false, logoTimer=null, endTimer=null;
  function finishIntro(){
   if(finished)return;
   finished=true;
-  try{localStorage.setItem(key,'1')}catch(e){}
   clearTimeout(logoTimer);clearTimeout(endTimer);
   overlay.classList.add('is-leaving');
   video.pause();
@@ -887,9 +885,6 @@ render();
  video.addEventListener('loadedmetadata',scheduleLogo,{once:true});
  video.addEventListener('ended',onEnded,{once:true});
  video.addEventListener('error',finishIntro,{once:true});
- let alreadySeen=false;
- try{alreadySeen=localStorage.getItem(key)==='1'}catch(e){}
- if(alreadySeen){finishIntro();return}
  const playPromise=video.play();
  if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(()=>finishIntro());
  // Awaryjne zabezpieczenie: jeśli film nie zacznie odtwarzania, nie zostawiaj pustego ekranu.
