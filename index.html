@@ -575,19 +575,28 @@ body::before{
 .sidebar-title{background:transparent!important;border:0!important;box-shadow:none!important}
 .shell{background:rgba(5,16,13,.10)!important}
 
-/* Remove all extra fills behind left navigation artwork */
-.sidebar,.sidebar-title,.sidebar-note,.nav,.nav button,.nav button:hover,.nav button.active{
+
+/* Truly remove any background layer behind the left navigation tiles */
+.sidebar,
+.sidebar *,
+.sidebar-title,
+.sidebar-note,
+.nav,
+.nav button,
+.nav button:hover,
+.nav button:focus,
+.nav button:focus-visible,
+.nav button.active{
  background-color:transparent!important;
+ background-image:none!important;
  box-shadow:none!important;
 }
-.nav button,.nav button:hover,.nav button.active{
- border:0!important;
-}
-.nav button.active{
- outline:2px solid #ffe09a!important;
- outline-offset:1px;
-}
-.sidebar-note{background:transparent!important;border:0!important}
+.nav button[data-page="start"],.nav button[data-page="start"]:hover,.nav button[data-page="start"].active{background:transparent url("assets/Goldener Start am Waldsee.png") center/100% 100% no-repeat!important}
+.nav button[data-page="plan"],.nav button[data-page="plan"]:hover,.nav button[data-page="plan"].active{background:transparent url("assets/Złoty planer wypraw wędkarskich.png") center/100% 100% no-repeat!important}
+.nav button[data-page="stock"],.nav button[data-page="stock"]:hover,.nav button[data-page="stock"].active{background:transparent url("assets/Magazyn zapasów nad jeziorem.png") center/100% 100% no-repeat!important}
+.nav button[data-page="recipes"],.nav button[data-page="recipes"]:hover,.nav button[data-page="recipes"].active{background:transparent url("assets/Goldene Rezepturen am Seeufer.png") center/100% 100% no-repeat!important}
+.nav button[data-page="buy"],.nav button[data-page="buy"]:hover,.nav button[data-page="buy"].active{background:transparent url("assets/Zakupy nad jeziorem o zachodzie słońca.png") center/100% 100% no-repeat!important}
+.nav button[data-page="history"],.nav button[data-page="history"]:hover,.nav button[data-page="history"].active{background:transparent url("assets/Geschichte des Angelns.png") center/100% 100% no-repeat!important}
 </style>
 </head>
 <body>
