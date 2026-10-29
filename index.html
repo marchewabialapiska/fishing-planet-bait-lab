@@ -557,21 +557,18 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){width:160px!important;min-width:160px!important;height:40px!important;min-height:40px!important}
 }
 
-/* === Full-page lakeside background artwork === */
-html{min-height:100%;background:#06120f!important}
-body{
- min-height:100vh!important;
- background-color:#06120f!important;
- background-image:linear-gradient(rgba(4,14,11,.48),rgba(4,14,11,.62)),url("assets/site-background.png")!important;
- background-position:center center!important;
- background-size:cover!important;
- background-repeat:no-repeat!important;
- background-attachment:fixed!important;
+/* === Full-page lakeside background artwork (fixed layer behind the app) === */
+html,body{min-height:100%;background:#06120f!important}
+body{min-height:100vh!important;background:none!important;position:relative!important}
+body::before{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background-image:linear-gradient(rgba(4,14,11,.34),rgba(4,14,11,.48)),url("./assets/site-background.png");
+ background-position:center center;background-size:cover;background-repeat:no-repeat;
 }
-#app{background:transparent!important}
+#app{position:relative;z-index:1;min-height:100vh;background:transparent!important}
 .app-frame{background:transparent!important}
-.sidebar{background:rgba(5,19,15,.76)!important;backdrop-filter:blur(3px)}
-.shell{background:rgba(5,16,13,.16)!important}
+.sidebar{background:rgba(5,19,15,.62)!important;backdrop-filter:blur(3px)}
+.shell{background:rgba(5,16,13,.08)!important}
 </style>
 </head>
 <body>
