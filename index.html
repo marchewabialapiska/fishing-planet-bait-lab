@@ -1115,6 +1115,64 @@ body::before{
 
 
 
+
+/* Improve readability across the START dashboard without changing its layout */
+#app .start-dashboard-grid .start-stock-name strong,
+#app .start-dashboard-grid .start-stock-qty,
+#app .start-dashboard-grid .start-trip-body strong,
+#app .start-dashboard-grid .start-buy-row span,
+#app .start-dashboard-grid .start-buy-row strong,
+#app .start-dashboard-grid .start-activity-copy strong{
+  font-size:14px!important;
+  line-height:1.4!important;
+}
+#app .start-dashboard-grid .start-trip-body span,
+#app .start-dashboard-grid .start-activity-copy span{
+  font-size:12px!important;
+  line-height:1.5!important;
+}
+#app .start-dashboard-grid .start-trip-body small,
+#app .start-dashboard-grid .start-activity-copy small,
+#app .start-dashboard-grid .start-activity-row>b{
+  font-size:11px!important;
+  line-height:1.4!important;
+}
+#app .start-dashboard-grid .start-stock-row,
+#app .start-dashboard-grid .start-buy-row,
+#app .start-dashboard-grid .start-trip-card,
+#app .start-dashboard-grid .start-activity-row{
+  gap:10px!important;
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+}
+#app .start-dashboard-grid .start-stock-row>img,
+#app .start-dashboard-grid .start-buy-row>img{
+  width:30px!important;height:30px!important;
+}
+#app .start-dashboard-grid .start-stock-row .status{
+  font-size:10px!important;
+}
+#app .start-dashboard-grid .start-buy-row .btn,
+#app .start-dashboard-grid .start-trip-card .btn,
+#app .start-dashboard-grid .start-trip-card button{
+  font-size:12px!important;
+  padding:8px 11px!important;
+}
+@media(max-width:650px){
+  #app .start-dashboard-grid .start-stock-name strong,
+  #app .start-dashboard-grid .start-stock-qty,
+  #app .start-dashboard-grid .start-trip-body strong,
+  #app .start-dashboard-grid .start-buy-row span,
+  #app .start-dashboard-grid .start-buy-row strong,
+  #app .start-dashboard-grid .start-activity-copy strong{
+    font-size:13px!important;
+  }
+  #app .start-dashboard-grid .start-trip-body span,
+  #app .start-dashboard-grid .start-activity-copy span{
+    font-size:12px!important;
+  }
+}
+
 /* Match backpack stock rows and planned-trip cards to the same dark translucent theme */
 #app .start-dashboard-grid .start-stock-row,
 #app .start-dashboard-grid .start-trip-card{
