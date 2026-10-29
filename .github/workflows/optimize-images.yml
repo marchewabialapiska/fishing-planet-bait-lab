@@ -34,39 +34,32 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from PIL import Image
-          import re
 
           assets = Path("assets")
-          excluded = {"site-background.png"}
-          created = []
           replacements = {}
 
           for path in assets.rglob("*"):
               if not path.is_file() or path.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
                   continue
-              if path.name.lower() in excluded:
-                  print(f"Keeping original untouched: {path}")
-                  continue
 
               target = path.with_suffix(".webp")
               try:
-                  with Image.open(path) as image:
-                      image.load()
+                  with Image.open(path) as source:
+                      source.load()
+                      image = source
                       if image.mode not in ("RGB", "RGBA"):
                           image = image.convert("RGBA" if "transparency" in image.info else "RGB")
-                      image.save(target, "WEBP", quality=88, method=6)
-                  created.append(target.as_posix())
+                      quality = 84 if path.name.lower() == "site-background.png" else 88
+                      image.save(target, "WEBP", quality=quality, method=6)
                   replacements[path.as_posix()] = target.as_posix()
                   replacements[path.name] = target.name
-                  print(f"Optimized: {path} -> {target}")
+                  print(f"Optimized copy created, original preserved: {path} -> {target}")
               except Exception as exc:
                   print(f"Skipped {path}: {exc}")
 
           html_path = Path("index.html")
           html = html_path.read_text(encoding="utf-8")
           for old, new in sorted(replacements.items(), key=lambda item: len(item[0]), reverse=True):
-              if old == "site-background.png" or new == "site-background.webp":
-                  continue
               html = html.replace(old, new)
           html_path.write_text(html, encoding="utf-8")
           PY
