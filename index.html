@@ -1277,6 +1277,32 @@ body::before{
   #app .start-dashboard-grid .start-trip-card .start-trip-body>small{font-size:14px!important}
 }
 
+
+/* Make all START section helper notes easier to read */
+#app .start-dashboard-grid .panelhead p.muted,
+#app .start-actions-panel .panelhead p.muted{
+  font-size:16px!important;
+  line-height:1.55!important;
+  color:#d0ddd2!important;
+}
+/* Match the Quick Actions heading to the Do dokupienia heading */
+#app .start-dashboard-grid .start-buy-title,
+#app .start-actions-panel .panelhead h2{
+  font-size:21px!important;
+  line-height:1.2!important;
+  font-weight:850!important;
+}
+@media(max-width:650px){
+  #app .start-dashboard-grid .panelhead p.muted,
+  #app .start-actions-panel .panelhead p.muted{
+    font-size:14px!important;
+  }
+  #app .start-dashboard-grid .start-buy-title,
+  #app .start-actions-panel .panelhead h2{
+    font-size:19px!important;
+  }
+}
+
 </style>
 </head>
 <body>
