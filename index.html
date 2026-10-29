@@ -574,6 +574,20 @@ body::before{
 .sidebar::before,.sidebar::after{display:none!important}
 .sidebar-title{background:transparent!important;border:0!important;box-shadow:none!important}
 .shell{background:rgba(5,16,13,.10)!important}
+
+/* Remove all extra fills behind left navigation artwork */
+.sidebar,.sidebar-title,.sidebar-note,.nav,.nav button,.nav button:hover,.nav button.active{
+ background-color:transparent!important;
+ box-shadow:none!important;
+}
+.nav button,.nav button:hover,.nav button.active{
+ border:0!important;
+}
+.nav button.active{
+ outline:2px solid #ffe09a!important;
+ outline-offset:1px;
+}
+.sidebar-note{background:transparent!important;border:0!important}
 </style>
 </head>
 <body>
