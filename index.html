@@ -1303,6 +1303,32 @@ body::before{
   }
 }
 
+
+/* START dashboard metrics: match framed translucent sections */
+#app .metrics .metric{
+  background:rgba(4,22,16,.48)!important;
+  background-image:none!important;
+  border:1px solid rgba(218,190,111,.24)!important;
+  border-radius:16px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.18)!important;
+  backdrop-filter:blur(3px)!important;
+  -webkit-backdrop-filter:blur(3px)!important;
+  color:#edf5eb!important;
+}
+/* Metric titles: yellow and sized like dashboard section headings */
+#app .metrics .metric .label{
+  font-size:21px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  color:#f2cf7d!important;
+}
+/* Keep current value size and color; remove tiny explanatory notes */
+#app .metrics .metric .hint{
+  display:none!important;
+}
+
 </style>
 </head>
 <body>
