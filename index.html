@@ -798,45 +798,7 @@ body::before{
 </style>
 </head>
 <body>
-<div id="fpl-intro" aria-label="Intro Fishing Planet Bait Lab">
- <video id="fpl-intro-video" autoplay muted playsinline preload="auto" aria-hidden="true">
-  <source src="/fishing-planet-bait-lab/assets/fpl_intro.mp4" type="video/mp4">
- </video>
- <img id="fpl-intro-logo" src="/fishing-planet-bait-lab/assets/fpl_bait_lab_logo.png" alt="Fishing Planet Bait Lab">
- <button id="fpl-intro-skip" type="button">Pomiń intro <span aria-hidden="true">→</span></button>
-</div><script>
-(function(){
- const overlay=document.getElementById('fpl-intro');
- const video=document.getElementById('fpl-intro-video');
- const logo=document.getElementById('fpl-intro-logo');
- const skip=document.getElementById('fpl-intro-skip');
- if(!overlay||!video||!logo||!skip)return;
- let finished=false, logoShown=false, fadeTimer=null, logoTimer=null;
- function showLogo(){if(finished||logoShown)return;logoShown=true;overlay.classList.add('logo-visible');}
- function finishIntro(){
-  if(finished)return;
-  finished=true;clearTimeout(logoTimer);clearTimeout(fadeTimer);
-  overlay.classList.add('is-leaving');
-  try{video.pause()}catch(e){}
-  fadeTimer=setTimeout(()=>{overlay.remove()},1550);
- }
- function maybeShowLogo(){
-  if(Number.isFinite(video.duration)&&video.duration>0&&video.currentTime>=Math.max(0,video.duration-3.2))showLogo();
- }
- skip.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();finishIntro()});
- video.addEventListener('timeupdate',maybeShowLogo);
- video.addEventListener('ended',function(){showLogo();setTimeout(finishIntro,1500)});
- video.addEventListener('error',function(){setTimeout(finishIntro,800)});
- video.addEventListener('canplay',function(){video.classList.add('ready')},{once:true});
- function startPlayback(){
-  const p=video.play();
-  if(p&&p.catch)p.catch(function(){/* Keep skip control available; some browsers require a user gesture. */});
- }
- video.addEventListener('canplay',startPlayback,{once:true});
- startPlayback();
- setTimeout(function(){if(!finished&&(video.error||video.readyState<2)&&video.currentTime<0.1)finishIntro()},10000);
-})();
-</script>
+<!-- Intro tymczasowo wyłączone; można przywrócić później. -->
 
 <div id="app">
 <header class="top">
