@@ -456,6 +456,50 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
  .nav button:not([data-page="start"]){font-size:14px;min-height:42px;padding:9px 11px}
 }
 
+
+/* Unified illustrated-menu treatment inspired by the generated Bait Lab concept */
+.nav{gap:9px!important}
+.nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){
+ display:flex!important;align-items:center!important;gap:14px!important;
+ width:100%!important;min-height:58px!important;height:auto!important;
+ padding:9px 13px!important;border:1px solid #c8943b66!important;border-radius:10px!important;
+ background:linear-gradient(105deg,#143426 0%,#0a1d15 76%,#10291d 100%)!important;
+ color:#edc36c!important;font-family:Georgia,"Times New Roman",serif!important;
+ font-size:19px!important;font-weight:800!important;letter-spacing:1.1px!important;
+ font-variant:small-caps;line-height:1.15!important;text-align:left!important;
+ text-shadow:0 1px 0 #4a2b0b,0 2px 8px #0008!important;
+ box-shadow:inset 0 1px 0 #f6d99020,0 3px 10px #0003!important;
+ overflow:hidden;transform:none!important;
+ transition:color .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease!important
+}
+.nav button:hover,.nav button[data-page="start"]:hover,.nav button:not([data-page="start"]):hover{
+ background:linear-gradient(105deg,#204a33 0%,#10281c 76%,#183b29 100%)!important;
+ color:#ffe6a0!important;border-color:#f0c76b!important;
+ box-shadow:inset 0 1px 0 #fff0b52c,0 0 13px #dba74524!important
+}
+.nav button.active,.nav button[data-page="start"].active,.nav button:not([data-page="start"]).active{
+ background:linear-gradient(105deg,#dcae50 0%,#b9802c 76%,#95651f 100%)!important;
+ color:#17251a!important;border-color:#ffe09a!important;
+ text-shadow:0 1px 0 #fff0b5!important;
+ box-shadow:inset 0 1px 0 #fff0b54d,0 3px 14px #dba74530!important
+}
+.nav-icon{
+ flex:0 0 34px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+ border-radius:7px;border:1px solid #d5a44980;
+ background:linear-gradient(145deg,#244a32,#0a1a12);
+ font-family:Arial,sans-serif;font-size:22px;font-variant:normal;letter-spacing:0;
+ text-shadow:0 1px 5px #e9b84a44;box-shadow:inset 0 1px 0 #fff2
+}
+.nav button.active .nav-icon{
+ background:linear-gradient(145deg,#fff0b0,#d79b37);border-color:#fff0b0;
+ box-shadow:inset 0 1px 0 #fff8
+}
+.nav-label{display:block;min-width:0}
+@media(max-width:560px){
+ .nav button,.nav button[data-page="start"],.nav button:not([data-page="start"]){min-height:52px!important;font-size:17px!important;padding:8px 10px!important;gap:10px!important}
+ .nav-icon{flex-basis:30px;width:30px;height:30px;font-size:19px}
+}
+
 </style>
 </head>
 <body>
@@ -514,7 +558,7 @@ function save(){
   }
 }
 function toast(msg){let el=document.createElement("div");el.className="toast";el.textContent=msg;document.body.appendChild(el);setTimeout(()=>el.remove(),2400);}
-function nav(){ $("#nav").innerHTML=pages.map(([id,icon,label])=>`<button class="${page===id?"active":""}" data-page="${id}" ${id==="start"?"aria-label=\"Start\"":""}>${icon} &nbsp;${label}</button>`).join(""); $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{page=b.dataset.page;render();});}
+function nav(){ $("#nav").innerHTML=pages.map(([id,icon,label])=>`<button class="${page===id?"active":""}" data-page="${id}" ${id==="start"?"aria-label=\"Start\"":""}><span class="nav-icon" aria-hidden="true">${icon}</span><span class="nav-label">${label}</span></button>`).join(""); $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{page=b.dataset.page;render();});}
 function needForPlan(plan=state.plan){let out={};plan.forEach(p=>{if(!p.recipe||Number(p.portions)<=0)return;(state.recipes[p.recipe]||[]).forEach(i=>out[i.ingredient]=(out[i.ingredient]||0)+i.grams*Number(p.portions));});return out;}
 function availableStatus(ingredient,need){let have=Number(state.stock[ingredient]||0);return have>=need?["OK","ok"]:["BRAKUJE","bad"];}
 function metric(label,value,hint){return `<div class="metric"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;}
