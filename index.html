@@ -1258,6 +1258,25 @@ body::before{
   }
 }
 
+
+/* FINAL override: ensure the venue and bait-count hierarchy wins over earlier dashboard rules */
+#app .start-dashboard-grid .start-trip-card .start-trip-body>span{
+  font-size:21px!important;
+  line-height:1.3!important;
+  font-weight:900!important;
+  color:#f2cf7d!important;
+}
+#app .start-dashboard-grid .start-trip-card .start-trip-body>small{
+  font-size:16px!important;
+  line-height:1.4!important;
+  font-weight:800!important;
+  color:#edf5eb!important;
+}
+@media(max-width:650px){
+  #app .start-dashboard-grid .start-trip-card .start-trip-body>span{font-size:18px!important}
+  #app .start-dashboard-grid .start-trip-card .start-trip-body>small{font-size:14px!important}
+}
+
 </style>
 </head>
 <body>
