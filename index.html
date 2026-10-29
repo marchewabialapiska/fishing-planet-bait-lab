@@ -431,6 +431,31 @@ input,select,textarea{background:#091a12;color:#edf6ee;border:1px solid #345342}
 .nav button[data-page="start"]:hover,.nav button[data-page="start"].active{background-image:linear-gradient(100deg,#24543a,#102b1e 78%)}
 @media(max-width:560px){.nav button[data-page="start"]{min-height:48px;font-size:20px}}
 
+
+/* Remaining sidebar tiles: coordinated Bait Lab gold/forest typography */
+.nav button:not([data-page="start"]){
+ display:flex;align-items:center;gap:11px;width:100%;min-height:44px;
+ padding:10px 13px;border:1px solid #b88b3b30;border-radius:10px;
+ background:linear-gradient(100deg,#102b1e,#0a2017 78%);
+ color:#d9c18a!important;
+ font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;
+ letter-spacing:.35px;line-height:1.25;text-align:left;
+ box-shadow:inset 0 1px 0 #f6d9900d;
+ transition:color .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease
+}
+.nav button:not([data-page="start"]):hover{
+ background:linear-gradient(100deg,#1a3b29,#10291d 78%);
+ color:#ffe7a4!important;border-color:#d9ad584f;transform:translateX(2px)
+}
+.nav button:not([data-page="start"]).active{
+ background:linear-gradient(100deg,#dcae50,#b9802c 78%);
+ color:#17251a!important;border-color:#f5d58d;
+ box-shadow:inset 0 1px 0 #fff0b54d,0 3px 12px #dba74520
+}
+@media(max-width:560px){
+ .nav button:not([data-page="start"]){font-size:14px;min-height:42px;padding:9px 11px}
+}
+
 </style>
 </head>
 <body>
