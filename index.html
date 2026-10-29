@@ -539,8 +539,13 @@ html,body{min-height:100%;background:#06120f!important}
 body{min-height:100vh!important;background:none!important;position:relative!important}
 body::before{
  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
- background-image:linear-gradient(rgba(4,14,11,.18),rgba(4,14,11,.34)),url("./assets/site-background.png?v=6");
- background-position:center top;background-size:100% auto;background-repeat:no-repeat;
+ background-image:
+  linear-gradient(to bottom,rgba(4,14,11,.10) 0%,rgba(4,14,11,.16) 26%,rgba(4,14,11,.44) 48%,rgba(4,14,11,.70) 100%),
+  linear-gradient(rgba(4,14,11,.08),rgba(4,14,11,.16)),
+  url("./assets/site-background.png?v=7");
+ background-position:center top,center top,center top;
+ background-size:100% 100%,100% 100%,80% auto;
+ background-repeat:no-repeat;
 }
 #app{position:relative;z-index:1;min-height:100vh;background:transparent!important;color:#edf5eb!important}
 .top{background:transparent!important;background-image:none!important;border:0!important;border-bottom:0!important;box-shadow:none!important;outline:0!important}
