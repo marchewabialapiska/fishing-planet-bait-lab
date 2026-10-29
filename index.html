@@ -1329,6 +1329,34 @@ body::before{
   display:none!important;
 }
 
+
+/* Desktop START banner: smaller pike artwork, tucked to the top-right */
+@media(min-width:1051px){
+  #app .start-hero-tile.start-hero-graphic{
+    justify-content:flex-end!important;
+    align-items:flex-start!important;
+    min-height:0!important;
+    height:108px!important;
+    margin:0 0 8px!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  #app .start-banner-image{
+    width:62%!important;
+    max-width:760px!important;
+    max-height:112px!important;
+    height:auto!important;
+    object-fit:contain!important;
+    object-position:right top!important;
+    margin:-10px -8px 0 auto!important;
+    transform:none!important;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.22))!important;
+  }
+  #app .metrics{
+    margin-top:0!important;
+  }
+}
+
 </style>
 </head>
 <body>
