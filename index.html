@@ -1015,6 +1015,72 @@ body::before{
   #app .start-actions-grid{grid-template-columns:1fr!important}
 }
 
+
+
+/* START readability fix: light ingredient and activity rows match the clear stock/trip cards */
+#app .start-dashboard-grid .start-buy-row{
+  grid-template-columns:27px minmax(0,1fr) auto auto!important;
+  gap:9px!important;
+  padding:8px 9px!important;
+  min-height:39px!important;
+  border:1px solid rgba(224,234,222,.95)!important;
+  border-radius:9px!important;
+  background:rgba(248,251,247,.96)!important;
+  box-shadow:0 2px 5px rgba(0,0,0,.08)!important;
+}
+#app .start-dashboard-grid .start-buy-row span{
+  color:#294637!important;
+  font-size:11px!important;
+  font-weight:700!important;
+}
+#app .start-dashboard-grid .start-buy-row strong{
+  color:#a23f32!important;
+  font-size:11px!important;
+  font-weight:850!important;
+}
+#app .start-dashboard-grid .start-buy-row .btn.ghost{
+  background:#153f36!important;
+  color:#ffe1a0!important;
+  border-color:#c79a4b!important;
+}
+#app .start-dashboard-grid .start-activity-row{
+  grid-template-columns:9px minmax(0,1fr) auto!important;
+  gap:10px!important;
+  align-items:center!important;
+  padding:10px 11px!important;
+  min-height:58px!important;
+  border:1px solid rgba(224,234,222,.92)!important;
+  border-radius:9px!important;
+  background:rgba(248,251,247,.96)!important;
+  box-shadow:0 2px 5px rgba(0,0,0,.08)!important;
+}
+#app .start-dashboard-grid .start-activity-copy{display:grid!important;gap:3px!important;min-width:0!important}
+#app .start-dashboard-grid .start-activity-copy strong{
+  color:#203e2d!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+}
+#app .start-dashboard-grid .start-activity-copy span{
+  color:#4d6253!important;
+  font-size:10px!important;
+  line-height:1.35!important;
+  overflow-wrap:anywhere!important;
+}
+#app .start-dashboard-grid .start-activity-copy small{
+  color:#718073!important;
+  font-size:9px!important;
+}
+#app .start-dashboard-grid .start-activity-row>b{
+  color:#8e6224!important;
+  font-size:10px!important;
+  font-weight:850!important;
+}
+@media(max-width:520px){
+  #app .start-dashboard-grid .start-buy-row{grid-template-columns:24px minmax(0,1fr) auto!important;gap:7px!important}
+  #app .start-dashboard-grid .start-buy-row .btn{grid-column:2/-1!important;justify-self:start!important}
+  #app .start-dashboard-grid .start-activity-row{gap:7px!important;padding:9px!important}
+}
+
 </style>
 </head>
 <body>
