@@ -328,11 +328,13 @@ input,select,textarea{background:#081b16!important;border-color:#355347!importan
 html,body{min-height:100%;background:var(--forest-bg);color:var(--forest-text)}
 body{background:radial-gradient(ellipse at 72% 0%,rgba(48,105,75,.16),transparent 38rem),linear-gradient(145deg,#07130f,#0a1913 52%,#08130e)}
 #app{min-height:100vh;background:transparent;color:var(--forest-text)}
-.top{min-height:235px;padding:0 clamp(22px,4vw,62px);border-bottom:1px solid #c69a4a66;background:linear-gradient(90deg,rgba(4,17,12,.88),rgba(5,20,14,.42) 56%,rgba(5,17,12,.18)),linear-gradient(0deg,rgba(4,16,11,.38),rgba(4,16,11,.06)),url('assets/fpl_lake.webp') center 48%/cover no-repeat;position:relative;overflow:hidden}
+.top{min-height:235px;padding:0 clamp(22px,4vw,62px);border-bottom:1px solid #c69a4a66;background:linear-gradient(90deg,rgba(4,17,12,.48),rgba(5,20,14,.24) 56%,rgba(5,17,12,.12)),linear-gradient(0deg,rgba(4,16,11,.24),rgba(4,16,11,.02)),url('assets/fpl_lake_anglers_4k.webp') center 54%/cover no-repeat;position:relative;overflow:hidden}
 .top:before{content:"";position:absolute;inset:auto 0 0;height:70px;background:linear-gradient(0deg,rgba(7,19,15,.72),transparent);border:0;box-shadow:none;transform:none}
 .top:after{content:"";position:absolute;right:6%;top:-230px;width:340px;height:340px;border:1px solid #f1c56d22;border-radius:50%;box-shadow:0 0 0 34px #f1c56d09,0 0 0 70px #f1c56d06;pointer-events:none}
 .top-inner{max-width:1800px;margin:0 auto;min-height:235px;display:flex;flex-direction:column;justify-content:center;gap:22px;position:relative;z-index:1;padding:25px 0}
 .brandline{display:flex;align-items:center;gap:13px;color:#f4f6ef;font-size:13px;letter-spacing:.14em}
+/* Logo blending: suppress the dark rectangular canvas against the hero image. */
+.brand-logo-img{width:clamp(110px,13vw,190px);height:auto;max-height:105px;object-fit:contain;flex:0 0 auto;mix-blend-mode:screen;filter:drop-shadow(0 3px 12px #0009);}
 .logo{width:52px;height:52px;border-radius:50%;border:1px solid #e8b553aa;background:#06150fbb;color:#f5c96f;font-size:25px;box-shadow:0 0 26px #e8b55316}
 .brand-main{display:block;font-size:clamp(19px,2.1vw,28px);font-weight:950;letter-spacing:.045em;line-height:1.1}
 .brand-sub{display:block;margin-top:5px;color:#f0bd59;font-size:12px;letter-spacing:.3em;font-weight:900}
