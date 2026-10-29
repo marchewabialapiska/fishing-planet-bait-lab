@@ -1083,18 +1083,18 @@ body::before{
 
 
 
-/* START planned trips: remove the panel surface completely; let artwork and trip cards float over the lake */
+/* Restore planned trips panel frame to match other dashboard sections */
 #app .start-dashboard-grid .start-trips-panel{
-  background:transparent!important;
-  background-color:transparent!important;
-  border:0!important;
+  background:rgba(4,22,16,.48)!important;
+  background-color:rgba(4,22,16,.48)!important;
+  border:1px solid rgba(218,190,111,.24)!important;
   outline:0!important;
-  box-shadow:none!important;
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
-  border-radius:0!important;
-  padding:0!important;
-  overflow:visible!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.18)!important;
+  backdrop-filter:blur(3px)!important;
+  -webkit-backdrop-filter:blur(3px)!important;
+  border-radius:16px!important;
+  padding:18px!important;
+  overflow:hidden!important;
 }
 #app .start-dashboard-grid .start-trips-panel .start-trips-top{
   margin-bottom:14px!important;
@@ -1110,12 +1110,9 @@ body::before{
   border-radius:10px!important;
   color:#edf5eb!important;
 }
-
-
-
-
-
-
+@media(max-width:650px){
+  #app .start-dashboard-grid .start-trips-panel{padding:14px!important}
+}
 
 /* Stronger section descriptions and a clear hierarchy for fishing venue names */
 #app .start-dashboard-grid .panelhead .muted{
