@@ -1665,7 +1665,7 @@ function startPage(){
    <section class="panel"><div class="panelhead"><div><h2 class="start-history-title"><img class="start-history-icon" src="assets/ostatnie-dzialania.webp" alt="" loading="lazy"> Ostatnie działania</h2><p class="muted">Najnowsze wpisy z dziennika.</p></div><button class="btn ghost" data-go="history">Historia</button></div><div class="start-activity-list">${recentRows||'<div class="empty">Brak zapisanych działań. Zakupy i zużycie pojawią się tutaj.</div>'}</div></section>
   </div>
  </div>
- <section class="panel start-actions-panel"><div class="panelhead"><div><h2>Szybkie działania</h2><p class="muted">Najczęściej używane skróty — zawsze pod ręką.</p></div><span class="start-actions-emblem">✦</span></div><div class="start-actions-grid"><button class="btn gold" data-go="plan">＋ Zaplanuj wyprawę</button><button class="btn" data-go="buy">＋ Dodaj zakup</button><button class="btn ghost" data-go="stock">✎ Zmień stany plecaka</button><button class="btn ghost" id="backup">⇩ Eksportuj kopię danych</button><button class="btn ghost" id="restore">⇧ Importuj kopię</button></div></section>`;
+ `;
 }
 function planPage(){
  const need=needForPlan(),venueOptions=(v)=>VENUES.map(x=>"<option value=\""+esc(x)+"\" "+(v===x?"selected":"")+">"+esc(x)+"</option>").join("");
@@ -1724,7 +1724,7 @@ function buyPage(){
 }
 function historyPage(){
  let rows=state.history.slice().reverse().map(h=>`<tr><td>${esc(h.date)}</td><td><span class="status ${h.type==="Zużycie"?"warn":"ok"}">${esc(h.type)}</span></td><td>${esc(h.description||"—")}</td><td>${esc(h.ingredient||"—")}</td><td>${h.type==="Zakup"?"+":"−"}${fmt(h.grams)} g</td><td>${esc(h.details||"—")}</td></tr>`).join("");
- return `<section class="panel"><div class="panelhead"><div><h2>Dziennik dnia</h2><p class="muted">Wyczyść dziennik i listę ostatnich zakupów po zakończeniu dnia. To usuwa wyłącznie zapisy — nie zmienia stanów magazynowych.</p></div><div class="row"><button class="btn ghost" id="export-history">Eksportuj CSV</button><button class="btn danger" id="clear-history">Wyczyść historię</button></div></div>
+ return `<section class="panel"><div class="panelhead"><div><h2>Dziennik dnia</h2><p class="muted">Wyczyść dziennik i listę ostatnich zakupów po zakończeniu dnia. To usuwa wyłącznie zapisy — nie zmienia stanów magazynowych.</p></div><div class="row"><button class="btn ghost" id="export-history">Eksportuj CSV</button><button class="btn ghost" id="backup">⇩ Kopia danych</button><button class="btn ghost" id="restore">⇧ Import kopii</button><button class="btn danger" id="clear-history">Wyczyść historię</button></div></div>
  <div class="notice">„Wyczyść historię” usuwa wpisy dziennika i listę ostatnich zakupów. Nie cofa zakupów, nie dodaje z powrotem zużytych składników i nie zmienia magazynu.</div>
  ${rows?table(["Data i godzina","Typ","Opis / wyprawa","Składnik","Ilość","Szczegóły"],rows):'<div class="empty">Dziennik jest pusty. Zakupy i zużycie będą tu zapisywane, gdy wykonasz operacje.</div>'}</section>`;
 }
