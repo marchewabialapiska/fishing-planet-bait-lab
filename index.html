@@ -1556,7 +1556,7 @@ function startPage(){
  </section>
   <div class="start-dashboard-grid">
  <div class="start-side-stack">
-   <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.webp" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.webp" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
+   <section class="panel start-trips-panel"><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div></section>
   </div>
   <div class="start-side-stack">
