@@ -1438,6 +1438,8 @@ body::before{
 .planner-field-panel .planner-mode-heading{border-color:#816b3d;background:linear-gradient(120deg,#382e19,#17251b)}
 .field-preview{margin-top:14px}
 @media(max-width:700px){.planner-mode-heading{align-items:flex-start;flex-wrap:wrap}.planner-mode-heading .status{margin-left:47px}.planner-bait-row{grid-template-columns:1fr 1fr}.planner-bait-row .field:first-child{grid-column:1/-1}.planner-bait-row button{grid-column:1/-1}.planner-section-subhead{align-items:flex-start;flex-direction:column}.planner-summary-strip{grid-template-columns:1fr}}
+
+.recipe-ingredients{margin-top:10px;border-top:1px solid rgba(130,150,125,.25);padding-top:9px}.recipe-ingredients summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px;font-weight:700;color:var(--green,#496b45);padding:5px 0}.recipe-ingredients summary::-webkit-details-marker{display:none}.recipe-ingredients summary::before{content:"＋";font-size:1rem}.recipe-ingredients[open] summary::before{content:"−"}.recipe-ingredients .ingredientlist{margin-top:9px}
 </style>
 </head>
 <body>
@@ -1606,7 +1608,7 @@ function stockPage(){
  ${table(["Składnik","Stan w plecaku (g)","Potrzeba planu","Brakuje","Zostanie","Status","Akcja"],rows)}</section>`;
 }
 function recipesPage(){
- const cards=Object.keys(state.recipes).map(name=>`<article class="recipe"><div class="recipehead"><h3>${esc(name)}</h3><div class="row"><button class="btn ghost" data-edit-recipe="${esc(name)}">Edytuj</button><button class="btn danger" data-delete-recipe="${esc(name)}">Usuń</button></div></div><div class="ingredientlist">${(state.recipes[name]||[]).map(i=>`<div class="ingredient"><span class="ingredient-line"><img class="ingredient-art" src="${itemArt(i.ingredient)}" alt="" loading="lazy"><span class="ingredient-name">${esc(i.ingredient)}</span></span><strong>${fmt(i.grams)} g</strong></div>`).join("")}</div></article>`).join("");
+ const cards=Object.keys(state.recipes).map(name=>`<article class="recipe"><div class="recipehead"><h3>${esc(name)}</h3><div class="row"><button class="btn ghost" data-edit-recipe="${esc(name)}">Edytuj</button><button class="btn danger" data-delete-recipe="${esc(name)}">Usuń</button></div></div><details class="recipe-ingredients"><summary>Składniki receptury <span class="muted">(${(state.recipes[name]||[]).length})</span></summary><div class="ingredientlist">${(state.recipes[name]||[]).map(i=>`<div class="ingredient"><span class="ingredient-line"><img class="ingredient-art" src="${itemArt(i.ingredient)}" alt="" loading="lazy"><span class="ingredient-name">${esc(i.ingredient)}</span></span><strong>${fmt(i.grams)} g</strong></div>`).join("")}</div></details></article>`).join("");
  return `<section class="panel"><div class="panelhead"><div><h2>Baza receptur</h2><p class="muted">Składniki wybierasz z magazynu. Możesz też dodać nowy produkt bezpośrednio podczas tworzenia receptury.</p></div></div><div class="recipe-art-row"><div class="recipe-art"><img src="${ART.sunnybait}" alt="Składniki zanęty słonecznej"><span>☀ Zanęta słoneczna</span></div><div class="recipe-art"><img src="${ART.cloudybait}" alt="Składniki zanęty pochmurnej"><span>☁ Zanęta pochmurna</span></div></div>
  <form id="recipe-form" class="panel" style="background:#f5f9f4;margin-bottom:17px">
   <h3 id="recipe-form-title">＋ Dodaj / edytuj recepturę</h3><input type="hidden" id="recipe-original" value="">
