@@ -675,8 +675,8 @@ body::before{
 }
 
 /* Układ testowy: małe logo w lewym górnym rogu, szczupak wysoko po prawej */
-.top{min-height:0!important;height:0!important;padding:0!important;display:block!important;overflow:visible!important}
-.top-inner{position:relative!important;width:100%!important;max-width:none!important;min-height:0!important;height:0!important;padding:0!important;margin:0!important;display:block!important;overflow:visible!important}
+.top{min-height:285px!important;height:285px!important;padding:0!important;display:block!important;overflow:visible!important}
+.top-inner{position:relative!important;width:100%!important;max-width:none!important;min-height:285px!important;height:285px!important;padding:0!important;margin:0!important;display:block!important;overflow:visible!important}
 .brandline{position:absolute!important;left:auto!important;right:34px!important;top:42px!important;width:500px!important;max-width:calc(100vw - 360px)!important;display:flex!important;align-items:flex-start!important;justify-content:flex-end!important;margin:0!important;z-index:30!important}
 .brand-logo-img{display:block!important;width:100%!important;height:auto!important;max-width:500px!important;max-height:230px!important;object-fit:contain!important;object-position:right top!important;margin:0!important;filter:drop-shadow(0 4px 12px rgba(0,0,0,.55))!important}
 @media(min-width:1051px){
@@ -684,7 +684,8 @@ body::before{
  #app .start-banner-image{margin-top:-72px!important}
 }
 @media(max-width:1050px){
- .top{height:0!important;min-height:0!important}
+ .top{height:130px!important;min-height:130px!important}
+ .top-inner{height:130px!important;min-height:130px!important}
  .brandline{left:auto!important;right:14px!important;top:8px!important;width:min(42vw,260px)!important;max-width:calc(100vw - 180px)!important;justify-content:flex-end!important}
  .brand-logo-img{width:100%!important;max-width:260px!important;max-height:110px!important;object-fit:contain!important;object-position:right top!important}
  #app .start-hero-tile.start-hero-graphic{height:180px!important;margin-top:0!important}
@@ -693,7 +694,7 @@ body::before{
 /* Uproszczone menu: bez nagłówka, kafelki wyżej na ekranie */
 .sidebar-title{display:none!important}
 .sidebar-note{display:none!important}
-.sidebar{margin-top:-24px!important;padding:0 14px 8px 16px!important}
+.sidebar{margin-top:0!important;padding:24px 14px 8px 16px!important}
 .nav{gap:5px!important;margin:0!important;padding:0!important}
 @media(max-width:900px){
  .sidebar{margin-top:0!important;padding:8px!important}
