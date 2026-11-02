@@ -1457,6 +1457,23 @@ body::before{
 #app .start-boat-flag-hit:hover,#app .start-boat-flag-hit:active,#app .start-boat-flag-hit:focus{background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important;cursor:pointer}
 #app .start-boat-flag-hit:focus-visible{outline:2px solid rgba(244,193,91,.8)!important;outline-offset:2px}
 @media(max-width:650px){#app .start-boat-wrap{margin-bottom:6px}#app .start-boat-flag-hit{left:5%;top:2%;width:34%;height:37%}}
+
+/* FIX: tło przypięte do okna przeglądarki, niezależnie od przewijania dokumentu */
+html{background:#071411!important}
+body{background:transparent!important;position:relative!important;isolation:isolate!important}
+body::before{
+ content:"";
+ position:fixed!important;
+ inset:0!important;
+ z-index:-1!important;
+ pointer-events:none!important;
+ background:
+  linear-gradient(180deg,rgba(4,17,13,.38),rgba(4,17,13,.56)),
+  url("assets/site-background.webp?v=20261102") center center / cover no-repeat!important;
+ background-color:#071411!important;
+}
+#app{position:relative!important;z-index:1!important;background:transparent!important}
+
 </style>
 </head>
 <body>
