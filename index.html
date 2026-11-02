@@ -1480,12 +1480,16 @@ state.plan = Array.isArray(state.plan) ? state.plan : [];
 state.purchases = Array.isArray(state.purchases) ? state.purchases : [];
 state.history = Array.isArray(state.history) ? state.history : [];
 state.trips = Array.isArray(state.trips) ? state.trips : [];
-// Migracja nowych receptur karpiowych: nie nadpisuje istniejących stanów plecaka.
+// Jednorazowa migracja receptur karpiowych. Po jej wykonaniu usunięte przez użytkownika receptury nie są odtwarzane.
+const CARP_RECIPES_MIGRATION_VERSION = "carp-recipes-2026-11-02-v1";
 const CARP_RECIPES_UPDATE = {"Karpowa — pół porcji":[{"ingredient":"Carp Rival","grams":750},{"ingredient":"Catfish Destroyer","grams":750},{"ingredient":"Big Riverine Breamer","grams":500},{"ingredient":"X Flavour Supreme","grams":83},{"ingredient":"Giant Octopus Supreme","grams":83},{"ingredient":"CSL","grams":83},{"ingredient":"Pastoncino Mix","grams":125},{"ingredient":"Oilcake-Pea","grams":125},{"ingredient":"Hemp-Corn","grams":125}],"Karpowa — pełna porcja":[{"ingredient":"Carp Rival","grams":1500},{"ingredient":"Catfish Destroyer","grams":1500},{"ingredient":"Big Riverine Breamer","grams":1000},{"ingredient":"X Flavour Supreme","grams":166},{"ingredient":"Giant Octopus Supreme","grams":166},{"ingredient":"CSL","grams":166},{"ingredient":"Pastoncino Mix","grams":250},{"ingredient":"Oilcake-Pea","grams":250},{"ingredient":"Hemp-Corn","grams":250}]};
-let baitLabMigrated = false;
-Object.entries(CARP_RECIPES_UPDATE).forEach(([name,items])=>{if(!state.recipes[name]){state.recipes[name]=items;baitLabMigrated=true;}});
-if(!Object.prototype.hasOwnProperty.call(state.stock,"Hemp-Corn")){state.stock["Hemp-Corn"]=0;baitLabMigrated=true;}
-if(baitLabMigrated){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){console.warn("Nie udało się zapisać migracji receptur.",e);}}
+if(localStorage.getItem(CARP_RECIPES_MIGRATION_VERSION)!=="done"){
+  let baitLabMigrated = false;
+  Object.entries(CARP_RECIPES_UPDATE).forEach(([name,items])=>{if(!state.recipes[name]){state.recipes[name]=items;baitLabMigrated=true;}});
+  if(!Object.prototype.hasOwnProperty.call(state.stock,"Hemp-Corn")){state.stock["Hemp-Corn"]=0;baitLabMigrated=true;}
+  if(baitLabMigrated){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){console.warn("Nie udało się zapisać migracji receptur.",e);}}
+  try{localStorage.setItem(CARP_RECIPES_MIGRATION_VERSION,"done");}catch(e){console.warn("Nie udało się zapisać wersji migracji receptur.",e);}
+}
 // Jednorazowy import stanów plecaka z pliku Excel przekazanego przez użytkownika.
 const BACKPACK_IMPORT_VERSION = "excel-backpack-2026-11-01-v1";
 if(localStorage.getItem(BACKPACK_IMPORT_VERSION)!=="done"){
