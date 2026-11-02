@@ -1458,6 +1458,57 @@ body::before{
 #app .start-boat-flag-hit:focus-visible{outline:2px solid rgba(244,193,91,.8)!important;outline-offset:2px}
 @media(max-width:650px){#app .start-boat-wrap{margin-bottom:6px}#app .start-boat-flag-hit{left:5%;top:2%;width:34%;height:37%}}
 
+/* Podstrony: osobny, niski nagłówek z mniejszym logo; treść i banery zaczynają się poniżej */
+#app.subpage .top{
+ position:relative!important;
+ height:104px!important;
+ min-height:104px!important;
+ padding:0!important;
+ overflow:visible!important;
+ z-index:1!important;
+}
+#app.subpage .top-inner{
+ position:relative!important;
+ width:100%!important;
+ height:104px!important;
+ min-height:104px!important;
+ max-width:none!important;
+ margin:0!important;
+ padding:8px 28px!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:flex-end!important;
+ overflow:visible!important;
+ z-index:1!important;
+}
+#app.subpage .brandline{
+ position:relative!important;
+ inset:auto!important;
+ width:250px!important;
+ max-width:34vw!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:flex-end!important;
+ margin:0!important;
+ z-index:1!important;
+}
+#app.subpage .brand-logo-img{
+ display:block!important;
+ width:100%!important;
+ max-width:250px!important;
+ max-height:88px!important;
+ height:auto!important;
+ object-fit:contain!important;
+ object-position:right center!important;
+}
+#app.subpage .app-frame{position:relative!important;z-index:2!important}
+@media(max-width:900px){
+ #app.subpage .top,#app.subpage .top-inner{height:82px!important;min-height:82px!important}
+ #app.subpage .top-inner{padding:6px 14px!important}
+ #app.subpage .brandline{width:min(190px,38vw)!important;max-width:38vw!important}
+ #app.subpage .brand-logo-img{max-height:68px!important}
+}
+
 /* FIX: logo pozostaje pod zawartością zakładek i nie przykrywa ich banerów */
 #app .top{position:relative!important;z-index:0!important}
 #app .top-inner{z-index:0!important}
@@ -1677,7 +1728,7 @@ function addRecipeIngredientRow(selected="", grams=""){
  row.querySelector(".recipe-row-remove").onclick=()=>row.remove();wrap.appendChild(row);
 }
 function clearRecipeEditor(){const original=$("#recipe-original");if(!original)return;original.value="";$("#recipe-name").value="";$("#recipe-ingredient-rows").innerHTML="";$("#recipe-form-title").textContent="＋ Dodaj / edytuj recepturę";$("#recipe-new-product").value="";$("#recipe-new-grams").value="";addRecipeIngredientRow();}
-function render(){nav();let fn={"start":startPage,"plan":planPage,"stock":stockPage,"recipes":recipesPage,"buy":buyPage,"history":historyPage}[page];$("#content").innerHTML=fn();if(page==="recipes"&&!$("#recipe-ingredient-rows").children.length)addRecipeIngredientRow();bind();}
+function render(){document.querySelector("#app").classList.toggle("subpage",page!=="start");nav();let fn={"start":startPage,"plan":planPage,"stock":stockPage,"recipes":recipesPage,"buy":buyPage,"history":historyPage}[page];$("#content").innerHTML=fn();if(page==="recipes"&&!$("#recipe-ingredient-rows").children.length)addRecipeIngredientRow();bind();}
 function bind(){
  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{page=b.dataset.go;render();});
  document.querySelectorAll("[data-plan-recipe]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planRecipe].recipe=el.value;save();render();});
