@@ -1863,11 +1863,6 @@ render();
  }
  drawBaitLabClock();
  if(!window.baitLabClockTimer)window.baitLabClockTimer=setInterval(drawBaitLabClock,1000);
- const app=document.getElementById("app");
- if(app&&!window.baitLabClockObserver){
-  window.baitLabClockObserver=new MutationObserver(drawBaitLabClock);
-  window.baitLabClockObserver.observe(app,{childList:true,subtree:true});
- }
 })();
 </script>
 
