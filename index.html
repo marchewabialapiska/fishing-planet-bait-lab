@@ -1397,26 +1397,22 @@ body::before{
     justify-content:flex-end!important;
     align-items:flex-start!important;
     min-height:0!important;
-    height:190px!important;
-    margin:0 0 4px!important;
+    height:250px!important;
+    margin:0 0 12px!important;
     padding:0!important;
     overflow:visible!important;
   }
   #app .start-banner-image{
     width:125%!important;
     max-width:1350px!important;
-    max-height:235px!important;
+    max-height:250px!important;
     height:auto!important;
     object-fit:contain!important;
     object-position:right top!important;
-    margin:-42px -8px 0 auto!important;
+    margin:0 -8px 0 auto!important;
     transform:none!important;
     filter:drop-shadow(0 3px 8px rgba(0,0,0,.22))!important;
   }
-  #app .metrics{
-    margin-top:0!important;
-  }
-}
 
 
 /* Planner clarity refresh */
@@ -1558,8 +1554,7 @@ function startPage(){
  <section class="start-hero-tile start-hero-graphic">
   <img class="start-banner-image" src="assets/wyprawy-zapasy.webp?v=20261102" alt="Szczupak i napis: Twoje wyprawy. Twoje zapasy. Podsumowanie plecaka, zaplanowanych wypraw i składników do uzupełnienia." fetchpriority="high">
  </section>
- <div class="metrics">${metric("Składniki w plecaku",allIngredients().length,"pozycje w magazynie")}${metric("Łączny zapas",fmt(totalStock)+" g","wszystkie składniki razem")}${metric("Zaplanowane porcje",fmt(activePlan.reduce((sum,p)=>sum+Number(p.portions||0),0)),"w aktywnych wyprawach")}${metric("Braki do dokupienia",missingItems.length,missingItems.length?"pozycji wymaga uzupełnienia":"wszystko pokryte zapasami")}</div>
- <div class="start-dashboard-grid">
+  <div class="start-dashboard-grid">
  <div class="start-side-stack">
    <section class="panel start-trips-panel"><div class="start-trips-top"><img class="start-trips-art" src="assets/zaplanowane-wyprawy.webp" alt="Zaplanowane wyprawy" loading="lazy"><button class="start-trips-add" data-go="plan" aria-label="Dodaj wyprawę"><img src="assets/dodaj-wyprawe.webp" alt="" loading="lazy"><span>Dodaj wyprawę</span></button></div><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div></section>
