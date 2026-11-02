@@ -1509,6 +1509,14 @@ body::before{
  #app.subpage .brand-logo-img{max-height:68px!important}
 }
 
+/* Podstrony: nagłówek z logo nie może spychać menu na dół */
+@media(min-width:901px){
+ #app.subpage .sidebar{margin-top:-104px!important}
+}
+@media(max-width:900px){
+ #app.subpage .sidebar{margin-top:-82px!important}
+}
+
 /* FIX: logo pozostaje pod zawartością zakładek i nie przykrywa ich banerów */
 #app .top{position:relative!important;z-index:0!important}
 #app .top-inner{z-index:0!important}
