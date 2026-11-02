@@ -1496,10 +1496,10 @@ if(localStorage.getItem(BACKPACK_IMPORT_VERSION)!=="done"){
 }
 state.shoppingChecks = state.shoppingChecks && typeof state.shoppingChecks === "object" ? state.shoppingChecks : {};
 state.shoppingAmounts = state.shoppingAmounts && typeof state.shoppingAmounts === "object" ? state.shoppingAmounts : {};
-state.planName = typeof state.planName === "string" ? state.planName : "";
-state.planVenue = typeof state.planVenue === "string" ? state.planVenue : "";
-state.planCustomVenue = typeof state.planCustomVenue === "string" ? state.planCustomVenue : "";
-state.planNotes = typeof state.planNotes === "string" ? state.planNotes : "";
+state.planName = typeof state.planName === "string" ? state.planName : (state.plan[0]?.trip || "");
+state.planVenue = typeof state.planVenue === "string" ? state.planVenue : (state.plan[0]?.venue || "");
+state.planCustomVenue = typeof state.planCustomVenue === "string" ? state.planCustomVenue : (state.plan[0]?.customVenue || "");
+state.planNotes = typeof state.planNotes === "string" ? state.planNotes : (state.plan[0]?.notes || "");
 state.fieldVenue = typeof state.fieldVenue === "string" ? state.fieldVenue : "";
 state.fieldCustomVenue = typeof state.fieldCustomVenue === "string" ? state.fieldCustomVenue : "";
 state.fieldPreparations = Array.isArray(state.fieldPreparations) ? state.fieldPreparations : [];
@@ -1657,11 +1657,12 @@ function bind(){
   const needs={};(state.recipes[recipe]||[]).forEach(it=>needs[it.ingredient]=(needs[it.ingredient]||0)+it.grams*portions);
   const missing=Object.keys(needs).filter(k=>needs[k]>Number(state.stock[k]||0));
   wrap.innerHTML='<div class="field-preview-title">Składniki do przygotowania</div>'+table(["Składnik","Potrzeba","Masz","Status"],Object.keys(needs).map(k=>{const have=Number(state.stock[k]||0),lack=Math.max(0,needs[k]-have);return "<tr><td>"+esc(k)+"</td><td>"+fmt(needs[k])+" g</td><td>"+fmt(have)+" g</td><td>"+(lack>0?'<span class="status bad">BRAKUJE '+fmt(lack)+' g</span>':'<span class="status ok">WYSTARCZY</span>')+"</td></tr>";}).join(""));
-  button.disabled=missing.length>0;button.textContent=missing.length?"Brakuje składników — nie można zatwierdzić":"✓ Zatwierdź faktyczne przygotowanie";
+  const venueMissing=!state.fieldVenue;button.disabled=missing.length>0||venueMissing;button.textContent=venueMissing?"Wybierz aktualne łowisko":(missing.length?"Brakuje składników — nie można zatwierdzić":"✓ Zatwierdź faktyczne przygotowanie");
  };
  $("#field-recipe")?.addEventListener("change",updateFieldPreview);$("#field-portions")?.addEventListener("input",updateFieldPreview);updateFieldPreview();
  $("#confirm-field-prep")?.addEventListener("click",()=>{
   const recipe=$("#field-recipe")?.value,portions=Math.max(0,Number($("#field-portions")?.value)||0),venue=state.fieldVenue==="Inne / własne łowisko"?(state.fieldCustomVenue||"Własne łowisko"):state.fieldVenue;
+  if(!venue){toast("Najpierw wybierz łowisko, na którym jesteś.");return;}
   if(!recipe||portions<=0){toast("Wybierz recepturę i liczbę porcji.");return;}
   const needs={};(state.recipes[recipe]||[]).forEach(it=>needs[it.ingredient]=(needs[it.ingredient]||0)+it.grams*portions);
   const missing=Object.keys(needs).filter(k=>needs[k]>Number(state.stock[k]||0));
