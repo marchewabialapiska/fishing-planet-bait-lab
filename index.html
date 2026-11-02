@@ -1418,6 +1418,26 @@ body::before{
   }
 }
 
+
+/* Planner clarity refresh */
+.planner-mode-heading{display:flex;align-items:center;gap:13px;margin:2px 0 17px;padding:13px 15px;border:1px solid #355443;border-radius:13px;background:linear-gradient(120deg,#18372a,#10251b)}
+.planner-mode-heading h3{margin:0;color:#f1c66d;font-size:13px;letter-spacing:.045em}
+.planner-mode-heading .muted{margin-top:3px;color:#a9bcae}
+.planner-mode-heading .status{margin-left:auto}
+.planner-step{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#f1b84b;color:#17231b;font-weight:950;font-size:15px}
+.planner-trip-fields{margin-bottom:18px}
+.planner-section-subhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px}
+.planner-section-subhead h3{margin:0;color:#f1c66d}
+.planner-section-subhead .muted{margin-top:3px}
+.planner-bait-row{grid-template-columns:minmax(220px,1fr) 150px auto;padding:14px 0;border-top:1px solid #294638}
+.planner-summary-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}
+.planner-summary-strip>div{padding:13px 15px;border:1px solid #355443;border-radius:11px;background:#0d2118}
+.planner-summary-strip span{display:block;color:#a9bcae;font-size:11px}
+.planner-summary-strip strong{display:block;color:#f4c96f;font-size:21px;margin-top:4px}
+.planner-field-panel{border-color:#8c713d;box-shadow:0 0 0 1px #d3a64b18,0 12px 35px #0002}
+.planner-field-panel .planner-mode-heading{border-color:#816b3d;background:linear-gradient(120deg,#382e19,#17251b)}
+.field-preview{margin-top:14px}
+@media(max-width:700px){.planner-mode-heading{align-items:flex-start;flex-wrap:wrap}.planner-mode-heading .status{margin-left:47px}.planner-bait-row{grid-template-columns:1fr 1fr}.planner-bait-row .field:first-child{grid-column:1/-1}.planner-bait-row button{grid-column:1/-1}.planner-section-subhead{align-items:flex-start;flex-direction:column}.planner-summary-strip{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1476,6 +1496,13 @@ if(localStorage.getItem(BACKPACK_IMPORT_VERSION)!=="done"){
 }
 state.shoppingChecks = state.shoppingChecks && typeof state.shoppingChecks === "object" ? state.shoppingChecks : {};
 state.shoppingAmounts = state.shoppingAmounts && typeof state.shoppingAmounts === "object" ? state.shoppingAmounts : {};
+state.planName = typeof state.planName === "string" ? state.planName : "";
+state.planVenue = typeof state.planVenue === "string" ? state.planVenue : "";
+state.planCustomVenue = typeof state.planCustomVenue === "string" ? state.planCustomVenue : "";
+state.planNotes = typeof state.planNotes === "string" ? state.planNotes : "";
+state.fieldVenue = typeof state.fieldVenue === "string" ? state.fieldVenue : "";
+state.fieldCustomVenue = typeof state.fieldCustomVenue === "string" ? state.fieldCustomVenue : "";
+state.fieldPreparations = Array.isArray(state.fieldPreparations) ? state.fieldPreparations : [];
 state.plan.forEach(p=>{ if(!("venue" in p)) p.venue=""; if(!("notes" in p)) p.notes=""; });
 let page="start";
 const pages=[["start","⌂","START"],["plan","🎯","PLANER"],["stock","🎒","PLECAK"],["recipes","🧪","ZANĘTY"],["buy","🛒","ZAKUPY"],["history","📋","HISTORIA"]];
@@ -1539,38 +1566,29 @@ function startPage(){
  <section class="panel start-actions-panel"><div class="panelhead"><div><h2>Szybkie działania</h2><p class="muted">Najczęściej używane skróty — zawsze pod ręką.</p></div><span class="start-actions-emblem">✦</span></div><div class="start-actions-grid"><button class="btn gold" data-go="plan">＋ Zaplanuj wyprawę</button><button class="btn" data-go="buy">＋ Dodaj zakup</button><button class="btn ghost" data-go="stock">✎ Zmień stany plecaka</button><button class="btn ghost" id="backup">⇩ Eksportuj kopię danych</button><button class="btn ghost" id="restore">⇧ Importuj kopię</button></div></section>`;
 }
 function planPage(){
- let n=needForPlan();
- const venueOptions=(selected)=>VENUES.map(v=>`<option value="${esc(v)}" ${selected===v?"selected":""}>${esc(v)}</option>`).join("");
- const groups=[]; const groupMap=new Map();
- state.plan.forEach((p,i)=>{const key=(p.trip||"").trim()||"__bez_nazwy__";if(!groupMap.has(key)){const g={key,trip:p.trip||"",venue:p.venue||"",customVenue:p.customVenue||"",notes:p.notes||"",items:[]};groupMap.set(key,g);groups.push(g);}groupMap.get(key).items.push({p,i});});
- let rows=groups.map((g,gi)=>`<div class="panel" style="padding:16px;margin-bottom:14px;background:#fbfdf9">
-  <div class="panelhead"><div><h3>🎣 ${esc(g.trip||"Wyprawa bez nazwy")}</h3><p class="muted">Jedno łowisko i wspólne notatki, wiele wariantów zanęty.</p></div><button class="btn danger" data-remove-trip-group="${gi}">Usuń całą wyprawę</button></div>
-  <div class="grid2">
-   <label class="field">Nazwa wyprawy<input type="text" value="${esc(g.trip)}" placeholder="np. Weekend na karpie" data-group-trip="${gi}"></label>
-   <label class="field">Łowisko<select data-group-venue="${gi}"><option value="">— wybierz łowisko —</option>${venueOptions(g.venue)}</select></label>
-   <label class="field">Własne łowisko (opcjonalnie)<input type="text" data-group-custom-venue="${gi}" value="${esc(g.customVenue)}" placeholder="Wpisz własną nazwę, jeśli nie ma na liście"></label>
-   <label class="field">Notatki do wyprawy<textarea data-group-notes="${gi}" rows="2" placeholder="Miejscówka, pogoda, zestaw, godziny…">${esc(g.notes)}</textarea></label>
-  </div>
-  <div class="trip-options"><div class="panelhead" style="margin-bottom:4px"><div><h3>Opcje zanęty</h3><p class="muted">Każda opcja może korzystać z innej receptury i liczby porcji.</p></div><button class="btn gold" data-add-bait-option="${gi}">＋ Dodaj opcję zanęty</button></div>
-  ${g.items.map(({p,i},oi)=>`<div class="bait-option">
-   <label class="field">Receptura<select data-plan-recipe="${i}"><option value="">— wybierz recepturę —</option>${Object.keys(state.recipes).map(r=>`<option value="${esc(r)}" ${p.recipe===r?"selected":""}>${esc(r)}</option>`).join("")}</select></label>
-   <label class="field">Liczba porcji<input type="number" min="0" step="0.5" value="${Number(p.portions)||0}" data-plan-portions="${i}"></label>
-   <button class="btn ghost" data-remove-plan="${i}">Usuń opcję</button>
-  </div>`).join("")}
-  </div>
- </div>`).join("");
- let needs=Object.keys(n).sort((a,b)=>a.localeCompare(b,"pl")).map(k=>`<tr><td>${esc(k)}</td><td>${fmt(n[k])} g</td><td>${fmt(state.stock[k])} g</td><td>${n[k]>Number(state.stock[k]||0)?`<span class="status bad">BRAKUJE ${fmt(n[k]-Number(state.stock[k]||0))} g</span>`:`<span class="status ok">WYSTARCZY</span>`}</td></tr>`).join("");
- const shoppingMissing=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0)).sort((a,b)=>a.localeCompare(b,"pl"));
- const shoppingRows=shoppingMissing.map(k=>{const missing=Math.max(0,n[k]-Number(state.stock[k]||0));const amount=state.shoppingAmounts[k]??String(missing);return `<tr><td><strong>${esc(k)}</strong></td><td>${fmt(n[k])} g</td><td>${fmt(Number(state.stock[k]||0))} g</td><td><span class="status bad">${fmt(missing)} g</span></td><td><input type="number" min="0.1" step="0.1" value="${esc(amount)}" data-shopping-amount="${esc(k)}" aria-label="Kupiona ilość ${esc(k)} w gramach"></td><td><input type="checkbox" ${state.shoppingChecks[k]?"checked":""} data-shopping-check="${esc(k)}" aria-label="Oznacz ${esc(k)} jako kupione"></td></tr>`}).join("");
- return `<section class="panel"><div class="panelhead"><div><h2>Plan wypraw i przygotowania zanęt</h2><p class="muted">Utwórz wyprawę, wybierz łowisko, a następnie dodawaj dowolną liczbę opcji zanęty. Notatki są wspólne dla całej wyprawy.</p></div><button class="btn gold" id="add-plan">＋ Nowa wyprawa</button></div>
- <div class="notice">Magazyn zmienia się dopiero po „Zatwierdź zużycie”. Dodawanie lub usuwanie opcji nie zmienia stanów magazynowych.</div>
- ${rows||'<div class="empty">Nie ma zaplanowanych wypraw. Kliknij „Nowa wyprawa”, aby zacząć.</div>'}
- <div class="row" style="margin-top:16px"><button class="btn gold" id="confirm-plan">✓ Zatwierdź zużycie całego planu</button><button class="btn ghost" id="clear-plan">Wyczyść cały plan</button></div>
- </section>
- <section class="panel"><div class="panelhead"><div><h2>Lista składników dla planu</h2><p class="muted">Sumaryczne zapotrzebowanie na wszystkie opcje zanęty ze wszystkich wypraw.</p></div></div>${needs?table(["Składnik","Potrzeba","Masz","Kontrola"],needs):'<div class="empty">Wybierz recepturę, aby obliczyć zapotrzebowanie.</div>'}</section>
- <section class="panel"><div class="panelhead"><div><h2>Lista zakupów na wyprawę</h2><p class="muted">Tylko brakujące składniki. Sprawdź kupione pozycje, wpisz faktycznie kupioną ilość i zatwierdź, aby dodać ją do magazynu.</p></div><span class="status ${shoppingMissing.length?"bad":"ok"}">${shoppingMissing.length?`${shoppingMissing.length} braków`:"Komplet składników"}</span></div>
- ${shoppingRows?table(["Składnik","Potrzeba","Masz","Brakuje","Dodaj do magazynu (g)","Kupione"],shoppingRows):'<div class="empty">Na ten moment niczego nie brakuje — wybierz receptury i liczbę porcji powyżej.</div>'}
- ${shoppingRows?`<div class="row" style="margin-top:16px"><button class="btn gold" id="confirm-shopping">✓ Dodaj kupione do magazynu</button><button class="btn ghost" id="sync-shopping-amounts">↻ Ustaw ilości według aktualnych braków</button><button class="btn ghost" id="reset-shopping-checks">Wyczyść odhaczenia</button></div><p class="muted" style="margin-top:10px">Lista braków aktualizuje się z planu i magazynu. Przycisk „Ustaw ilości…” ponownie wpisuje aktualnie brakujące gramatury. Magazyn i historia zmieniają się dopiero po zatwierdzeniu zakupów.</p>`:""}</section>`;
+ const need=needForPlan(),venueOptions=(v)=>VENUES.map(x=>"<option value=\""+esc(x)+"\" "+(v===x?"selected":"")+">"+esc(x)+"</option>").join("");
+ const recipes=Object.keys(state.recipes).sort((x,y)=>x.localeCompare(y,"pl"));
+ const rows=state.plan.map((p,i)=>"<div class=\"bait-option planner-bait-row\"><label class=\"field\">Rodzaj zanęty<select data-plan-recipe=\""+i+"\"><option value=\"\">— wybierz recepturę —</option>"+recipes.map(x=>"<option value=\""+esc(x)+"\" "+(p.recipe===x?"selected":"")+">"+esc(x)+"</option>").join("")+"</select></label><label class=\"field\">Liczba porcji<input type=\"number\" min=\"0\" step=\"0.5\" value=\""+(Number(p.portions)||0)+"\" data-plan-portions=\""+i+"\"></label><button class=\"btn ghost\" data-remove-plan=\""+i+"\">Usuń</button></div>").join("");
+ const needs=Object.keys(need).sort((x,y)=>x.localeCompare(y,"pl")).map(k=>{let h=Number(state.stock[k]||0),m=Math.max(0,need[k]-h);return "<tr><td><strong>"+esc(k)+"</strong></td><td>"+fmt(need[k])+" g</td><td>"+fmt(h)+" g</td><td>"+(m?'<span class="status bad">BRAKUJE '+fmt(m)+' g</span>':'<span class="status ok">WYSTARCZY</span>')+"</td></tr>";}).join("");
+ const missing=Object.keys(need).filter(k=>need[k]>Number(state.stock[k]||0)).sort((x,y)=>x.localeCompare(y,"pl"));
+ const buys=missing.map(k=>"<tr><td><strong>"+esc(k)+"</strong></td><td>"+fmt(need[k]-Number(state.stock[k]||0))+" g</td><td><input type=\"number\" min=\"0.1\" step=\"0.1\" value=\""+esc(state.shoppingAmounts[k]??String(need[k]-Number(state.stock[k]||0)))+"\" data-shopping-amount=\""+esc(k)+"\"></td><td><input type=\"checkbox\" "+(state.shoppingChecks[k]?"checked":"")+" data-shopping-check=\""+esc(k)+"\"></td></tr>").join("");
+ const history=(state.fieldPreparations||[]).slice().reverse().slice(0,10).map(p=>"<tr><td>"+esc(p.date)+"</td><td>"+esc(p.recipe)+"</td><td>"+fmt(p.portions)+"</td><td>"+esc(p.venue||"—")+"</td></tr>").join("");
+ const total=state.plan.reduce((n,p)=>n+Math.max(0,Number(p.portions)||0),0);
+ return "<section class=\"panel\"><div class=\"panelhead\"><div><h2>Plan wypraw i przygotowania zanęt</h2><p class=\"muted\">Planowanie zakupów i faktyczne przygotowanie nad wodą to dwa niezależne procesy.</p></div><button class=\"btn ghost\" id=\"new-outing\">＋ Nowa wyprawa</button></div>"+
+ "<div class=\"planner-mode-heading\"><span class=\"planner-step\">1</span><div><h3>PLANOWANIE WYPRAWY</h3><p class=\"muted\">Eksperymentuj z recepturami i porcjami. Plan nie zmienia plecaka.</p></div><span class=\"status warn\">Kalkulacja</span></div>"+
+ "<div class=\"grid2 planner-trip-fields\"><label class=\"field\">Nazwa wyprawy<input id=\"plan-name\" value=\""+esc(state.planName||"")+"\" placeholder=\"np. Weekendowe łowienie\"></label><label class=\"field\">Planowane łowisko<select id=\"plan-venue\"><option value=\"\">— wybierz łowisko —</option>"+venueOptions(state.planVenue||"")+"<option value=\"Inne / własne łowisko\">Inne / własne łowisko</option></select></label>"+
+ (state.planVenue==="Inne / własne łowisko"?"<label class=\"field wide\">Własne łowisko<input id=\"plan-custom-venue\" value=\""+esc(state.planCustomVenue||"")+"\" placeholder=\"Nazwa łowiska\"></label>":"")+
+ "<label class=\"field wide\">Notatki<textarea id=\"plan-notes\" rows=\"2\" placeholder=\"Miejscówka, pogoda, zestawy…\">"+esc(state.planNotes||"")+"</textarea></label></div>"+
+ "<div class=\"planner-section-subhead\"><div><h3>Dobierz zanęty i porcje</h3><p class=\"muted\">Każda zmiana automatycznie aktualizuje zapotrzebowanie.</p></div><button class=\"btn gold\" id=\"add-plan\">＋ Dodaj zanętę</button></div>"+(rows||'<div class="empty">Dodaj pierwszą zanętę, aby rozpocząć planowanie.</div>')+
+ "<div class=\"planner-summary-strip\"><div><span>Rodzaje zanęt</span><strong>"+state.plan.filter(p=>p.recipe&&Number(p.portions)>0).length+"</strong></div><div><span>Łącznie porcji</span><strong>"+fmt(total)+"</strong></div><div><span>Składniki w kalkulacji</span><strong>"+Object.keys(need).length+"</strong></div></div></section>"+
+ "<section class=\"panel\"><div class=\"planner-mode-heading\"><span class=\"planner-step\">2</span><div><h3>ZAPOTRZEBOWANIE I PLECAK</h3><p class=\"muted\">Porównanie składników potrzebnych do planu z aktualnym stanem.</p></div></div>"+(needs?table(["Składnik","Potrzeba","Masz w plecaku","Status"],needs):'<div class="empty">Wybierz recepturę i liczbę porcji, aby zobaczyć wyliczenia.</div>')+"</section>"+
+ "<section class=\"panel\"><div class=\"panelhead\"><div><h3>LISTA ZAKUPÓW</h3><p class=\"muted\">Brakujące składniki wyliczone na podstawie planu. Zakupy zatwierdzasz osobno.</p></div><span class=\"status "+(missing.length?"bad":"ok")+"\">"+(missing.length?missing.length+" braków":"Komplet składników")+"</span></div>"+(buys?table(["Składnik","Brakuje","Dokupić (g)","Kupione"],buys):'<div class="empty">Nie ma braków albo nie wybrano receptur.</div>')+(buys?'<div class="row" style="margin-top:14px"><button class="btn gold" id="confirm-shopping">✓ Zatwierdź zakupy</button><button class="btn ghost" id="sync-shopping-amounts">↻ Ustaw ilości według braków</button><button class="btn ghost" id="reset-shopping-checks">Wyczyść zaznaczenia</button></div>':"")+"</section>"+
+ "<section class=\"panel planner-field-panel\"><div class=\"planner-mode-heading\"><span class=\"planner-step\">3</span><div><h3>NA ŁOWISKU — FAKTYCZNE PRZYGOTOWANIE</h3><p class=\"muted\">Wybierz niezależnie to, co naprawdę przygotowujesz.</p></div><span class=\"status ok\">Rzeczywiste zużycie</span></div><div class=\"notice\">Ten moduł nie pobiera receptur ani porcji z planowania. Zatwierdzenie odejmuje tylko faktycznie przygotowane składniki.</div>"+
+ "<div class=\"grid2\"><label class=\"field\">Aktualne łowisko<select id=\"field-venue\"><option value=\"\">— wybierz łowisko —</option>"+venueOptions(state.fieldVenue||"")+"<option value=\"Inne / własne łowisko\">Inne / własne łowisko</option></select></label>"+
+ (state.fieldVenue==="Inne / własne łowisko"?"<label class=\"field\">Nazwa łowiska<input id=\"field-custom-venue\" value=\""+esc(state.fieldCustomVenue||"")+"\"></label>":"")+
+ "<label class=\"field\">Faktycznie przygotowywana receptura<select id=\"field-recipe\"><option value=\"\">— wybierz dowolną recepturę —</option>"+recipes.map(x=>"<option value=\""+esc(x)+"\">"+esc(x)+"</option>").join("")+"</select></label><label class=\"field\">Faktyczna liczba porcji<input id=\"field-portions\" type=\"number\" min=\"0.1\" step=\"0.5\" value=\"1\"></label></div>"+
+ "<div id=\"field-preview\" class=\"field-preview\"><div class=\"empty\">Wybierz recepturę, aby sprawdzić potrzebne składniki.</div></div><div class=\"row\" style=\"margin-top:14px\"><button class=\"btn gold\" id=\"confirm-field-prep\" disabled>✓ Zatwierdź faktyczne przygotowanie</button></div>"+
+ "<div class=\"planner-section-subhead\" style=\"margin-top:22px\"><div><h3>Ostatnie przygotowania</h3><p class=\"muted\">Historia rzeczywiście zatwierdzonych porcji.</p></div></div>"+(history?table(["Data","Receptura","Porcje","Łowisko"],history):'<div class="empty">Nie ma jeszcze zatwierdzonych przygotowań.</div>')+"</section>";
 }
 function stockPage(){
  let n=needForPlan();
@@ -1624,14 +1642,35 @@ function bind(){
  document.querySelectorAll("[data-plan-recipe]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planRecipe].recipe=el.value;save();render();});
  document.querySelectorAll("[data-plan-portions]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planPortions].portions=Math.max(0,Number(el.value)||0);save();render();});
  document.querySelectorAll("[data-remove-plan]").forEach(el=>el.onclick=()=>{state.plan.splice(+el.dataset.removePlan,1);save();render();});
- $("#add-plan")?.addEventListener("click",()=>{const base="Nowa wyprawa";let name=base,n=2;while(state.plan.some(p=>(p.trip||"").trim()===name)){name=`${base} ${n++}`;}state.plan.push({recipe:"",portions:1,trip:name,venue:"",customVenue:"",notes:""});save();render();});
- $("#clear-plan")?.addEventListener("click",()=>{if(confirm("Wyczyścić wszystkie pozycje planu? Magazyn nie zostanie zmieniony.")){state.plan=[];save();render();}});
- document.querySelectorAll("[data-group-trip]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupTrip;const groups=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))];const old=groups[gi],name=el.value.trim();if(!name){alert("Podaj nazwę wyprawy.");render();return;}if(name!==old&&state.plan.some(p=>(p.trip||"").trim()===name)){alert("Wyprawa o tej nazwie już istnieje. Użyj innej nazwy.");render();return;}state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===old)p.trip=name;});save();render();});
- document.querySelectorAll("[data-group-venue]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupVenue;const tripGroups=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=tripGroups[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key){p.venue=el.value;if(el.value!=="Inne / własne łowisko")p.customVenue="";}});save();render();});
- document.querySelectorAll("[data-group-custom-venue]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupCustomVenue;const keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key){p.customVenue=el.value;if(el.value.trim())p.venue="Inne / własne łowisko";}});save();render();});
- document.querySelectorAll("[data-group-notes]").forEach(el=>el.onchange=()=>{const gi=+el.dataset.groupNotes;const keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi];state.plan.forEach(p=>{if(((p.trip||"").trim()||"__bez_nazwy__")===key)p.notes=el.value;});save();toast("Notatki zapisane.");});
- document.querySelectorAll("[data-add-bait-option]").forEach(el=>el.onclick=()=>{const gi=+el.dataset.addBaitOption,keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi],base=state.plan.find(p=>(((p.trip||"").trim()||"__bez_nazwy__")===key));if(!base)return;state.plan.push({recipe:"",portions:1,trip:base.trip,venue:base.venue||"",customVenue:base.customVenue||"",notes:base.notes||""});save();render();});
- document.querySelectorAll("[data-remove-trip-group]").forEach(el=>el.onclick=()=>{const gi=+el.dataset.removeTripGroup,keys=[...new Set(state.plan.map(p=>(p.trip||"").trim()||"__bez_nazwy__"))],key=keys[gi],name=key==="__bez_nazwy__"?"":key;if(!confirm(`Usunąć całą wyprawę „${name||"bez nazwy"}” wraz ze wszystkimi opcjami zanęty? Magazyn pozostanie bez zmian.`))return;state.plan=state.plan.filter(p=>(((p.trip||"").trim()||"__bez_nazwy__")!==key));save();render();toast("Wyprawa usunięta.");});
+ $("#add-plan")?.addEventListener("click",()=>{state.plan.push({recipe:"",portions:1});save();render();});
+ $("#new-outing")?.addEventListener("click",()=>{if((state.plan.length||state.planName||state.planVenue)&&!confirm("Rozpocząć nową wyprawę? Poprzedni plan zostanie wyczyszczony. Plecak, zakupy i historia pozostaną bez zmian."))return;state.plan=[];state.planName="";state.planVenue="";state.planCustomVenue="";state.planNotes="";state.shoppingChecks={};state.shoppingAmounts={};save();render();toast("Poprzedni plan wyczyszczony.");});
+ $("#plan-name")?.addEventListener("change",e=>{state.planName=e.target.value;save();});
+ $("#plan-venue")?.addEventListener("change",e=>{state.planVenue=e.target.value;if(e.target.value!=="Inne / własne łowisko")state.planCustomVenue="";save();render();});
+ $("#plan-custom-venue")?.addEventListener("change",e=>{state.planCustomVenue=e.target.value;save();});
+ $("#plan-notes")?.addEventListener("change",e=>{state.planNotes=e.target.value;save();});
+ $("#field-venue")?.addEventListener("change",e=>{state.fieldVenue=e.target.value;if(e.target.value!=="Inne / własne łowisko")state.fieldCustomVenue="";save();render();});
+ $("#field-custom-venue")?.addEventListener("change",e=>{state.fieldCustomVenue=e.target.value;save();});
+ const updateFieldPreview=()=>{
+  const recipe=$("#field-recipe")?.value,portions=Math.max(0,Number($("#field-portions")?.value)||0),wrap=$("#field-preview"),button=$("#confirm-field-prep");
+  if(!wrap||!button)return;
+  if(!recipe||portions<=0){wrap.innerHTML='<div class="empty">Wybierz recepturę i poprawną liczbę porcji.</div>';button.disabled=true;return;}
+  const needs={};(state.recipes[recipe]||[]).forEach(it=>needs[it.ingredient]=(needs[it.ingredient]||0)+it.grams*portions);
+  const missing=Object.keys(needs).filter(k=>needs[k]>Number(state.stock[k]||0));
+  wrap.innerHTML='<div class="field-preview-title">Składniki do przygotowania</div>'+table(["Składnik","Potrzeba","Masz","Status"],Object.keys(needs).map(k=>{const have=Number(state.stock[k]||0),lack=Math.max(0,needs[k]-have);return "<tr><td>"+esc(k)+"</td><td>"+fmt(needs[k])+" g</td><td>"+fmt(have)+" g</td><td>"+(lack>0?'<span class="status bad">BRAKUJE '+fmt(lack)+' g</span>':'<span class="status ok">WYSTARCZY</span>')+"</td></tr>";}).join(""));
+  button.disabled=missing.length>0;button.textContent=missing.length?"Brakuje składników — nie można zatwierdzić":"✓ Zatwierdź faktyczne przygotowanie";
+ };
+ $("#field-recipe")?.addEventListener("change",updateFieldPreview);$("#field-portions")?.addEventListener("input",updateFieldPreview);updateFieldPreview();
+ $("#confirm-field-prep")?.addEventListener("click",()=>{
+  const recipe=$("#field-recipe")?.value,portions=Math.max(0,Number($("#field-portions")?.value)||0),venue=state.fieldVenue==="Inne / własne łowisko"?(state.fieldCustomVenue||"Własne łowisko"):state.fieldVenue;
+  if(!recipe||portions<=0){toast("Wybierz recepturę i liczbę porcji.");return;}
+  const needs={};(state.recipes[recipe]||[]).forEach(it=>needs[it.ingredient]=(needs[it.ingredient]||0)+it.grams*portions);
+  const missing=Object.keys(needs).filter(k=>needs[k]>Number(state.stock[k]||0));
+  if(missing.length){alert("Brakuje składników:\\n"+missing.map(k=>k+": brakuje "+fmt(needs[k]-Number(state.stock[k]||0))+" g").join("\\n"));return;}
+  if(!confirm("Potwierdzasz przygotowanie "+fmt(portions)+" porcji receptury „"+recipe+"”? Składniki zostaną odjęte z plecaka."))return;
+  const date=new Date().toLocaleString("pl-PL");
+  Object.entries(needs).forEach(([ingredient,grams])=>{state.stock[ingredient]=Math.max(0,Number(state.stock[ingredient]||0)-grams);state.history.push({date,type:"Zużycie",description:venue||"Przygotowanie na łowisku",ingredient,grams,details:recipe+" · "+fmt(portions)+" porcji"});});
+  state.fieldPreparations.push({date,venue,recipe,portions});save();render();toast("Przygotowanie zapisane. Plecak został zaktualizowany.");
+ });
  $("#product-form")?.addEventListener("submit",e=>{e.preventDefault();const name=$("#product-name").value.trim(),grams=Number($("#product-grams").value);if(!name)return;if(Object.keys(state.stock).some(k=>k.toLocaleLowerCase("pl")===name.toLocaleLowerCase("pl"))){alert("Produkt o takiej nazwie już istnieje.");return;}state.stock[name]=Math.max(0,grams||0);save();render();toast("Produkt dodany do magazynu.");});
  document.querySelectorAll("[data-delete-product]").forEach(el=>el.onclick=()=>{const name=el.dataset.deleteProduct;const used=Object.entries(state.recipes).filter(([r,items])=>items.some(it=>it.ingredient===name)).map(([r])=>r);if(!confirm(`Usunąć produkt „${name}” z magazynu${used.length?`, a także z receptur: ${used.join(", ")}`:""}? Historia pozostanie bez zmian.`))return;delete state.stock[name];Object.keys(state.recipes).forEach(r=>state.recipes[r]=state.recipes[r].filter(it=>it.ingredient!==name));save();render();toast("Produkt usunięty.");});
  $("#add-recipe-row")?.addEventListener("click",()=>addRecipeIngredientRow());
@@ -1642,7 +1681,6 @@ function bind(){
  $("#recipe-cancel")?.addEventListener("click",()=>clearRecipeEditor());
  $("#clear-history")?.addEventListener("click",()=>{if(!state.history.length){toast("Historia jest już pusta.");return;}if(!confirm("Usunąć wpisy dziennika oraz listę ostatnich zakupów? Magazyn, plan i receptury pozostaną bez zmian."))return;state.history=[];state.purchases=[];save();render();toast("Wyczyszczono dziennik. Magazyn bez zmian.");});
 
- $("#confirm-plan")?.addEventListener("click",()=>{let plan=state.plan.filter(p=>p.recipe&&Number(p.portions)>0);if(!plan.length){toast("Plan jest pusty.");return;}let n=needForPlan(plan),short=Object.keys(n).filter(k=>n[k]>Number(state.stock[k]||0));if(short.length){alert("Nie można zatwierdzić zużycia — brakuje składników:\\n"+short.map(k=>`${k}: brakuje ${fmt(n[k]-state.stock[k])} g`).join("\\n"));return;}if(!confirm("Potwierdzasz rzeczywiste zużycie całego planu? Stany magazynowe zostaną pomniejszone."))return;let now=new Date().toLocaleString("pl-PL");plan.forEach(p=>(state.recipes[p.recipe]||[]).forEach(it=>{let grams=it.grams*Number(p.portions);state.stock[it.ingredient]-=grams;state.history.push({date:now,type:"Zużycie",description:p.trip||"Plan zanęt",ingredient:it.ingredient,grams,details:`${p.recipe} · ${fmt(p.portions)} porcji`});}));state.plan=[];save();render();toast("Zużycie zapisane, magazyn zaktualizowany.");});
  document.querySelectorAll("[data-stock]").forEach(el=>el.onchange=()=>{state.stock[el.dataset.stock]=Math.max(0,Number(el.value)||0);save();render();toast("Stan magazynowy zapisany.");});
  $("#stock-search")?.addEventListener("input",e=>{let q=e.target.value.toLocaleLowerCase("pl");document.querySelectorAll("#content tbody tr").forEach(tr=>tr.style.display=tr.textContent.toLocaleLowerCase("pl").includes(q)?"":"none");});
  document.querySelectorAll("[data-shopping-check]").forEach(el=>el.onchange=()=>{state.shoppingChecks[el.dataset.shoppingCheck]=el.checked;save();});
