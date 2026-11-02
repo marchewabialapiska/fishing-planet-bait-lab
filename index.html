@@ -1518,10 +1518,69 @@ body::before{
 
 
 
+/* ETAP 1 — mocna, ale płynna animacja wody na warstwie tła.
+   Nie zmienia grafiki, układu ani elementów interfejsu. */
+#water-motion{
+ position:fixed!important;
+ inset:0!important;
+ z-index:0!important;
+ overflow:hidden!important;
+ pointer-events:none!important;
+ opacity:.78!important;
+ mix-blend-mode:screen!important;
+ background:
+  radial-gradient(ellipse 38% 24% at 18% 28%,rgba(100,205,190,.22),transparent 72%),
+  radial-gradient(ellipse 34% 26% at 78% 62%,rgba(91,190,184,.20),transparent 74%),
+  radial-gradient(ellipse 46% 20% at 54% 12%,rgba(139,221,207,.15),transparent 75%);
+ background-size:155% 155%!important;
+ animation:water-drift 17s ease-in-out infinite alternate!important;
+}
+#water-motion::before,
+#water-motion::after{
+ content:"";
+ position:absolute;
+ inset:-28%;
+ pointer-events:none;
+}
+#water-motion::before{
+ opacity:.72;
+ background:
+  repeating-radial-gradient(ellipse at 24% 38%,transparent 0 34px,rgba(173,239,222,.10) 36px,transparent 42px 76px),
+  repeating-radial-gradient(ellipse at 76% 68%,transparent 0 48px,rgba(120,215,204,.09) 50px,transparent 57px 98px);
+ background-size:125% 115%,140% 130%;
+ filter:blur(5px);
+ animation:water-caustics 12s ease-in-out infinite alternate;
+}
+#water-motion::after{
+ opacity:.48;
+ background:linear-gradient(112deg,transparent 25%,rgba(173,239,222,.10) 34%,transparent 43%,transparent 58%,rgba(132,220,207,.09) 66%,transparent 74%);
+ background-size:220% 180%;
+ filter:blur(13px);
+ animation:water-rays 21s linear infinite;
+}
+@keyframes water-drift{
+ 0%{background-position:0% 10%;filter:hue-rotate(0deg)}
+ 50%{background-position:55% 48%;filter:hue-rotate(9deg)}
+ 100%{background-position:100% 90%;filter:hue-rotate(-5deg)}
+}
+@keyframes water-caustics{
+ 0%{transform:translate3d(-3%,1%,0) scale(1) rotate(-2deg)}
+ 100%{transform:translate3d(3%,-2%,0) scale(1.08) rotate(2deg)}
+}
+@keyframes water-rays{
+ 0%{background-position:0% 50%;transform:translateX(-2%)}
+ 100%{background-position:100% 50%;transform:translateX(2%)}
+}
+#app{position:relative!important;z-index:1!important}
+@media(prefers-reduced-motion:reduce){
+ #water-motion,#water-motion::before,#water-motion::after{animation:none!important}
+}
+
 /* Clock styles removed. */
 </style>
 </head>
 <body>
+<div id="water-motion" aria-hidden="true"></div>
 <!-- Intro tymczasowo wyłączone; można przywrócić później. -->
 
 <div id="app">
