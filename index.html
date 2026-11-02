@@ -1542,20 +1542,20 @@ body::before{
 
 
 
-/* BAIT LAB CLOCK — compact and centered above the boat */
+/* BAIT LAB CLOCK — small, pinned to the upper-left; reserve header space for the logo */
 #app .start-hero-tile.start-hero-graphic{
- display:flex!important;align-items:center!important;justify-content:center!important;
- width:100%!important;min-height:122px!important;height:122px!important;
- margin:0 0 10px!important;padding:0!important;overflow:hidden!important;
+ display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;
+ position:relative!important;width:100%!important;min-height:270px!important;height:270px!important;
+ margin:0 0 12px!important;padding:12px 18px!important;overflow:visible!important;
 }
 #app .baitlab-clock{
- position:relative!important;display:block!important;flex:0 0 280px!important;
- width:280px!important;min-width:280px!important;max-width:280px!important;
- height:110px!important;margin:0 auto!important;overflow:hidden!important;
+ position:relative!important;display:block!important;flex:0 0 150px!important;
+ width:150px!important;min-width:150px!important;max-width:150px!important;
+ height:59px!important;margin:0!important;overflow:hidden!important;
 }
 #app .baitlab-clock-face{
  position:absolute!important;inset:0!important;display:block!important;
- width:280px!important;height:110px!important;max-width:280px!important;
+ width:150px!important;height:59px!important;max-width:150px!important;
  object-fit:contain!important;pointer-events:none!important;
 }
 #app .baitlab-clock-digits{
@@ -1576,9 +1576,12 @@ body::before{
  margin:0 1.5%!important;
 }
 @media(max-width:650px){
- #app .start-hero-tile.start-hero-graphic{height:106px!important;min-height:106px!important;margin-bottom:8px!important}
- #app .baitlab-clock{flex-basis:250px!important;width:250px!important;min-width:250px!important;max-width:250px!important;height:98px!important}
- #app .baitlab-clock-face{width:250px!important;height:98px!important;max-width:250px!important}
+ #app .start-hero-tile.start-hero-graphic{
+  height:145px!important;min-height:145px!important;margin-bottom:8px!important;
+  padding:8px 10px!important;
+ }
+ #app .baitlab-clock{flex-basis:112px!important;width:112px!important;min-width:112px!important;max-width:112px!important;height:44px!important}
+ #app .baitlab-clock-face{width:112px!important;height:44px!important;max-width:112px!important}
  #app .baitlab-clock-digits{top:37%!important;height:31%!important}
 }
 </style>
