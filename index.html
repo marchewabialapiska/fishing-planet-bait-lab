@@ -671,7 +671,7 @@ body::before{
 }
 @media(max-width:900px){
   #app .brandline{left:50%!important;right:auto!important;top:8px!important;transform:translateX(-50%)!important;width:min(42vw,260px)!important;max-width:calc(100vw - 180px)!important;justify-content:center!important}
-  #app .brand-logo-img{width:100%!important;max-width:260px!important;max-height:110px!important;object-fit:contain!important;object-position:right top!important}
+  #app .brand-logo-img{width:100%!important;max-width:260px!important;max-height:110px!important;object-fit:contain!important;object-position:center top!important}
   #app .nav button[data-page="plan"]{height:96px!important;min-height:96px!important;flex-basis:96px!important}
 }
 
@@ -687,7 +687,7 @@ body::before{
 @media(max-width:1050px){
  .top{height:130px!important;min-height:130px!important}
  .top-inner{height:130px!important;min-height:130px!important}
- .brandline{left:auto!important;right:14px!important;top:8px!important;width:min(42vw,260px)!important;max-width:calc(100vw - 180px)!important;justify-content:flex-end!important}
+ .brandline{left:50%!important;right:auto!important;top:8px!important;transform:translateX(-50%)!important;width:min(42vw,260px)!important;max-width:calc(100vw - 180px)!important;justify-content:center!important}
  .brand-logo-img{width:100%!important;max-width:260px!important;max-height:110px!important;object-fit:contain!important;object-position:right top!important}
  #app .start-hero-tile.start-hero-graphic{height:180px!important;margin-top:0!important}
 }
@@ -1460,64 +1460,38 @@ body::before{
 #app .start-boat-flag-hit:focus-visible{outline:2px solid rgba(244,193,91,.8)!important;outline-offset:2px}
 @media(max-width:650px){#app .start-boat-wrap{margin-bottom:6px}#app .start-boat-flag-hit{left:5%;top:2%;width:34%;height:37%}}
 
-/* Podstrony: osobny, niski nagłówek z mniejszym logo; treść i banery zaczynają się poniżej */
-#app.subpage .top{
- position:relative!important;
- height:110px!important;
- min-height:110px!important;
- padding:0!important;
- overflow:visible!important;
- z-index:1!important;
-}
-#app.subpage .top-inner{
- position:relative!important;
- width:100%!important;
- height:110px!important;
- min-height:110px!important;
- max-width:none!important;
- margin:0!important;
- padding:0!important;
- display:block!important;
- overflow:visible!important;
- z-index:1!important;
+/* Wszystkie zakładki: identyczna wysokość nagłówka i identyczne logo jak na START */
+#app.subpage .top,#app.subpage .top-inner{
+ height:285px!important;
+ min-height:285px!important;
 }
 #app.subpage .brandline{
- position:absolute!important;
- left:auto!important;
- right:34px!important;
- top:8px!important;
- width:250px!important;
- max-width:34vw!important;
- display:flex!important;
- align-items:flex-start!important;
- justify-content:flex-end!important;
- margin:0!important;
- z-index:1!important;
+ left:50%!important;
+ right:auto!important;
+ top:42px!important;
+ transform:translateX(-50%)!important;
+ width:500px!important;
+ max-width:calc(100vw - 360px)!important;
+ justify-content:center!important;
 }
 #app.subpage .brand-logo-img{
- display:block!important;
  width:100%!important;
- max-width:250px!important;
- max-height:88px!important;
- height:auto!important;
- object-fit:contain!important;
- object-position:right center!important;
+ max-width:500px!important;
+ max-height:230px!important;
+ object-position:center top!important;
 }
 #app.subpage .app-frame{position:relative!important;z-index:2!important}
-@media(max-width:900px){
- #app.subpage .top,#app.subpage .top-inner{height:90px!important;min-height:90px!important}
- #app.subpage .top-inner{padding:6px 14px!important}
- #app.subpage .brandline{width:min(190px,38vw)!important;max-width:38vw!important}
- #app.subpage .brand-logo-img{max-height:68px!important}
+@media(max-width:1050px){
+ #app.subpage .top,#app.subpage .top-inner{height:130px!important;min-height:130px!important}
+ #app.subpage .brandline{
+  left:50%!important;right:auto!important;top:8px!important;
+  transform:translateX(-50%)!important;
+  width:min(42vw,260px)!important;max-width:calc(100vw - 180px)!important;
+  justify-content:center!important;
+ }
+ #app.subpage .brand-logo-img{width:100%!important;max-width:260px!important;max-height:110px!important;object-position:center top!important}
 }
-
-/* Podstrony: menu zachowuje dotychczasową wysokość, a treść podchodzi pod mniejsze logo */
-@media(min-width:901px){
- #app.subpage .sidebar{margin-top:175px!important}
-}
-@media(max-width:900px){
- #app.subpage .sidebar{margin-top:0!important}
-}
+#app.subpage .sidebar{margin-top:0!important}
 
 /* FIX: logo pozostaje pod zawartością zakładek i nie przykrywa ich banerów */
 #app .top{position:relative!important;z-index:0!important}
