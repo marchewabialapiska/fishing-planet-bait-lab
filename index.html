@@ -1639,10 +1639,11 @@ function startPage(){
  const tripGroups=[];
  const tripMap=new Map();
  state.plan.forEach((p,i)=>{
-  const key=(p.trip||"").trim()||"Wyprawa bez nazwy";
-  if(!tripMap.has(key)){const g={trip:key,venue:p.customVenue||p.venue||"",notes:p.notes||"",items:[]};tripMap.set(key,g);tripGroups.push(g);}
+  const key=(state.planName||p.trip||"").trim()||"Wyprawa bez nazwy";
+  const selectedVenue=state.planVenue==="Inne / własne łowisko"?(state.planCustomVenue||"Własne łowisko"):(state.planVenue||p.customVenue||p.venue||"");
+  if(!tripMap.has(key)){const g={trip:key,venue:selectedVenue,notes:state.planNotes||p.notes||"",items:[]};tripMap.set(key,g);tripGroups.push(g);}
   if(p.recipe&&Number(p.portions)>0)tripMap.get(key).items.push(p);
-  if(!tripMap.get(key).venue)tripMap.get(key).venue=p.customVenue||p.venue||"";
+  if(!tripMap.get(key).venue)tripMap.get(key).venue=selectedVenue;
  });
  const inventoryRows=allIngredients().map(k=>{
   const have=Number(state.stock[k]||0),need=Number(n[k]||0);
