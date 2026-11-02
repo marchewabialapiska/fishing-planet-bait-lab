@@ -611,8 +611,8 @@ body::before{
 @media(min-width:901px){
   #app .sidebar{
     margin-top:0!important;
-    /* Leave the header/logo area clear; first START tile aligns with the stats row */
-    padding:345px 14px 12px 16px!important;
+    /* Extra room for the enlarged logo above the navigation tiles */
+    padding:390px 14px 12px 16px!important;
     align-self:start!important;
     min-width:0!important;
     overflow:visible!important;
@@ -640,12 +640,13 @@ body::before{
   #app .brandline{
     left:16px!important;
     top:42px!important;
-    width:250px!important;
-    max-width:calc(100vw - 32px)!important;
+    width:625px!important;
+    max-width:none!important;
   }
   #app .brand-logo-img{
-    max-width:250px!important;
-    max-height:135px!important;
+    width:100%!important;
+    max-width:625px!important;
+    max-height:338px!important;
   }
   /* The trip-planner tile has a long title, so give it extra height for legibility */
   #app .nav button[data-page="plan"]{
