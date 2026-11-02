@@ -1625,7 +1625,8 @@ function save(){
   }
 }
 function toast(msg){let el=document.createElement("div");el.className="toast";el.textContent=msg;document.body.appendChild(el);setTimeout(()=>el.remove(),2400);}
-function nav(){ $("#nav").innerHTML=pages.map(([id,icon,label])=>`<button class="${page===id?"active":""}" data-page="${id}" ${id==="start"?"aria-label=\"Start\"":""}><span class="nav-icon" aria-hidden="true">${icon}</span><span class="nav-label">${label}</span></button>`).join(""); $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{page=b.dataset.page;render();});}
+function navigateTo(nextPage){if(!pages.some(([id])=>id===nextPage)||nextPage===page)return;page=nextPage;history.pushState({fplApp:true,fplPage:page},"",location.href);render();}
+function nav(){ $("#nav").innerHTML=pages.map(([id,icon,label])=>`<button class="${page===id?"active":""}" data-page="${id}" ${id==="start"?"aria-label=\"Start\"":""}><span class="nav-icon" aria-hidden="true">${icon}</span><span class="nav-label">${label}</span></button>`).join(""); $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>navigateTo(b.dataset.page));}
 function needForPlan(plan=state.plan){let out={};plan.forEach(p=>{if(!p.recipe||Number(p.portions)<=0)return;(state.recipes[p.recipe]||[]).forEach(i=>out[i.ingredient]=(out[i.ingredient]||0)+i.grams*Number(p.portions));});return out;}
 function availableStatus(ingredient,need){let have=Number(state.stock[ingredient]||0);return have>=need?["OK","ok"]:["BRAKUJE","bad"];}
 function metric(label,value,hint){return `<div class="metric"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`;}
@@ -1739,7 +1740,8 @@ function addRecipeIngredientRow(selected="", grams=""){
 function clearRecipeEditor(){const original=$("#recipe-original");if(!original)return;original.value="";$("#recipe-name").value="";$("#recipe-ingredient-rows").innerHTML="";$("#recipe-form-title").textContent="＋ Dodaj / edytuj recepturę";$("#recipe-new-product").value="";$("#recipe-new-grams").value="";addRecipeIngredientRow();}
 function render(){document.querySelector("#app").classList.toggle("subpage",page!=="start");nav();let fn={"start":startPage,"plan":planPage,"stock":stockPage,"recipes":recipesPage,"buy":buyPage,"history":historyPage}[page];$("#content").innerHTML=fn();if(page==="recipes"&&!$("#recipe-ingredient-rows").children.length)addRecipeIngredientRow();bind();}
 function bind(){
- document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{page=b.dataset.go;render();});
+ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>navigateTo(b.dataset.go));
+ const logo=document.querySelector(".brandline");if(logo){logo.setAttribute("role","button");logo.setAttribute("tabindex","0");logo.setAttribute("aria-label","Wróć na stronę główną");logo.style.cursor="pointer";logo.onclick=()=>navigateTo("start");logo.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();navigateTo("start");}};}
  document.querySelectorAll("[data-plan-recipe]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planRecipe].recipe=el.value;save();render();});
  document.querySelectorAll("[data-plan-portions]").forEach(el=>el.onchange=()=>{state.plan[+el.dataset.planPortions].portions=Math.max(0,Number(el.value)||0);save();render();});
  document.querySelectorAll("[data-remove-plan]").forEach(el=>el.onclick=()=>{state.plan.splice(+el.dataset.removePlan,1);save();render();});
@@ -1796,6 +1798,8 @@ function bind(){
  $("#export-history")?.addEventListener("click",()=>{let rows=[["Data","Typ","Opis","Składnik","Ilość g","Szczegóły"],...state.history.map(h=>[h.date,h.type,h.description,h.ingredient,h.grams,h.details])];download("fishing-planet-historia.csv","\\ufeff"+rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(";")).join("\\r\\n"),"text/csv;charset=utf-8");});
 }
 function download(name,text,mime){let blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
+if(!history.state||history.state.fplApp!==true){history.replaceState({fplApp:true,fplPage:page},"",location.href);}
+window.addEventListener("popstate",event=>{const target=event.state&&event.state.fplApp&&pages.some(([id])=>id===event.state.fplPage)?event.state.fplPage:"start";if(page!==target){page=target;render();}});
 render();
 </script>
 
