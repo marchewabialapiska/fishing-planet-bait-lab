@@ -1542,32 +1542,6 @@ body::before{
 
 
 
-/* UNDERWATER COMMAND CENTER */
-.underwater-panel{position:relative;overflow:hidden;margin:0 0 18px;padding:0!important;border:1px solid rgba(87,190,165,.42)!important;border-radius:20px;background:linear-gradient(145deg,#071c1b,#0b302b)!important;box-shadow:0 18px 55px #0008,0 0 35px #28b99a12!important}
-.underwater-head{position:absolute;z-index:3;left:20px;right:20px;top:16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}
-.underwater-kicker{font-size:9px;letter-spacing:.22em;font-weight:900;color:#8ed9c1;text-transform:uppercase}
-.underwater-title{margin-top:4px;color:#f0f6e9;font-size:clamp(14px,1.5vw,19px);font-weight:950;letter-spacing:.045em;text-shadow:0 2px 12px #001}
-.underwater-live{display:flex;align-items:center;gap:7px;color:#b5d8c8;font-size:9px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;background:#041815aa;border:1px solid #5bc7a54a;border-radius:30px;padding:7px 10px;backdrop-filter:blur(8px)}
-.underwater-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#6af0a5;box-shadow:0 0 10px #6af0a5}
-#underwater-stage{position:relative;height:clamp(260px,27vw,390px);min-height:260px;overflow:hidden;touch-action:pan-y;background:radial-gradient(ellipse at 50% 0%,#1b7770 0%,#0b3836 45%,#061b1b 100%);cursor:grab}
-#underwater-stage.is-dragging{cursor:grabbing}
-#underwater-stage canvas{display:block;width:100%;height:100%;outline:none}
-.underwater-bottom{position:absolute;z-index:3;left:14px;right:14px;bottom:12px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;pointer-events:none}
-.underwater-controls{display:flex;gap:5px;flex-wrap:wrap;pointer-events:auto}
-.underwater-controls button,.underwater-reset{border:1px solid #9bd7c34d;background:#031a17c9;color:#d8eee1;border-radius:8px;padding:7px 10px;font-size:9px;font-weight:850;cursor:pointer;backdrop-filter:blur(8px)}
-.underwater-controls button.active{background:#d9a94e;color:#17241c;border-color:#f6d18a}
-.underwater-reset{pointer-events:auto}
-.underwater-hint{position:absolute;z-index:2;right:16px;bottom:52px;color:#c1e0d4a8;font-size:9px;letter-spacing:.04em;text-shadow:0 1px 5px #000;pointer-events:none}
-.underwater-error:after{content:"Scena 3D niedostępna — sprawdź połączenie z biblioteką Three.js";position:absolute;inset:50% 16px auto;transform:translateY(-50%);color:#e4f3e9;text-align:center;font-size:12px}
-@media(max-width:700px){#underwater-stage{height:270px}.underwater-head{left:13px;right:13px;top:12px}.underwater-hint{display:none}.underwater-bottom{left:9px;right:9px;bottom:9px}.underwater-controls button,.underwater-reset{padding:7px 8px}}
-/* BAIT LAB DIGITAL CLOCK — transparent PNG assets */
-#app .start-hero-tile.start-hero-graphic{min-height:164px!important;height:164px!important;align-items:center!important;justify-content:center!important;margin:0 0 12px!important;overflow:visible!important}
-.baitlab-clock{position:relative;width:min(390px,74%);height:154px;margin:0 auto;flex:0 0 auto;filter:drop-shadow(0 8px 16px rgba(0,0,0,.32))}
-.baitlab-clock-face{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
-.baitlab-clock-digits{position:absolute;left:17.5%;top:37%;width:65%;height:31%;display:flex;align-items:center;justify-content:center;gap:1.2%;pointer-events:none}
-.baitlab-clock-digit{display:block;width:11.8%;height:100%;object-fit:contain}
-.baitlab-clock-colon{display:block;width:5.5%;height:78%;object-fit:contain;margin:0 .6%}
-@media(max-width:650px){#app .start-hero-tile.start-hero-graphic{height:126px!important;min-height:126px!important;margin-bottom:8px!important}.baitlab-clock{width:min(310px,88%);height:120px}.baitlab-clock-digits{top:37%;height:31%}}
 </style>
 </head>
 <body>
@@ -1691,17 +1665,6 @@ function startPage(){
   </div></section>
  <div class="start-dashboard-grid">
  <div class="start-side-stack">
-   <section class="panel underwater-panel" aria-label="Underwater Command Center">
-    <div id="underwater-stage">
-     <canvas aria-label="Interaktywna scena podwodna 3D"></canvas>
-     <div class="underwater-head"><div><div class="underwater-kicker">BAIT LAB · LIVE ENVIRONMENT</div><div class="underwater-title">UNDERWATER COMMAND CENTER</div></div><span class="underwater-live">LIVE SIMULATION</span></div>
-     <div class="underwater-hint">PRZECIĄGNIJ, ABY OBRÓCIĆ · SCROLL, ABY PRZYBLIŻYĆ</div>
-     <div class="underwater-bottom">
-      <div class="underwater-controls"><button class="active" data-depth="1.1">ŚRODEK</button><button data-depth="-0.6">PŁYCIEJ</button><button data-depth="2.2">GŁĘBIEJ</button></div>
-      <button class="underwater-reset" type="button" data-underwater-reset>↺ RESET KAMERY</button>
-     </div>
-    </div>
-   </section>
    <div class="start-boat-wrap"><img class="start-boat-image" src="assets/lodz-na-ryby.webp?v=20261102" alt="Łódź NA RYBY z flagą Dodaj wyprawę"><button class="start-boat-flag-hit" type="button" data-go="plan" aria-label="Dodaj wyprawę — otwórz planer"></button></div><section class="panel start-trips-panel"><div class="start-trip-list">${tripCards||'<div class="empty">Nie ma jeszcze zaplanowanych wypraw.</div>'}</div></section>
    <section class="panel"><div class="panelhead"><div><h2 class="start-buy-title"><img class="start-buy-icon" src="assets/do-dokupienia.webp" alt="" loading="lazy"> Do dokupienia</h2><p class="muted">Braki wyliczone na podstawie wszystkich zaplanowanych receptur.</p></div><button class="btn ghost" data-go="buy">Zakupy</button></div><div class="start-buy-list">${missingRows||'<div class="empty">Świetnie — zapasy pokrywają aktualny plan.</div>'}</div></section>
   </div>
@@ -1845,7 +1808,7 @@ if(!history.state||history.state.fplApp!==true){history.replaceState({fplApp:tru
 window.addEventListener("popstate",event=>{const target=event.state&&event.state.fplApp&&pages.some(([id])=>id===event.state.fplPage)?event.state.fplPage:"start";if(page!==target){page=target;render();}});
 render();
 </script>
-<script type="module" src="underwater.js?v=20261102"></script>
+
 <script>
 (function(){
  const root=document.getElementById("baitlab-clock-digits");
