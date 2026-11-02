@@ -268,6 +268,21 @@ td input{background:#08170f}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;transform:none!important}}
 
 
+
+/* === FIXED LAKESHORE BACKGROUND === */
+html{background:#071411!important}
+body{
+ background:
+  linear-gradient(180deg,rgba(4,17,13,.38),rgba(4,17,13,.56)),
+  url("assets/site-background.webp?v=20261102") center center / cover no-repeat fixed !important;
+ background-color:#071411!important;
+ color:#edf5eb!important;
+}
+#app{background:transparent!important}
+@media(max-width:700px){
+ body{background-attachment:scroll!important;background-position:center center!important}
+}
+
 /* === EMBEDDED FISHING ART PACK: local images, no external requests === */
 :root{--site-primary:#0b302a;--site-secondary:#eab653;--site-background:#071411;--site-on-background:#eef7ee}
 body{background:radial-gradient(ellipse at 80% 0%,#194c3c 0,transparent 36rem),linear-gradient(180deg,#071411,#0c211a 60%,#07110e)!important;color:#edf5eb!important}
