@@ -1650,6 +1650,112 @@ body::before{
   #app .start-dashboard-grid .panelhead h2{font-size:15px!important}
 }
 
+
+
+/* === MOBILE LAYOUT FIX V2: restore readable navigation and full-width layout === */
+@media (max-width: 720px) {
+  html, body { width:100%!important; max-width:100%!important; overflow-x:hidden!important; }
+  #app { width:100%!important; max-width:100%!important; overflow:hidden!important; }
+  #app .top, #app .top-inner {
+    display:block!important; width:100%!important; height:132px!important;
+    min-height:132px!important; max-height:132px!important; padding:0!important;
+    margin:0!important; overflow:hidden!important;
+  }
+  #app .brandline {
+    position:absolute!important; left:50%!important; right:auto!important; top:5px!important;
+    transform:translateX(-50%)!important; display:flex!important; align-items:center!important;
+    justify-content:center!important; width:min(76vw,260px)!important;
+    max-width:calc(100vw - 24px)!important; height:120px!important; margin:0!important;
+  }
+  #app .brand-logo-img {
+    display:block!important; width:100%!important; height:auto!important;
+    max-width:260px!important; max-height:116px!important; object-fit:contain!important;
+    object-position:center!important; margin:0!important;
+  }
+  #app .app-frame {
+    display:block!important; width:100%!important; max-width:100%!important;
+    min-height:0!important; margin:0!important; padding:0!important;
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #app .sidebar {
+    display:block!important; position:relative!important; inset:auto!important;
+    width:100%!important; max-width:100%!important; min-width:0!important;
+    height:auto!important; margin:0!important; padding:9px 10px 11px!important;
+    border:0!important; border-bottom:1px solid rgba(220,181,93,.28)!important;
+    background:rgba(5,20,14,.96)!important; overflow:visible!important;
+  }
+  #app .sidebar-title, #app .sidebar-note { display:none!important; }
+  #app #nav, #app .nav {
+    display:grid!important; position:static!important; inset:auto!important;
+    width:100%!important; max-width:100%!important; min-width:0!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:58px!important; gap:7px!important;
+    margin:0!important; padding:0!important; overflow:visible!important;
+    background:transparent!important; border:0!important; box-shadow:none!important;
+    border-radius:0!important; backdrop-filter:none!important;
+  }
+  #app #nav button, #app .nav button,
+  #app #nav button[data-page], #app .nav button[data-page] {
+    display:flex!important; position:relative!important; align-items:center!important;
+    justify-content:flex-start!important; gap:9px!important;
+    width:100%!important; min-width:0!important; max-width:100%!important;
+    height:58px!important; min-height:58px!important; max-height:58px!important;
+    flex:none!important; padding:7px 9px!important; margin:0!important;
+    background-color:rgba(13,39,27,.94)!important;
+    background-image:none!important; background-repeat:no-repeat!important;
+    background-position:center!important; background-size:cover!important;
+    border:1px solid rgba(220,181,93,.32)!important; border-radius:10px!important;
+    color:#f1d18a!important; font:700 12px/1.2 system-ui,sans-serif!important;
+    letter-spacing:.02em!important; text-align:left!important;
+    white-space:normal!important; text-shadow:none!important;
+    transform:none!important; filter:none!important; box-shadow:none!important;
+    overflow:hidden!important; opacity:1!important; visibility:visible!important;
+  }
+  #app #nav button .nav-icon, #app .nav button .nav-icon {
+    display:flex!important; flex:0 0 30px!important; width:30px!important; height:30px!important;
+    align-items:center!important; justify-content:center!important;
+    font-size:19px!important; line-height:1!important; color:#f2c66f!important;
+    background:rgba(225,171,71,.12)!important; border:1px solid rgba(225,171,71,.35)!important;
+    border-radius:8px!important;
+  }
+  #app #nav button .nav-label, #app .nav button .nav-label {
+    display:block!important; min-width:0!important; color:inherit!important;
+    font-size:12px!important; line-height:1.2!important; font-weight:800!important;
+  }
+  #app #nav button[data-page="start"] {
+    background:linear-gradient(110deg,rgba(100,68,22,.72),rgba(13,39,27,.96))!important;
+    border-color:rgba(240,194,100,.7)!important;
+  }
+  #app .shell {
+    display:block!important; width:100%!important; max-width:100%!important;
+    min-width:0!important; margin:0!important; padding:12px 10px 24px!important;
+    box-sizing:border-box!important;
+  }
+  #app #content { display:block!important; width:100%!important; max-width:100%!important; min-width:0!important; margin:0!important; }
+  #app .start-dashboard-grid {
+    display:grid!important; width:100%!important; max-width:100%!important;
+    min-width:0!important; grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important; align-items:start!important;
+  }
+  #app .start-side-stack { display:grid!important; width:100%!important; min-width:0!important; grid-template-columns:minmax(0,1fr)!important; gap:12px!important; }
+  #app .start-boat-wrap { width:100%!important; max-width:560px!important; margin:0 auto 4px!important; }
+  #app .start-boat-image { display:block!important; width:100%!important; max-width:100%!important; height:auto!important; }
+  #app .start-dashboard-grid .panel { width:100%!important; min-width:0!important; box-sizing:border-box!important; padding:12px!important; }
+  #app .start-dashboard-grid .panelhead { display:flex!important; flex-direction:row!important; align-items:center!important; justify-content:space-between!important; gap:8px!important; }
+  #app .start-dashboard-grid .panelhead h2 { font-size:15px!important; line-height:1.25!important; }
+  #app .start-dashboard-grid .panelhead p.muted { font-size:10px!important; }
+  #app .footer { text-align:center!important; padding:14px 6px!important; font-size:9px!important; }
+}
+@media (max-width: 380px) {
+  #app .brandline { width:min(72vw,230px)!important; }
+  #app #nav, #app .nav { grid-auto-rows:54px!important; gap:6px!important; }
+  #app #nav button, #app .nav button, #app #nav button[data-page], #app .nav button[data-page] {
+    height:54px!important; min-height:54px!important; max-height:54px!important;
+    padding:6px 7px!important; gap:7px!important;
+  }
+  #app #nav button .nav-label, #app .nav button .nav-label { font-size:11px!important; }
+}
+
 </style>
 </head>
 <body>
