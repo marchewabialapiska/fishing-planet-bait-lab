@@ -1519,6 +1519,137 @@ body::before{
 
 
 /* Clock styles removed. */
+
+/* === MOBILE HOMEPAGE REFRESH — desktop remains unchanged === */
+@media(max-width:720px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  #app{width:100%;max-width:100%;overflow:hidden}
+
+  /* Compact, centered brand header */
+  #app .top,#app .top-inner{
+    height:124px!important;
+    min-height:124px!important;
+    max-height:124px!important;
+  }
+  #app .top{padding:0 12px!important}
+  #app .top-inner{display:flex!important;align-items:center!important;justify-content:center!important;padding:4px 0!important}
+  #app .brandline{
+    position:absolute!important;
+    left:50%!important;right:auto!important;top:5px!important;
+    transform:translateX(-50%)!important;
+    display:flex!important;justify-content:center!important;
+    width:min(58vw,230px)!important;max-width:calc(100vw - 32px)!important;
+    margin:0!important;
+  }
+  #app .brand-logo-img{
+    display:block!important;width:100%!important;height:auto!important;
+    max-width:230px!important;max-height:112px!important;
+    object-fit:contain!important;object-position:center!important;
+  }
+
+  /* Six clear menu tiles: two columns by three rows */
+  #app .app-frame{
+    display:block!important;width:100%!important;max-width:100%!important;
+    min-height:0!important;margin:0!important;
+  }
+  #app .sidebar{
+    position:relative!important;top:auto!important;z-index:5!important;
+    display:block!important;width:100%!important;margin:0!important;
+    padding:10px 11px 11px!important;
+    border-right:0!important;border-bottom:1px solid #294638!important;
+    background:rgba(7,20,14,.96)!important;
+  }
+  #app .nav{
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:minmax(50px,auto)!important;
+    gap:7px!important;width:100%!important;margin:0!important;padding:0!important;
+    overflow:visible!important;flex-direction:unset!important;
+  }
+  #app .nav button{
+    display:flex!important;align-items:center!important;justify-content:flex-start!important;
+    width:100%!important;min-width:0!important;min-height:50px!important;
+    padding:9px 10px!important;border-radius:11px!important;
+    font-size:11px!important;line-height:1.25!important;
+    white-space:normal!important;text-align:left!important;
+    overflow-wrap:anywhere!important;
+  }
+  #app .nav button[data-page="start"]{
+    min-height:50px!important;padding:9px 9px 9px 43px!important;
+  }
+
+  /* Homepage content uses the full screen width without cramped columns */
+  #app .shell{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+    margin:0!important;padding:13px 10px 24px!important;
+  }
+  #app #content{width:100%!important;min-width:0!important}
+  #app .start-dashboard-grid{
+    display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;width:100%!important;
+  }
+  #app .start-side-stack{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;min-width:0!important}
+  #app .start-boat-wrap{
+    width:min(100%,520px)!important;margin:0 auto 4px!important;
+  }
+  #app .start-boat-image{width:100%!important;height:auto!important;object-fit:contain!important}
+  #app .start-boat-flag-hit{left:5%!important;top:2%!important;width:34%!important;height:37%!important}
+  #app .start-dashboard-grid .panel{min-width:0!important;padding:14px!important;margin-bottom:0!important}
+  #app .start-dashboard-grid .panelhead{
+    display:flex!important;flex-direction:row!important;align-items:center!important;
+    justify-content:space-between!important;gap:10px!important;
+  }
+  #app .start-dashboard-grid .panelhead>div{min-width:0!important}
+  #app .start-dashboard-grid .panelhead h2{font-size:17px!important;line-height:1.25!important}
+  #app .start-dashboard-grid .panelhead p.muted{font-size:11px!important;line-height:1.45!important}
+  #app .start-dashboard-grid .panelhead .btn{flex:0 0 auto!important;padding:8px 10px!important;font-size:10px!important}
+
+  /* Keep inventory and activity rows readable at narrow widths */
+  #app .start-dashboard-grid .start-stock-row{
+    display:grid!important;grid-template-columns:27px minmax(0,1fr) auto!important;
+    gap:8px!important;min-width:0!important;padding:9px 8px!important;
+  }
+  #app .start-dashboard-grid .start-stock-row .status{display:none!important}
+  #app .start-dashboard-grid .start-stock-row>img,
+  #app .start-dashboard-grid .start-buy-row>img{width:26px!important;height:26px!important}
+  #app .start-dashboard-grid .start-stock-name{min-width:0!important}
+  #app .start-dashboard-grid .start-stock-name strong,
+  #app .start-dashboard-grid .start-stock-qty{font-size:11px!important}
+  #app .start-dashboard-grid .start-trip-card{
+    display:grid!important;grid-template-columns:30px minmax(0,1fr) auto!important;
+    gap:8px!important;padding:9px!important;min-width:0!important;
+  }
+  #app .start-dashboard-grid .start-trip-body{min-width:0!important}
+  #app .start-dashboard-grid .start-trip-card .start-trip-body>span{font-size:14px!important}
+  #app .start-dashboard-grid .start-trip-card .start-trip-body>small{font-size:11px!important}
+  #app .start-dashboard-grid .start-trip-card .btn,
+  #app .start-dashboard-grid .start-trip-card button{padding:8px 9px!important;font-size:10px!important}
+  #app .start-dashboard-grid .start-buy-row{
+    display:grid!important;grid-template-columns:26px minmax(0,1fr) auto!important;
+    gap:8px!important;padding:8px!important;min-width:0!important;
+  }
+  #app .start-dashboard-grid .start-buy-row span{font-size:11px!important}
+  #app .start-dashboard-grid .start-buy-row strong{font-size:11px!important;white-space:nowrap!important}
+  #app .start-dashboard-grid .start-buy-row .btn{grid-column:auto!important;justify-self:end!important;padding:7px 9px!important;font-size:10px!important}
+  #app .start-dashboard-grid .start-activity-row{
+    display:grid!important;grid-template-columns:8px minmax(0,1fr) auto!important;
+    gap:8px!important;padding:9px 7px!important;min-width:0!important;
+  }
+  #app .start-dashboard-grid .start-activity-copy{min-width:0!important}
+  #app .start-dashboard-grid .start-activity-copy strong{font-size:11px!important;overflow-wrap:anywhere!important}
+  #app .start-dashboard-grid .start-activity-copy span{font-size:10px!important}
+  #app .start-dashboard-grid .start-activity-copy small{font-size:9px!important}
+  #app .start-dashboard-grid .start-activity-row>b{font-size:10px!important;white-space:nowrap!important}
+  #app .footer{text-align:center!important;font-size:9px!important;padding:14px 6px 4px!important}
+}
+@media(max-width:380px){
+  #app .shell{padding-left:8px!important;padding-right:8px!important}
+  #app .nav{gap:6px!important}
+  #app .nav button{font-size:10px!important;padding:8px!important}
+  #app .nav button[data-page="start"]{padding-left:38px!important}
+  #app .start-dashboard-grid .panel{padding:11px!important}
+  #app .start-dashboard-grid .panelhead h2{font-size:15px!important}
+}
+
 </style>
 </head>
 <body>
